@@ -1,4 +1,3 @@
-
 # Local CI kit
 .act-artifacts/
 .env.act
@@ -6,6 +5,16 @@
 
 # The registry of running mocks
 .mocks.json
+.mocks.log
+.mocks.pid
 
-# macOS
+# Node
+node_modules/
+npm-debug.log*
+*.tgz
+
+# Editors and macOS
 .DS_Store
+.idea/
+.vscode/
+*.swp

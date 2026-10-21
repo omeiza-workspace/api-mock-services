@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{name}} (mock)</title>
+<script src="https://unpkg.com/htmx.org@2.0.4/dist/htmx.min.js"></script>
+<style>
+{{styles}}
+</style>
+</head>
+<body>
+<header>
+  <h1>{{name}}</h1>
+  <span>the mock — {{url}}</span>
+</header>
+
+<main>
+  <section>
+    <h2>The state</h2>
+    <div id="state">{{state}}</div>
+  </section>
+
+  <section>
+    <h2>What it was asked</h2>
+    <div id="requests" hx-get="/_panel/requests" hx-trigger="every 2s" hx-swap="innerHTML">
+      {{requests}}
+    </div>
+  </section>
+</main>
+</body>
+</html>

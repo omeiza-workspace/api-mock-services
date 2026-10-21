@@ -24,7 +24,11 @@ include .ci/ci.mk
 # The mocks to start by default.
 MOCKS ?= stripe resend xero cloudflare paystack
 
-.PHONY: help test test-watch pre-ci ci ci-fast mocks docker compose clean
+# The compose profile to start — payments, identity, messaging, ai, storage,
+# all.
+PROFILE ?= all
+
+.PHONY: help test test-watch lint check footprint pre-ci ci ci-fast mocks docker compose clean
 
 help: ## Show the available targets
 	@printf '\n\033[1;36mTargets\033[0m\n'
@@ -38,6 +42,17 @@ test: ## Run the tests — the local gate
 
 test-watch: ## Run the tests, and again on every change
 	@node --test --watch test/*.test.js
+
+lint: ## Check the house style
+	@npm run lint
+
+check: lint test ## The lint and the tests
+
+footprint: ## Check the mocks are still light — memory, CPU and startup
+	@npm run footprint
+
+footprint: ## Measure what the engine costs, and fail if it costs too much
+	@bash test/footprint.sh
 
 pre-ci: test ## The local tests, before anything else
 	@:
@@ -54,8 +69,8 @@ mocks: ## Start the mocks, for a project to point at
 docker: ## Build the container image
 	@docker build -t api-mock-services -f docker/Dockerfile .
 
-compose: ## Start every mock as a container
-	@docker compose -f examples/docker-compose.yml up -d
+compose: ## Start the mocks as containers — make PROFILE=payments for one group
+	@docker compose -f examples/docker-compose.yml --profile $(PROFILE) up -d
 
 clean: ## Remove what the local runs leave behind
 	@rm -f .mocks.json

@@ -1,5 +1,4 @@
 import { createServer } from 'node:http'
-import { panelRoutes, readControlForm } from './panel.js'
 
 /**
  * The harness every mock is built on.
@@ -91,6 +90,22 @@ export async function readBody(req) {
 }
 
 /**
+ * Read a form body, as a plain object.
+ *
+ * The panel's buttons send a form; the command line sends JSON. Both end up
+ * in the same place.
+ */
+export function readControlForm(body) {
+  const values = {}
+
+  for (const [key, value] of new URLSearchParams(body)) {
+    values[key] = value
+  }
+
+  return values
+}
+
+/**
  * Turn a path into something a request can be matched against.
  *
  * A path with `:name` in it matches one segment and remembers it.
@@ -153,13 +168,19 @@ export class MockService {
     /** The webhooks that were sent. */
     this.state.webhooks = []
 
+    /**
+     * The checkout, if this mock has one.
+     *
+     * The browser layer reads it: a title, how to find the payment being
+     * made, and what to record when it is done. The engine never looks at
+     * it — see `src/ui/`.
+     */
+    this.checkout = null
+
     this.server = null
     this.url = ''
     this.port = 0
     this.listeners = new Set()
-
-    // The control panel — the page a person uses.
-    panelRoutes(this)
   }
 
   /** Register a route. */
@@ -318,6 +339,13 @@ export class MockService {
     })
 
     if (!route) {
+      // Every mock says whether it is well — so a container health check
+      // has something to ask.
+      if (request.path === '/health') {
+        json(res, 200, { status: 'healthy', service: this.name })
+        return
+      }
+
       res.statusCode = 404
       res.setHeader('content-type', 'application/json')
       res.end(

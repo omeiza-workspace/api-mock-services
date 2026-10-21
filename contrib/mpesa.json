@@ -1,0 +1,54 @@
+{
+  "name": "mpesa",
+  "state": {
+    "greeting": "hello"
+  },
+  "routes": [
+    {
+      "method": "POST",
+      "path": "/mpesa/stkpush/v1/processrequest",
+      "status": 200,
+      "body": {
+        "ResponseCode": "0",
+        "ResponseDescription": "Accept the service request successfully.",
+        "CustomerMessage": "Success. CheckoutRequestID sent to your phone.",
+        "CheckoutRequestID": "{{state.greeting}}",
+        "MerchantCode": "{{body.BusinessShortCode}}",
+        "TransactionDesc": "{{body.TransactionDesc}}"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/mpesa/stkpush/v1/processrequest/query",
+      "status": 200,
+      "body": {
+        "ResponseCode": "0",
+        "ResponseDescription": "Accept the service request successfully.",
+        "CheckoutRequestID": "{{body.CheckoutRequestID}}",
+        "ResultCode": "0",
+        "ResultDesc": "The service request is successful."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/mpesa/b2c/v1/processrequest",
+      "status": 200,
+      "body": {
+        "ResponseCode": "0",
+        "ResponseDescription": "Accept the service request successfully.",
+        "TransactionReceipt": "QJG7XXXX1234",
+        "TransactionDate": "2026-01-01T10:00:00.000Z"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/mpesa/reverse/v1/processrequest",
+      "status": 200,
+      "body": {
+        "ResponseCode": "0",
+        "ResponseDescription": "Accept the service request successfully.",
+        "ReversalStatus": "Reversal successful"
+      }
+    }
+  ]
+}

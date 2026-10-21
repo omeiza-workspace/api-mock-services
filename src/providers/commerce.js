@@ -1,5 +1,4 @@
 import { MockService, json, counter } from '../harness.js'
-import { addCheckout } from '../checkout.js'
 
 /**
  * Stripe.
@@ -92,8 +91,8 @@ export function createStripeMock() {
     }
   }
 
-  // The checkout a person uses to pay.
-  addCheckout(service, {
+  // The checkout a person uses to pay. The browser layer mounts it.
+  service.checkout = {
     title: 'Card payment (mock)',
     find: (id) => {
       const intent = service.state.intents.get(id)
@@ -117,7 +116,7 @@ export function createStripeMock() {
           ? undefined
           : { type: 'card_error', message: outcome === 'failed' ? 'Your card was declined.' : 'The payment was cancelled.' }
     },
-  })
+  }
 
   return service
 }

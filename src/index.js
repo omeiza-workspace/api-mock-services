@@ -1,40 +1,172 @@
-import { createStripeMock, createResendMock, createXeroMock, createCloudflareMock } from './providers/commerce.js'
 import {
-  createPaystackMock,
-  createInterswitchMock,
-  createYouVerifyMock,
-  createOneSignalMock,
-  createTwilioMock,
+  createStripeMock as stripeMock,
+  createResendMock as resendMock,
+  createXeroMock as xeroMock,
+  createCloudflareMock as cloudflareMock,
+} from './providers/commerce.js'
+import {
+  createPaystackMock as paystackMock,
+  createInterswitchMock as interswitchMock,
+  createYouVerifyMock as youverifyMock,
+  createOneSignalMock as onesignalMock,
+  createTwilioMock as twilioMock,
 } from './providers/nigeria.js'
+import {
+  createFlutterwaveMock as flutterwaveMock,
+  createMonnifyMock as monnifyMock,
+} from './providers/fintech.js'
+import {
+  createSmileIdMock as smileidMock,
+  createIdentityPassMock as identitypassMock,
+} from './providers/identity.js'
+import {
+  createTermiiMock as termiiMock,
+  createWhatsAppMock as whatsappMock,
+  createFcmMock as fcmMock,
+} from './providers/messaging.js'
+import { createOpenAIMock as openaiMock } from './providers/ai.js'
+import { createS3Mock as s3Mock } from './providers/storage.js'
+import { createSpecMock as specMock, createSpecMockFromFile as specMockFromFile } from './spec.js'
+import { attachViews } from './ui/index.js'
 
 /**
  * api-mock-services
  *
- * Stand-ins for the outside world: the payment gateways, the email provider,
- * the accounting service, the DNS provider, the messaging and the identity
- * checks.
+ * Stand-ins for the outside world: the payment gateways, the identity checks,
+ * the email provider, the accounting service, the DNS provider, the
+ * messaging and the AI and storage services.
  *
  * One implementation, used by every project. A test starts the mock it needs,
  * points the app at it, and can then say what was actually asked for.
+ *
+ * The engine (`harness.js`) knows nothing about HTML. Everything a person
+ * sees lives in `ui/`, and is put on a mock by `attachViews`.
  */
 
 export { MockService, MockRequest, json, text, readBody, toMatcher } from './harness.js'
 
+/** The categories the mocks are grouped into. */
+export const CATEGORIES = {
+  payments: { title: 'Payments', description: 'The card and the bank rails' },
+  identity: { title: 'Identity', description: 'The KYC and the verification checks' },
+  messaging: { title: 'Messaging', description: 'The text, the WhatsApp and the push' },
+  email: { title: 'Email', description: 'The sending domains and the mail itself' },
+  accounting: { title: 'Accounting', description: 'The books' },
+  dns: { title: 'DNS', description: 'The zones and the records' },
+  ai: { title: 'AI', description: 'The model calls' },
+  storage: { title: 'Storage', description: 'The buckets and the objects' },
+}
+
 /** Every mock this package can start. */
 export const MOCKS = {
-  stripe: { create: createStripeMock, port: 4001, description: 'The card payments' },
-  resend: { create: createResendMock, port: 4002, description: 'The email' },
-  xero: { create: createXeroMock, port: 4003, description: 'The accounting' },
-  cloudflare: { create: createCloudflareMock, port: 4004, description: 'The DNS' },
-  paystack: { create: createPaystackMock, port: 4005, description: 'The card payments (Nigeria)' },
+  stripe: {
+    create: stripeMock,
+    port: 4001,
+    category: 'payments',
+    description: 'The card payments',
+  },
+  resend: {
+    create: resendMock,
+    port: 4002,
+    category: 'email',
+    description: 'The email',
+  },
+  xero: {
+    create: xeroMock,
+    port: 4003,
+    category: 'accounting',
+    description: 'The accounting',
+  },
+  cloudflare: {
+    create: cloudflareMock,
+    port: 4004,
+    category: 'dns',
+    description: 'The DNS',
+  },
+  paystack: {
+    create: paystackMock,
+    port: 4005,
+    category: 'payments',
+    description: 'The card payments (Nigeria)',
+  },
   interswitch: {
-    create: createInterswitchMock,
+    create: interswitchMock,
     port: 4006,
+    category: 'payments',
     description: 'The card payments (Nigeria, Interswitch)',
   },
-  youverify: { create: createYouVerifyMock, port: 4007, description: 'The identity checks' },
-  onesignal: { create: createOneSignalMock, port: 4008, description: 'The push notifications' },
-  twilio: { create: createTwilioMock, port: 4009, description: 'The SMS' },
+  youverify: {
+    create: youverifyMock,
+    port: 4007,
+    category: 'identity',
+    description: 'The identity checks',
+  },
+  onesignal: {
+    create: onesignalMock,
+    port: 4008,
+    category: 'messaging',
+    description: 'The push notifications',
+  },
+  twilio: {
+    create: twilioMock,
+    port: 4009,
+    category: 'messaging',
+    description: 'The SMS',
+  },
+  flutterwave: {
+    create: flutterwaveMock,
+    port: 4010,
+    category: 'payments',
+    description: 'The card payments (Nigeria, Flutterwave)',
+  },
+  monnify: {
+    create: monnifyMock,
+    port: 4011,
+    category: 'payments',
+    description: 'The bank rails (Nigeria, Monnify)',
+  },
+  termii: {
+    create: termiiMock,
+    port: 4012,
+    category: 'messaging',
+    description: 'The SMS (Nigeria, Termii)',
+  },
+  smileid: {
+    create: smileidMock,
+    port: 4013,
+    category: 'identity',
+    description: 'The identity checks (Nigeria, Smile ID)',
+  },
+  identitypass: {
+    create: identitypassMock,
+    port: 4014,
+    category: 'identity',
+    description: 'The identity checks (Nigeria, Identity Pass)',
+  },
+  whatsapp: {
+    create: whatsappMock,
+    port: 4015,
+    category: 'messaging',
+    description: 'The WhatsApp messages',
+  },
+  fcm: {
+    create: fcmMock,
+    port: 4016,
+    category: 'messaging',
+    description: 'The push notifications (Firebase)',
+  },
+  openai: {
+    create: openaiMock,
+    port: 4017,
+    category: 'ai',
+    description: 'The model calls (OpenAI and Anthropic shapes)',
+  },
+  s3: {
+    create: s3Mock,
+    port: 4018,
+    category: 'storage',
+    description: 'The buckets and the objects (S3)',
+  },
 }
 
 /**
@@ -54,6 +186,8 @@ export async function startMock(name, options = {}) {
 
   const service = entry.create(options)
 
+  attachViews(service)
+
   await service.listen(options.port ?? 0, options.host ?? '127.0.0.1')
 
   return service
@@ -70,14 +204,37 @@ export async function startMocks(names, options = {}) {
   return started
 }
 
-export {
-  createStripeMock,
-  createResendMock,
-  createXeroMock,
-  createCloudflareMock,
-  createPaystackMock,
-  createInterswitchMock,
-  createYouVerifyMock,
-  createOneSignalMock,
-  createTwilioMock,
-}
+/**
+ * A mock, with the browser layer on it.
+ *
+ * The panel and the checkout are all the UI layer adds, so every mock a
+ * caller gets has them.
+ */
+const withViews = (factory) => (options) => attachViews(factory(options))
+
+export const createStripeMock = withViews(stripeMock)
+export const createResendMock = withViews(resendMock)
+export const createXeroMock = withViews(xeroMock)
+export const createCloudflareMock = withViews(cloudflareMock)
+export const createPaystackMock = withViews(paystackMock)
+export const createInterswitchMock = withViews(interswitchMock)
+export const createYouVerifyMock = withViews(youverifyMock)
+export const createOneSignalMock = withViews(onesignalMock)
+export const createTwilioMock = withViews(twilioMock)
+export const createFlutterwaveMock = withViews(flutterwaveMock)
+export const createMonnifyMock = withViews(monnifyMock)
+export const createTermiiMock = withViews(termiiMock)
+export const createSmileIdMock = withViews(smileidMock)
+export const createIdentityPassMock = withViews(identitypassMock)
+export const createWhatsAppMock = withViews(whatsappMock)
+export const createFcmMock = withViews(fcmMock)
+export const createOpenAIMock = withViews(openaiMock)
+export const createS3Mock = withViews(s3Mock)
+
+/** A mock written as a route file rather than as code. */
+export const createSpecMock = withViews(specMock)
+
+/** A mock written as a route file on disk. */
+export const createSpecMockFromFile = async (path) => attachViews(await specMockFromFile(path))
+
+export { attachViews } from './ui/index.js'

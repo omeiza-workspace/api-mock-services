@@ -1,4 +1,13 @@
 {
   "stack": ["node"],
-  "act": { "image": "catthehacker/ubuntu:act-latest", "envFile": ".env.act", "secretFile": ".secrets" }
+  "act": { "image": "catthehacker/ubuntu:act-latest", "envFile": ".env.act", "secretFile": ".secrets" },
+  "mocks": {
+    "command": "node bin/api-mock-services.js start stripe paystack flutterwave",
+    "cwd": ".",
+    "endpoints": {
+      "stripe": "http://127.0.0.1:4001",
+      "paystack": "http://127.0.0.1:4005",
+      "flutterwave": "http://127.0.0.1:4010"
+    }
+  }
 }

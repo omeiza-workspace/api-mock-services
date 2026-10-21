@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{title}}</title>
+<style>
+{{styles}}
+</style>
+</head>
+<body>
+<main>
+  <h1>{{title}}</h1>
+  <p class="sub">This is a stand-in. No money moves.</p>
+
+  <p class="amount">{{amount}}</p>
+
+  <dl>
+    <div class="row"><dt>Reference</dt><dd><code>{{reference}}</code></dd></div>
+    <div class="row"><dt>Merchant</dt><dd>{{merchant}}</dd></div>
+  </dl>
+
+  <div class="buttons" id="buttons">
+    <button class="pay" data-outcome="success">Pay</button>
+    <button class="fail" data-outcome="failed">Fail the payment</button>
+    <button class="cancel" data-outcome="cancelled">Cancel</button>
+  </div>
+
+  <p class="done" id="done" hidden></p>
+</main>
+
+<script>
+  const buttons = document.getElementById('buttons')
+  const done = document.getElementById('done')
+
+  buttons.addEventListener('click', async (event) => {
+    const button = event.target.closest('button')
+    if (!button) return
+
+    const outcome = button.dataset.outcome
+
+    await fetch('{{completeUrl}}', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ outcome, reference: '{{reference}}' }),
+    })
+
+    buttons.hidden = true
+    done.hidden = false
+    done.textContent = outcome === 'success'
+      ? 'Paid. The shop has been told.'
+      : outcome === 'failed'
+            ? 'The payment failed.'
+            : 'The payment was cancelled.'
+  })
+</script>
+</body>
+</html>

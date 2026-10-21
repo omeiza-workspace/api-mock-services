@@ -4,65 +4,134 @@
 #
 #   docker compose -f docker-compose.yml up -d
 #
-# The ports are the ones the projects already use, so nothing else has to
-# change.
+# The stack is grouped into profiles, so a project only starts what it
+# needs. Starting everything costs eighteen containers; starting a category
+# costs two or three.
+#
+#   docker compose -f docker-compose.yml --profile payments up -d
+#   docker compose -f docker-compose.yml --profile identity up -d
+#   docker compose -f docker-compose.yml --profile messaging up -d
+#   docker compose -f docker-compose.yml --profile ai up -d
+#   docker compose -f docker-compose.yml --profile storage up -d
+#   docker compose -f docker-compose.yml --profile all up -d
+#
+# The lightest way of all is one container holding several mocks — one
+# process, one image, several ports:
+#
+#   docker run --rm -p 4001:4001 -p 4005:4005 api-mock-services stripe paystack
 #
 # The image is built once, from this package, and every mock runs from it —
 # so there is one implementation of each service, not one per project.
 
+x-mock: &mock
+  build:
+    context: ..
+    dockerfile: docker/Dockerfile
+  restart: "no"
+  deploy:
+    resources:
+      limits:
+        memory: 128M
+
 services:
+  # ── Payments ────────────────────────────────────────────────────────────
+  stripe-mock:
+    <<: *mock
+    profiles: [payments, all]
+    command: ["stripe"]
+    ports:
+      - "4001:4001"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:4001/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
   paystack-mock:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
+    <<: *mock
+    profiles: [payments, all]
     command: ["paystack"]
-    environment:
-      PORT: "5001"
     ports:
       - "5001:5001"
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:5001/health"]
-      interval: 10s
+      interval: 30s
       timeout: 5s
-      retries: 5
+      retries: 3
 
   interswitch-mock:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
+    <<: *mock
+    profiles: [payments, all]
     command: ["interswitch"]
-    environment:
-      PORT: "5002"
     ports:
       - "5002:5002"
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:5002/health"]
-      interval: 10s
+      interval: 30s
       timeout: 5s
-      retries: 5
+      retries: 3
 
+  flutterwave-mock:
+    <<: *mock
+    profiles: [payments, all]
+    command: ["flutterwave"]
+    ports:
+      - "4010:4010"
+
+  monnify-mock:
+    <<: *mock
+    profiles: [payments, all]
+    command: ["monnify"]
+    ports:
+      - "4011:4011"
+
+  # ── Identity ────────────────────────────────────────────────────────────
   youverify-mock:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
+    <<: *mock
+    profiles: [identity, all]
     command: ["youverify"]
-    environment:
-      PORT: "9010"
     ports:
       - "9010:9010"
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:9010/v1/health"]
-      interval: 10s
+      interval: 30s
       timeout: 5s
-      retries: 5
+      retries: 3
+
+  smileid-mock:
+    <<: *mock
+    profiles: [identity, all]
+    command: ["smileid"]
+    ports:
+      - "4013:4013"
+
+  identitypass-mock:
+    <<: *mock
+    profiles: [identity, all]
+    command: ["identitypass"]
+    ports:
+      - "4014:4014"
+
+  # ── Messaging ───────────────────────────────────────────────────────────
+  twilio-mock:
+    <<: *mock
+    profiles: [messaging, all]
+    command: ["twilio"]
+    ports:
+      - "4009:4009"
+
+  termii-mock:
+    <<: *mock
+    profiles: [messaging, all]
+    command: ["termii"]
+    ports:
+      - "4012:4012"
 
   onesignal-mock:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
+    <<: *mock
+    profiles: [messaging, all]
     command: ["onesignal"]
     environment:
-      PORT: "8080"
       NTFY_URL: http://ntfy:80
       NTFY_TOPIC: gefix-notifications
     ports:
@@ -71,61 +140,68 @@ services:
       ntfy:
         condition: service_healthy
 
-  stripe-mock:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
-    command: ["stripe"]
-    environment:
-      PORT: "4001"
+  whatsapp-mock:
+    <<: *mock
+    profiles: [messaging, all]
+    command: ["whatsapp"]
     ports:
-      - "4001:4001"
+      - "4015:4015"
 
-  resend-mock:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
-    command: ["resend"]
-    environment:
-      PORT: "4002"
+  fcm-mock:
+    <<: *mock
+    profiles: [messaging, all]
+    command: ["fcm"]
     ports:
-      - "4002:4002"
-
-  xero-mock:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
-    command: ["xero"]
-    environment:
-      PORT: "4003"
-    ports:
-      - "4003:4003"
-
-  cloudflare-mock:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
-    command: ["cloudflare"]
-    environment:
-      PORT: "4004"
-    ports:
-      - "4004:4004"
-
-  twilio-mock:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
-    command: ["twilio"]
-    environment:
-      PORT: "4009"
-    ports:
-      - "4009:4009"
+      - "4016:4016"
 
   # The messages are shown here.
   ntfy:
     image: binwiederhier/ntfy:latest
+    profiles: [messaging, all]
+    restart: "no"
     ports:
       - "8090:80"
     command: serve
     environment:
       - NTFY_BASE_URL=http://localhost:8090
+    deploy:
+      resources:
+        limits:
+          memory: 64M
+
+  # ── Email, accounting, DNS ──────────────────────────────────────────────
+  resend-mock:
+    <<: *mock
+    profiles: [email, all]
+    command: ["resend"]
+    ports:
+      - "4002:4002"
+
+  xero-mock:
+    <<: *mock
+    profiles: [accounting, all]
+    command: ["xero"]
+    ports:
+      - "4003:4003"
+
+  cloudflare-mock:
+    <<: *mock
+    profiles: [dns, all]
+    command: ["cloudflare"]
+    ports:
+      - "4004:4004"
+
+  # ── AI and storage ──────────────────────────────────────────────────────
+  openai-mock:
+    <<: *mock
+    profiles: [ai, all]
+    command: ["openai"]
+    ports:
+      - "4017:4017"
+
+  s3-mock:
+    <<: *mock
+    profiles: [storage, all]
+    command: ["s3"]
+    ports:
+      - "4018:4018"

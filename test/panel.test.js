@@ -1,6 +1,8 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { startMock } from '../src/index.js'
+import { MockService } from '../src/harness.js'
+import { attachViews } from '../src/ui/index.js'
 
 /**
  * The control panel.
@@ -8,6 +10,9 @@ import { startMock } from '../src/index.js'
  * A person uses it to see what the mock was asked and to decide how the
  * next call goes. The buttons are real forms, so the page works even when
  * the script does not load.
+ *
+ * The panel is the browser layer. The engine underneath it knows nothing
+ * about HTML — which is what this file checks as well.
  */
 
 const run = async (name, fn) => {
@@ -72,5 +77,37 @@ test('the panel shows the requests as they come in', async () => {
 
     assert.match(rows, /payment_intents/)
     assert.match(rows, /GET/)
+  })
+})
+
+test('the engine knows nothing about the browser', async () => {
+  const service = new MockService('bare')
+
+  await service.listen(0)
+
+  try {
+    // No panel, until the browser layer is put on it.
+    const without = await fetch(`${service.url}/_panel`)
+
+    assert.equal(without.status, 404)
+
+    attachViews(service)
+
+    const with_ = await fetch(`${service.url}/_panel`)
+
+    assert.equal(with_.status, 200)
+    assert.match(await with_.text(), /<html/)
+  } finally {
+    await service.close()
+  }
+})
+
+test('the styles are in their own file', async () => {
+  await run('stripe', async (service) => {
+    const page = await fetch(`${service.url}/_panel`).then((res) => res.text())
+
+    // The page brings the styles with it.
+    assert.match(page, /<style>/)
+    assert.match(page, /\.pill/)
   })
 })

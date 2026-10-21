@@ -1,7 +1,7 @@
 {
   "name": "@bytesickle/api-mock-services",
   "version": "1.0.0",
-  "description": "Stand-ins for the outside world: the payment gateways, the email provider, the accounting service, the DNS provider, the messaging and the identity checks. One implementation, used by every project.",
+  "description": "Stand-ins for the outside world: the payment gateways, the identity checks, the email provider, the accounting service, the DNS provider, the messaging, the AI and storage services. One implementation, used by every project.",
   "type": "module",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
@@ -10,9 +10,16 @@
       "types": "./src/index.d.ts",
       "import": "./src/index.js"
     },
+    "./harness": "./src/harness.js",
+    "./spec": "./src/spec.js",
+    "./ui": "./src/ui/index.js",
     "./providers/commerce": "./src/providers/commerce.js",
     "./providers/nigeria": "./src/providers/nigeria.js",
-    "./harness": "./src/harness.js"
+    "./providers/fintech": "./src/providers/fintech.js",
+    "./providers/identity": "./src/providers/identity.js",
+    "./providers/messaging": "./src/providers/messaging.js",
+    "./providers/ai": "./src/providers/ai.js",
+    "./providers/storage": "./src/providers/storage.js"
   },
   "bin": {
     "api-mock-services": "./bin/api-mock-services.js"
@@ -22,26 +29,62 @@
     "bin",
     "docker",
     "examples",
-    "README.md"
+    "CHANGELOG.md",
+    "LICENSE"
   ],
   "scripts": {
     "start": "node bin/api-mock-services.js start",
     "list": "node bin/api-mock-services.js list",
-    "test": "node --test test/*.test.js"
+    "test": "node --test test/*.test.js",
+    "test:watch": "node --test --watch test/*.test.js",
+    "lint": "node scripts/lint.js",
+    "footprint": "node scripts/footprint.js",
+    "check": "npm run lint && npm test"
   },
   "keywords": [
     "mock",
+    "mocks",
+    "stub",
     "stripe",
+    "paystack",
+    "flutterwave",
+    "monnify",
+    "interswitch",
     "resend",
     "xero",
     "cloudflare",
-    "paystack",
-    "interswitch",
     "youverify",
+    "smileid",
+    "identitypass",
     "onesignal",
+    "fcm",
     "twilio",
-    "testing"
+    "termii",
+    "whatsapp",
+    "openai",
+    "s3",
+    "testing",
+    "offline"
   ],
-  "license": "UNLICENSED",
-  "private": true
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omeiza-workspace/api-mock-services.git"
+  },
+  "bugs": {
+    "url": "https://github.com/omeiza-workspace/api-mock-services/issues"
+  },
+  "homepage": "https://github.com/omeiza-workspace/api-mock-services#readme",
+  "author": "Okuta Omeiza",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/omeiza-workspace"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
 }

@@ -1,7 +1,8 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { createHmac } from 'node:crypto'
-import { startMock } from '../src/index.js'
+import { fileURLToPath } from 'node:url'
+import { startMock, createSpecMockFromFile } from '../src/index.js'
 import { createSpecMock } from '../src/spec.js'
 
 /**
@@ -253,6 +254,31 @@ test('a mock can be written as a file, not as code', async () => {
 
     assert.equal(echoed.email, 'a@example.com')
     assert.equal(echoed.token, 'Bearer abc')
+  } finally {
+    await service.close()
+  }
+})
+
+test('a contributed mock file starts and answers', async () => {
+  const path = fileURLToPath(new URL('../contrib/mpesa.json', import.meta.url))
+  const service = await createSpecMockFromFile(path)
+
+  await service.listen(0)
+
+  try {
+    const res = await fetch(`${service.url}/mpesa/stkpush/v1/processrequest`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ BusinessShortCode: '174379', TransactionDesc: 'A test payment' }),
+    })
+
+    assert.equal(res.status, 200)
+
+    const body = await res.json()
+
+    assert.equal(body.ResponseCode, '0')
+    assert.equal(body.MerchantCode, '174379')
+    assert.equal(body.TransactionDesc, 'A test payment')
   } finally {
     await service.close()
   }

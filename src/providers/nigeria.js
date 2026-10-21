@@ -1,5 +1,4 @@
 import { MockService, json, counter } from '../harness.js'
-import { addCheckout } from '../checkout.js'
 
 /**
  * The Nigerian payment gateways and the identity provider.
@@ -208,8 +207,8 @@ export function createPaystackMock() {
     })
   })
 
-  // The checkout a person uses to pay.
-  addCheckout(service, {
+  // The checkout a person uses to pay. The browser layer mounts it.
+  service.checkout = {
     title: 'Paystack (mock)',
     find: (reference) => {
       const transaction = service.state.transactions.get(reference)
@@ -227,7 +226,7 @@ export function createPaystackMock() {
 
       if (transaction) transaction.outcome = outcome
     },
-  })
+  }
 
   service.on('GET', '/bank', (req, res) => {
     json(res, 200, {
@@ -377,8 +376,8 @@ export function createInterswitchMock() {
     })
   })
 
-  // The checkout a person uses to pay.
-  addCheckout(service, {
+  // The checkout a person uses to pay. The browser layer mounts it.
+  service.checkout = {
     title: 'Interswitch (mock)',
     find: (reference) => {
       const transaction = service.state.transactions.get(reference)
@@ -396,7 +395,7 @@ export function createInterswitchMock() {
 
       if (transaction) transaction.outcome = outcome
     },
-  })
+  }
 
   service.on('POST', '/webhook/test', (req, res) => {
     json(res, 200, { received: true })
