@@ -9,8 +9,11 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Added
 
-- A documentation site in `docs/` — plain HTML, no build step, published by
-  the Pages workflow.
+- A documentation site in `docs/` — plain HTML, one stylesheet, no build
+  step, published by the Pages workflow.
+- `scripts/update-specs.js` and a `Specs` workflow: the specifications the
+  mocks are checked against are fetched from the providers' own repositories
+  on a schedule, and the difference is committed for a human to look at.
 - `ARCHITECTURE.md` — why the project is built the way it is.
 - `ADOPTERS.md` — the list of who uses it, added by pull request.
 - `llms.txt` — a short guide for the coding agents that read repositories.

@@ -21,10 +21,11 @@ A row looks like this:
 ```
 
 If you would like a logo next to your name, put an SVG in
-[`docs/logos/`](docs/logos) — monochrome, about 32px tall — and link it:
+[`docs/logos/`](https://github.com/omeiza-workspace/api-mock-services/tree/main/docs/logos)
+— monochrome, about 32px tall — and link it:
 
 ```markdown
-| [![Acme](docs/logos/acme.svg)](https://acme.example) | The payment tests in our Laravel checkout | 2026 |
+| [![Acme](https://raw.githubusercontent.com/omeiza-workspace/api-mock-services/main/docs/logos/acme.svg)](https://acme.example) | The payment tests in our Laravel checkout | 2026 |
 ```
 
 That is the whole process. The list is a pull request, so it is public,

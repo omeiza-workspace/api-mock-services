@@ -1,0 +1,48 @@
+name: Specs
+
+# The specifications the mocks are kept in step with.
+#
+# A provider that changes its API does not leave the mocks quietly out of
+# date: the specification is fetched from the provider's own repository, and
+# the difference is committed here for a human to look at.
+
+on:
+  schedule:
+    # Mondays, early. The providers publish rarely; there is no point
+    # checking more often than this.
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: specs
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    name: Refresh the specifications
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch the specifications
+        run: node scripts/update-specs.js
+
+      - name: Commit what changed
+        run: |
+          if git diff --quiet -- specs; then
+            echo "The specifications are current."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add specs
+          git commit -m "chore: refresh the specifications"
+          git push

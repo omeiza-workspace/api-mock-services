@@ -29,6 +29,8 @@
     "bin",
     "docker",
     "examples",
+    "ARCHITECTURE.md",
+    "ADOPTERS.md",
     "CHANGELOG.md",
     "LICENSE"
   ],

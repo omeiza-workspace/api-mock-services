@@ -6,127 +6,8 @@
 <title>API Mock Services — stand-ins for the outside world</title>
 <meta name="description" content="One implementation, shared: stand-ins for the payment gateways, identity checks, email, DNS, messaging, AI and storage a project talks to in a test.">
 <meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/site.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>🧪</text></svg>">
-<style>
-  :root {
-    color-scheme: light dark;
-    --bg: #fbfbfc;
-    --fg: #18181b;
-    --muted: #71717a;
-    --line: #e4e4e7;
-    --card: #fff;
-    --accent: #15803d;
-    --accent-fg: #fff;
-    --code-bg: #f4f4f5;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #101012;
-      --fg: #e4e4e7;
-      --muted: #a1a1aa;
-      --line: #27272a;
-      --card: #18181b;
-      --accent: #22c55e;
-      --accent-fg: #052e16;
-      --code-bg: #27272a;
-    }
-  }
-
-  * { box-sizing: border-box; }
-
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--fg);
-    font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  }
-
-  .wrap { max-width: 62rem; margin: 0 auto; padding: 0 1.5rem; }
-
-  header {
-    border-bottom: 1px solid var(--line);
-    background: var(--card);
-  }
-
-  nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.25rem;
-    align-items: center;
-    padding: .9rem 0;
-    font-size: .92rem;
-  }
-
-  nav .brand { font-weight: 650; margin-right: auto; }
-  nav a { color: var(--muted); text-decoration: none; }
-  nav a:hover { color: var(--fg); }
-
-  .hero { padding: 4rem 0 2.5rem; }
-  .hero h1 { margin: 0 0 .5rem; font-size: clamp(2rem, 6vw, 3rem); letter-spacing: -.02em; }
-  .hero p { margin: 0 0 1.5rem; font-size: 1.15rem; color: var(--muted); max-width: 44rem; }
-  .hero .actions { display: flex; flex-wrap: wrap; gap: .75rem; }
-
-  .btn {
-    display: inline-block;
-    padding: .65rem 1.1rem;
-    border-radius: 9px;
-    border: 1px solid var(--line);
-    background: var(--card);
-    color: var(--fg);
-    font-weight: 550;
-    text-decoration: none;
-  }
-
-  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
-
-  .stats { display: flex; flex-wrap: wrap; gap: 2rem; padding: 1.5rem 0 3rem; }
-  .stat b { display: block; font-size: 1.6rem; letter-spacing: -.02em; }
-  .stat span { color: var(--muted); font-size: .88rem; }
-
-  section { padding: 2.5rem 0; border-top: 1px solid var(--line); }
-  h2 { margin: 0 0 1rem; font-size: 1.35rem; letter-spacing: -.01em; }
-  h3 { margin: 1.75rem 0 .5rem; font-size: 1rem; }
-  p { max-width: 46rem; }
-  a { color: inherit; }
-
-  .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
-
-  .card {
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    background: var(--card);
-    padding: 1rem 1.1rem;
-  }
-
-  .card h4 { margin: 0 0 .35rem; font-size: .95rem; }
-  .card p { margin: 0; color: var(--muted); font-size: .88rem; }
-
-  table { width: 100%; border-collapse: collapse; font-size: .9rem; }
-  th, td { text-align: left; padding: .5rem .6rem; border-bottom: 1px solid var(--line); }
-  th { color: var(--muted); font-weight: 550; }
-  td code { color: var(--muted); }
-
-  pre {
-    background: var(--code-bg);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: .9rem 1rem;
-    overflow-x: auto;
-    font-size: .85rem;
-  }
-
-  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9em; }
-
-  footer { border-top: 1px solid var(--line); padding: 2rem 0 3rem; color: var(--muted); font-size: .9rem; }
-  footer a { color: var(--muted); }
-  footer .row { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; }
-
-  @media print {
-    nav { display: none; }
-    body { background: #fff; color: #000; }
-  }
-</style>
 </head>
 <body>
 
@@ -134,10 +15,11 @@
   <div class="wrap">
     <nav>
       <span class="brand">API Mock Services</span>
-      <a href="#mocks">The mocks</a>
-      <a href="#use">Using it</a>
-      <a href="#design">Design</a>
-      <a href="#support">Support</a>
+      <a href="introduction/overview.html">Overview</a>
+      <a href="introduction/architecture.html">Architecture</a>
+      <a href="guides/ci-gates.html">CI gates</a>
+      <a href="guides/offline-testing.html">Offline testing</a>
+      <a href="community/impact.html">Community</a>
       <a href="https://github.com/omeiza-workspace/api-mock-services">GitHub</a>
     </nav>
   </div>
@@ -168,7 +50,7 @@
     <div class="stat"><b>432 ms</b><span>to answer the first call</span></div>
   </div>
 
-  <section id="mocks">
+  <section>
     <h2>The mocks there are</h2>
     <table>
       <thead>
@@ -197,7 +79,7 @@
     </table>
   </section>
 
-  <section id="use">
+  <section>
     <h2>Using it</h2>
 
     <h3>In a test</h3>
@@ -230,41 +112,33 @@ docker compose -f examples/docker-compose.yml --profile all up -d</code></pre>
     </p>
   </section>
 
-  <section id="design">
-    <h2>Design</h2>
-    <p>
-      The engine and the browser are two things, and they do not mix.
-      <code>src/harness.js</code> records requests, keeps state and answers
-      over a control surface. Everything a person sees lives in
-      <code>src/ui/</code>, with the markup in <code>templates/</code> and the
-      styles in <code>assets/</code>.
-    </p>
+  <section>
+    <h2>Where to go next</h2>
     <div class="grid">
       <div class="card">
-        <h4>No dependencies</h4>
-        <p>Node's own HTTP server. The lint, the tests and the footprint
-        budget are all written with what node already has.</p>
+        <h4><a href="introduction/overview.html">Overview</a></h4>
+        <p>Why the project exists, what it replaces, and the three ways to use it.</p>
       </div>
       <div class="card">
-        <h4>Real shapes</h4>
-        <p>The paths, the fields and the status codes are the provider's, so
-        the code under test does not change when it is pointed at a mock.</p>
+        <h4><a href="introduction/architecture.html">Architecture</a></h4>
+        <p>The engine, the browser layer, the footprint budget, and the decisions deliberately not taken.</p>
       </div>
       <div class="card">
-        <h4>The state is kept</h4>
-        <p>What the service was asked, and what it decided, is on
-        <code>service.state</code> and <code>service.requests</code>.</p>
+        <h4><a href="guides/ci-gates.html">CI gates</a></h4>
+        <p>Running the mocks inside the CI kit, so a test run never leaves a container behind.</p>
       </div>
       <div class="card">
-        <h4>The reference decides</h4>
-        <p>A reference with <code>success</code> in it comes back successful,
-        one with <code>failed</code> in it comes back failed.</p>
+        <h4><a href="guides/offline-testing.html">Offline testing</a></h4>
+        <p>Pointing an application at the mocks, and driving the failure paths worth testing.</p>
+      </div>
+      <div class="card">
+        <h4><a href="community/impact.html">Community</a></h4>
+        <p>Who uses it, what has been said about it, and how to help.</p>
       </div>
     </div>
-    <p><a href="https://github.com/omeiza-workspace/api-mock-services/blob/main/ARCHITECTURE.md">Read the architecture notes →</a></p>
   </section>
 
-  <section id="support">
+  <section>
     <h2>Support the project</h2>
     <p>
       The mocks are maintained in the open, and that takes time.

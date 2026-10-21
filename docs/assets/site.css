@@ -1,0 +1,287 @@
+/* The documentation site.
+ *
+ * One stylesheet, no build step, no framework. The pages are plain HTML;
+ * this is all the styling they need.
+ */
+
+:root {
+  color-scheme: light dark;
+  --bg: #fbfbfc;
+  --fg: #18181b;
+  --muted: #71717a;
+  --line: #e4e4e7;
+  --card: #fff;
+  --accent: #15803d;
+  --accent-fg: #fff;
+  --code-bg: #f4f4f5;
+  --max: 62rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #101012;
+    --fg: #e4e4e7;
+    --muted: #a1a1aa;
+    --line: #27272a;
+    --card: #18181b;
+    --accent: #22c55e;
+    --accent-fg: #052e16;
+    --code-bg: #27272a;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+header {
+  border-bottom: 1px solid var(--line);
+  background: var(--card);
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  padding: .9rem 0;
+  font-size: .92rem;
+}
+
+nav .brand {
+  font-weight: 650;
+  margin-right: auto;
+}
+
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+nav a:hover,
+nav a[aria-current='page'] {
+  color: var(--fg);
+}
+
+.hero {
+  padding: 4rem 0 2.5rem;
+}
+
+.hero h1 {
+  margin: 0 0 .5rem;
+  font-size: clamp(2rem, 6vw, 3rem);
+  letter-spacing: -.02em;
+}
+
+.hero p {
+  margin: 0 0 1.5rem;
+  font-size: 1.15rem;
+  color: var(--muted);
+  max-width: 44rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: .65rem 1.1rem;
+  border-radius: 9px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--fg);
+  font-weight: 550;
+  text-decoration: none;
+}
+
+.btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-fg);
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 1.5rem 0 3rem;
+}
+
+.stat b {
+  display: block;
+  font-size: 1.6rem;
+  letter-spacing: -.02em;
+}
+
+.stat span {
+  color: var(--muted);
+  font-size: .88rem;
+}
+
+section {
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--line);
+}
+
+h2 {
+  margin: 0 0 1rem;
+  font-size: 1.35rem;
+  letter-spacing: -.01em;
+}
+
+h3 {
+  margin: 1.75rem 0 .5rem;
+  font-size: 1rem;
+}
+
+p {
+  max-width: 46rem;
+}
+
+a {
+  color: inherit;
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  padding: 1rem 1.1rem;
+}
+
+.card h4 {
+  margin: 0 0 .35rem;
+  font-size: .95rem;
+}
+
+.card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .88rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .9rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: .5rem .6rem;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+th {
+  color: var(--muted);
+  font-weight: 550;
+}
+
+td code {
+  color: var(--muted);
+}
+
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: .9rem 1rem;
+  overflow-x: auto;
+  font-size: .85rem;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .9em;
+}
+
+blockquote {
+  margin: 1.5rem 0;
+  padding: .25rem 0 .25rem 1rem;
+  border-left: 3px solid var(--line);
+  color: var(--muted);
+}
+
+.lede {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 44rem;
+}
+
+.breadcrumb {
+  font-size: .85rem;
+  color: var(--muted);
+  padding: 1.25rem 0 0;
+}
+
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 2rem 0;
+  font-size: .92rem;
+}
+
+.pager a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.pager a:hover {
+  color: var(--fg);
+}
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 2rem 0 3rem;
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+footer a {
+  color: var(--muted);
+}
+
+footer .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+@media print {
+  nav,
+  .pager {
+    display: none;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+}

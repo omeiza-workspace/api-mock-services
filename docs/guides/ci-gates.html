@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CI gates — API Mock Services</title>
+<meta name="description" content="How the mocks are wired into the CI kit: the mocks section in .ci/ci.json, make mocks-up, make mocks-status and make mocks-down, and how the kit starts, waits for and shuts down the mocks.">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <span class="brand">API Mock Services</span>
+      <a href="../index.html">Home</a>
+      <a href="../introduction/overview.html">Overview</a>
+      <a href="../introduction/architecture.html">Architecture</a>
+      <a href="ci-gates.html" aria-current="page">CI gates</a>
+      <a href="offline-testing.html">Offline testing</a>
+      <a href="../community/impact.html">Impact</a>
+      <a href="https://github.com/omeiza-workspace/api-mock-services">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="breadcrumb">Documentation / Guides</div>
+
+  <div class="hero">
+    <h1>The mocks in your CI gates.</h1>
+    <p class="lede">
+      CI Kit runs a repository's gates locally, before anything reaches a
+      runner. This package is the mock engine those gates can point at, so
+      the same loop works on a laptop and in CI.
+    </p>
+  </div>
+
+  <section id="fit">
+    <h2>How it fits</h2>
+    <p>
+      The kit starts the mocks in the background, waits for them to answer,
+      runs the tests against them, and shuts them down again — so a test
+      run never leaves a container behind, and never needs a cloud runner.
+    </p>
+    <p>
+      The configuration lives in <code>.ci/ci.json</code>, in the
+      <code>mocks</code> section. It names the command that starts the
+      mocks, the directory it runs in, and the address each mock answers
+      on.
+    </p>
+    <pre><code>{
+  "mocks": {
+    "command": "node bin/api-mock-services.js start stripe paystack",
+    "endpoints": {
+      "stripe": "http://127.0.0.1:4001",
+      "paystack": "http://127.0.0.1:4005"
+    }
+  }
+}</code></pre>
+  </section>
+
+  <section id="config">
+    <h2>The configuration</h2>
+    <p>
+      This repository's own <code>.ci/ci.json</code> looks like this:
+    </p>
+    <pre><code>{
+  "stack": ["node"],
+  "act": { "image": "catthehacker/ubuntu:act-latest", "envFile": ".env.act", "secretFile": ".secrets" },
+  "mocks": {
+    "command": "node bin/api-mock-services.js start stripe paystack flutterwave",
+    "cwd": ".",
+    "endpoints": {
+      "stripe": "http://127.0.0.1:4001",
+      "paystack": "http://127.0.0.1:4005",
+      "flutterwave": "http://127.0.0.1:4010"
+    }
+  }
+}</code></pre>
+    <table>
+      <thead>
+        <tr><th>Key</th><th>What it is for</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>command</code></td><td>The command that starts the mocks. Here it starts three of them in one process, on one port each.</td></tr>
+        <tr><td><code>cwd</code></td><td>The directory the command runs in.</td></tr>
+        <tr><td><code>endpoints</code></td><td>The name of each mock and the address it answers on. The kit waits on these before the tests run.</td></tr>
+      </tbody>
+    </table>
+    <p>
+      A project that uses both gets the same loop in CI and on a laptop.
+      Only the <code>command</code> and the <code>endpoints</code> change
+      from one project to the next.
+    </p>
+  </section>
+
+  <section id="targets">
+    <h2>The three targets</h2>
+    <p>
+      The kit supplies them, so they work here without any extra
+      configuration:
+    </p>
+    <pre><code>make mocks-up      # start the mocks the tests need
+make mocks-status  # are they answering?
+make mocks-down    # stop them</code></pre>
+    <p>
+      <code>make mocks-up</code> runs the <code>command</code> from
+      <code>.ci/ci.json</code> in the background and waits for each
+      endpoint to answer. <code>make mocks-status</code> says whether they
+      are up. <code>make mocks-down</code> stops them, so nothing is left
+      running.
+    </p>
+  </section>
+
+  <section id="health">
+    <h2>Waiting for the mocks</h2>
+    <p>
+      Every mock answers <code>/health</code>, so a container can be checked
+      without knowing which mock it is. That is the check the kit waits on.
+    </p>
+    <pre><code>curl -s http://127.0.0.1:4001/health
+curl -s http://127.0.0.1:4005/health
+curl -s http://127.0.0.1:4010/health</code></pre>
+    <p>
+      If you are driving the mocks yourself, wait for the answer rather
+      than for a fixed delay:
+    </p>
+    <pre><code>until curl -sf http://127.0.0.1:4001/health &gt;/dev/null; do sleep 0.2; done</code></pre>
+  </section>
+
+  <section id="makefile">
+    <h2>The other targets</h2>
+    <p>
+      The Makefile keeps the local test as the gate. <code>make ci</code>
+      runs it first, so nothing reaches a runner that has not been through
+      the same tests on this machine.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Target</th><th>What it does</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>make</code></td><td>List the targets.</td></tr>
+        <tr><td><code>make test</code></td><td>The local tests.</td></tr>
+        <tr><td><code>make pre-ci</code></td><td>The local tests — the step the CI depends on.</td></tr>
+        <tr><td><code>make ci</code></td><td>The local tests, then the CI gate.</td></tr>
+        <tr><td><code>make mocks</code></td><td>Start the mocks, for a project to point at. The set is <code>MOCKS</code>, which defaults to <code>stripe resend xero cloudflare paystack</code>.</td></tr>
+        <tr><td><code>make compose</code></td><td>Start the mocks as containers. <code>make PROFILE=payments</code> starts one group.</td></tr>
+        <tr><td><code>make docker</code></td><td>Build the container image.</td></tr>
+      </tbody>
+    </table>
+    <p>
+      The commands behind them are the package's own:
+    </p>
+    <pre><code>npm test        # the tests
+npm run lint    # the house style
+npm run check   # both
+npm run footprint  # are the mocks still light?</code></pre>
+    <p>
+      Each mock is started and asked something, so a broken one is caught
+      here rather than in a project that depends on it. The footprint is a
+      budget, and it is checked in CI: eighteen mocks in one process, about
+      50MB of memory, under 1% CPU while idle, and answering in under half
+      a second. If a change makes the mocks heavier, the build fails.
+    </p>
+  </section>
+
+  <section id="kit">
+    <h2>The kit itself</h2>
+    <p>
+      The kit is found by the Makefile, in this order: an explicit
+      <code>CI_KIT</code> path, then <code>$CI_KIT_PATH</code>, then a kit
+      vendored into <code>.ci/kit</code>, then the usual install
+      locations. It is installed with:
+    </p>
+    <pre><code>curl -fsSL https://raw.githubusercontent.com/omeiza-workspace/ci-kit/main/bin/install.sh | sh</code></pre>
+    <p>
+      A project that uses the mocks and the kit together needs no cloud
+      runner to exercise a third-party flow. The mocks answer on the
+      machine, the tests run against them, and the kit stops them
+      afterwards.
+    </p>
+  </section>
+
+  <div class="pager">
+    <a href="../introduction/architecture.html">← Architecture</a>
+    <a href="offline-testing.html">Offline testing →</a>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap row">
+    <span>MIT licensed. Built to be light, green and sustainable.</span>
+    <span>
+      <a href="https://github.com/omeiza-workspace/api-mock-services">Source</a> ·
+      <a href="https://github.com/omeiza-workspace/ci-kit">Works beautifully with CI Kit →</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>

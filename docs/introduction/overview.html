@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overview — API Mock Services</title>
+<meta name="description" content="Why the mocks exist, what they replace, and the three ways to use them: in a test, as a container, or over HTTP from any language.">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <span class="brand">API Mock Services</span>
+      <a href="../index.html">Home</a>
+      <a href="overview.html" aria-current="page">Overview</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="../guides/ci-gates.html">CI gates</a>
+      <a href="../guides/offline-testing.html">Offline testing</a>
+      <a href="../community/impact.html">Impact</a>
+      <a href="https://github.com/omeiza-workspace/api-mock-services">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="breadcrumb">Documentation / Introduction</div>
+
+  <div class="hero">
+    <h1>Why these mocks exist.</h1>
+    <p class="lede">
+      Every project that talks to a payment gateway, an email provider, an
+      accounting service, a DNS provider, a messaging service or an identity
+      check needs something to talk to in a test. This is that something —
+      one implementation, shared, instead of a copy in every repository.
+    </p>
+  </div>
+
+  <section id="problem">
+    <h2>The problem</h2>
+    <p>
+      The need is the same in every repository: a card payment, an identity
+      check, an email, a DNS record, a text message, a model call. Most
+      teams solve it the same way too — with a copy of somebody else's mock,
+      kept in step by hand.
+    </p>
+    <p>
+      The copy drifts. It answers with shapes the real provider never
+      returns, so the code under test has to change when it is pointed at
+      the real thing. Or the team points the suite at the provider's own
+      test environment, and the tests now depend on the network.
+    </p>
+    <p>
+      The answer here is a single shared implementation, kept to the
+      provider's real paths, fields and status codes, light enough to start
+      on a laptop and in a test process.
+    </p>
+  </section>
+
+  <section id="replaces">
+    <h2>What it replaces</h2>
+    <div class="grid">
+      <div class="card">
+        <h4>A provider's test environment</h4>
+        <p>The provider's sandbox is somebody else's server. It needs
+        credentials, and it puts a bill on the account. The mocks run on
+        the machine instead, so the suite does not depend on the network.</p>
+      </div>
+      <div class="card">
+        <h4>A copy of a mock in every repository</h4>
+        <p>One implementation, shared. When a provider's shape changes, the
+        change lands once, and every project gets it.</p>
+      </div>
+      <div class="card">
+        <h4>A JVM mock engine</h4>
+        <p>A JVM, a compiled Go binary or a Python environment all add to
+        the footprint before a single request is served. Node is already on
+        the machine, because the project under test runs on it.</p>
+      </div>
+      <div class="card">
+        <h4>A container for every mock</h4>
+        <p>Nine mocks in one process cost 50MB. Nine containers cost nine
+        runtimes, nine ports and nine things to stop.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="cost">
+    <h2>What it costs</h2>
+    <table>
+      <thead>
+        <tr><th></th><th>this engine</th><th>four containers</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>processes</td><td>1</td><td>4</td></tr>
+        <tr><td>memory</td><td>50 MB</td><td>250 MB</td></tr>
+        <tr><td>idle CPU</td><td>0.0%</td><td>7.9%, almost all of it the OpenAPI proxy</td></tr>
+        <tr><td>time to first request answered</td><td>1.4 s</td><td>20 s and rising</td></tr>
+        <tr><td>things to start, stop and clean up</td><td>1</td><td>4</td></tr>
+      </tbody>
+    </table>
+    <p>
+      Measured on a laptop, against the four containers this replaces. The
+      checked budget measures the whole set — eighteen mocks in one process
+      — at 51 MB.
+    </p>
+  </section>
+
+  <section id="who">
+    <h2>Who it is for</h2>
+    <div class="grid">
+      <div class="card">
+        <h4>A team with a third-party flow to test</h4>
+        <p>The paths, the fields and the status codes are the provider's,
+        so the code under test does not change when it is pointed at a
+        mock.</p>
+      </div>
+      <div class="card">
+        <h4>A team whose suite must not depend on the network</h4>
+        <p>A mock on the machine answers the same way every time. That is
+        what stops a flaky test, and what keeps the suite fast.</p>
+      </div>
+      <div class="card">
+        <h4>A team that wants its gates to run on a laptop</h4>
+        <p>The local test is the gate. <code>make ci</code> runs it first,
+        so nothing reaches a runner that has not been through the same tests
+        on this machine.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="ways">
+    <h2>Three ways to use it</h2>
+
+    <h3>In a test</h3>
+    <p>
+      The mock starts inside the test process. Nothing listens on a port, no
+      container starts, and the mock stops when the test ends.
+    </p>
+    <pre><code>import { startMock } from '@bytesickle/api-mock-services'
+
+const stripe = await startMock('stripe')
+
+process.env.NUXT_STRIPE_API_BASE = `${stripe.url}/v1`
+
+// ... the test ...
+
+expect(stripe.last().path).toBe('/v1/refunds')
+expect(stripe.state.refunds[0].payment_intent).toBe('pi_test_1')
+
+await stripe.close()</code></pre>
+    <p>
+      The mock remembers what it was asked, so the test can say what really
+      happened rather than only that nothing threw.
+    </p>
+
+    <h3>As a container</h3>
+    <pre><code>docker build -t api-mock-services -f docker/Dockerfile .
+docker run --rm -p 4001:4001 api-mock-services stripe
+
+# one image, one process, as many mocks as you like
+docker run --rm -p 4001:4001 -p 4005:4005 api-mock-services stripe paystack</code></pre>
+    <p>
+      The compose file is grouped into profiles, so a project only starts
+      what it needs — a category of two or three containers rather than all
+      eighteen.
+    </p>
+    <pre><code>docker compose -f examples/docker-compose.yml --profile payments up -d
+docker compose -f examples/docker-compose.yml --profile identity up -d
+docker compose -f examples/docker-compose.yml --profile all up -d</code></pre>
+
+    <h3>Over HTTP, from any language</h3>
+    <p>
+      The package is plain JavaScript with no dependencies, so it works from
+      anything that runs Node. But it does not have to be Node — the mocks
+      answer over HTTP, so a project in any language can use them.
+    </p>
+    <pre><code>docker compose -f examples/docker-compose.yml --profile all up -d</code></pre>
+    <p>
+      Then point the application at it. The command line prints the
+      environment variable for each mock as it starts, so there is nothing
+      to copy by hand.
+    </p>
+    <pre><code>PAYSTACK_API_URL=http://localhost:5001
+FLUTTERWAVE_API_URL=http://localhost:4010/v3
+TERMII_API_URL=http://localhost:4012
+WHATSAPP_API_URL=http://localhost:4015
+OPENAI_API_BASE=http://localhost:4017/v1</code></pre>
+  </section>
+
+  <section id="rules">
+    <h2>The rules</h2>
+    <p>
+      These are not preferences. They are what keeps the engine light, and a
+      contributor who breaks one of them breaks the promise in the first
+      line of the README.
+    </p>
+    <div class="grid">
+      <div class="card">
+        <h4>No dependencies</h4>
+        <p>Not "few" — none. The engine runs on Node's own HTTP server. A
+        dependency is a package to install, audit and keep out of the
+        advisories.</p>
+      </div>
+      <div class="card">
+        <h4>In the test, not beside it</h4>
+        <p>A test that needs a mock starts it in the test process, with
+        <code>startMock()</code>. Nothing listens on a port and the mock
+        stops when the test ends.</p>
+      </div>
+      <div class="card">
+        <h4>Idle means idle</h4>
+        <p>A mock answers a request and then stops computing. Polling,
+        watching and retrying are how a mock turns into a battery
+        drain.</p>
+      </div>
+      <div class="card">
+        <h4>The real shape</h4>
+        <p>The paths, the fields and the status codes are the provider's,
+        so the code under test does not change when it is pointed at a
+        mock.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="pager">
+    <a href="../index.html">← Home</a>
+    <a href="architecture.html">Architecture →</a>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap row">
+    <span>MIT licensed. Built to be light, green and sustainable.</span>
+    <span>
+      <a href="https://github.com/omeiza-workspace/api-mock-services">Source</a> ·
+      <a href="https://github.com/omeiza-workspace/ci-kit">Works beautifully with CI Kit →</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>

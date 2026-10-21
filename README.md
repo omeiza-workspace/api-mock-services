@@ -457,6 +457,41 @@ is a pull request, so the list is public, dated, and cannot be inflated.
 
 ---
 
+## 🏢 Who uses it
+
+Is your team using the mocks to keep a test suite offline, or to cut the
+spend on a provider's test environment? Adding yourself is a pull request,
+and it takes a minute.
+
+| Who | What it is used for | Since |
+|---|---|---|
+| — | _add yours_ | — |
+
+The full list, and how to add to it, is in [ADOPTERS.md](ADOPTERS.md).
+
+### What people say
+
+Words from the people who use it are collected from the public
+[Discussions](https://github.com/omeiza-workspace/api-mock-services/discussions).
+Each one links back to where it was written, so it can be checked. Nothing
+is published here that is not verifiable.
+
+> *No quotes yet — the first discussions are the ones that will fill this.*
+
+### How to help
+
+- **Use it in a project** and open a pull request adding yourself to the
+  adopters list.
+- **Add a mock.** The shape of a provider's API is in the provider's own
+  documentation; a mock that follows it is a small pull request.
+- **Refresh a specification.** The specifications the mocks are checked
+  against are fetched from the providers' own repositories by a scheduled
+  job — if one of them has moved, that is worth knowing.
+- **Report something that does not do what it should.** A mock that is wrong
+  is worse than a mock that is missing, because a test will trust it.
+
+---
+
 ## Support the project
 
 The mocks are maintained in the open, and that takes time.

@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Architecture — API Mock Services</title>
+<meta name="description" content="The engineering story: the engine separated from the browser layer, no dependencies, a measured footprint budget, one process for many mocks, the control surface, and the decisions deliberately not taken.">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <span class="brand">API Mock Services</span>
+      <a href="../index.html">Home</a>
+      <a href="overview.html">Overview</a>
+      <a href="architecture.html" aria-current="page">Architecture</a>
+      <a href="../guides/ci-gates.html">CI gates</a>
+      <a href="../guides/offline-testing.html">Offline testing</a>
+      <a href="../community/impact.html">Impact</a>
+      <a href="https://github.com/omeiza-workspace/api-mock-services">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="breadcrumb">Documentation / Introduction</div>
+
+  <div class="hero">
+    <h1>How it is built.</h1>
+    <p class="lede">
+      One implementation, no dependencies, and a promise that is checked.
+      The short version is all of it. The rest of this page is why each
+      piece is the way it is.
+    </p>
+  </div>
+
+  <section id="shape">
+    <h2>The shape</h2>
+    <pre><code>src/
+  harness.js     the engine — routes, state, the control surface
+  index.js       the public API
+  spec.js        a mock written as a route file
+  providers/     the mocks, one file per group of them
+  ui/            everything a person sees: HTML, CSS, the panel
+    templates/   the markup
+    assets/      the styles</code></pre>
+  </section>
+
+  <section id="engine">
+    <h2>The engine knows nothing about HTML</h2>
+    <p>
+      <code>src/harness.js</code> does four things: it matches a request to a
+      route, it records what it was asked, it keeps the state the mock
+      decided on, and it answers over a control surface
+      (<code>/_control</code>).
+    </p>
+    <p>
+      Everything a person sees — the control panel, the hosted checkout —
+      lives in <code>src/ui/</code> and is put on a mock by
+      <code>attachViews</code>. The two are separated on purpose.
+    </p>
+    <div class="grid">
+      <div class="card">
+        <h4>The engine works without the browser</h4>
+        <p><code>new MockService('acme')</code> is a perfectly good mock. It
+        simply has no page until the browser layer is attached.</p>
+      </div>
+      <div class="card">
+        <h4>The page changes without the engine</h4>
+        <p>The markup is in <code>templates/</code>, the styles in
+        <code>assets/</code>, and the browser code is in the template
+        itself.</p>
+      </div>
+      <div class="card">
+        <h4>Neither has to know about the other</h4>
+        <p>The engine does not import the UI, and the UI does not import a
+        provider.</p>
+      </div>
+    </div>
+    <p>
+      A provider that wants a checkout declares it, rather than reaching
+      into the browser layer:
+    </p>
+    <pre><code>service.checkout = {
+  title: 'Acme (mock)',
+  find: (reference) =&gt; ({ reference, amount: '10.00', merchant: 'The shop' }),
+  onDone: (reference, outcome) =&gt; recordIt(reference, outcome),
+}</code></pre>
+    <p>The UI mounts it; the engine never looks at it.</p>
+  </section>
+
+  <section id="no-dependencies">
+    <h2>No dependencies</h2>
+    <p>
+      There are none — not at runtime, not in the tests, not in the lint.
+      Node is the whole toolchain. This is not asceticism; it is the thing
+      that makes the mocks easy to adopt.
+    </p>
+    <ul>
+      <li>A project can depend on the package without an install step of its own.</li>
+      <li>A contributor can add a mock without learning a framework.</li>
+      <li>The container image has nothing in it to install, so it stays small and starts instantly.</li>
+    </ul>
+    <p>
+      The lint is the clearest example. There is no eslint in it;
+      <code>scripts/lint.js</code> parses every file with
+      <code>node --check</code> and checks the house style — no semicolons,
+      no trailing whitespace, a newline at the end. The footprint budget is
+      the same idea: <code>scripts/footprint.js</code> measures the running
+      mocks with node and <code>ps</code>.
+    </p>
+  </section>
+
+  <section id="budget">
+    <h2>The promise that is checked</h2>
+    <p>
+      The README says the mocks are light. A promise nobody checks is a
+      promise that erodes, so it is a budget, and it fails the build.
+    </p>
+    <pre><code>npm run footprint</code></pre>
+    <pre><code>  mocks       18 in one process
+  memory      51 MB
+  idle CPU    0.3%
+  startup     432 ms
+
+  budgets: memory &lt;= 120 MB, startup &lt;= 5000 ms, idle CPU &lt;= 1%</code></pre>
+    <div class="stats">
+      <div class="stat"><b>18</b><span>mocks in one process</span></div>
+      <div class="stat"><b>51 MB</b><span>of memory</span></div>
+      <div class="stat"><b>0.3%</b><span>CPU while idle</span></div>
+      <div class="stat"><b>432 ms</b><span>to start</span></div>
+    </div>
+    <p>
+      The budgets are deliberately loose. They catch a regression that adds
+      a runtime — a dependency, a poller, a timer that never stops — not a
+      difference between two machines.
+    </p>
+  </section>
+
+  <section id="categories">
+    <h2>The categories</h2>
+    <p>
+      The mocks are grouped by what they stand in for, and the grouping is
+      part of the API.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Category</th><th>What it covers</th><th>Compose profile</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>payments</code></td><td>The card and the bank rails</td><td><code>payments</code></td></tr>
+        <tr><td><code>identity</code></td><td>The KYC and the verification checks</td><td><code>identity</code></td></tr>
+        <tr><td><code>messaging</code></td><td>The text, the WhatsApp and the push</td><td><code>messaging</code></td></tr>
+        <tr><td><code>email</code></td><td>The sending domains and the mail itself</td><td><code>email</code></td></tr>
+        <tr><td><code>accounting</code></td><td>The books</td><td><code>accounting</code></td></tr>
+        <tr><td><code>dns</code></td><td>The zones and the records</td><td><code>dns</code></td></tr>
+        <tr><td><code>ai</code></td><td>The model calls</td><td><code>ai</code></td></tr>
+        <tr><td><code>storage</code></td><td>The buckets and the objects</td><td><code>storage</code></td></tr>
+      </tbody>
+    </table>
+    <p>
+      The compose file uses the same names as profiles, so
+      <code>--profile payments</code> starts the payment mocks and nothing
+      else. A project should not pay for eighteen containers to test one
+      flow.
+    </p>
+  </section>
+
+  <section id="one-process">
+    <h2>One process, many mocks</h2>
+    <p>
+      <code>api-mock-services start stripe paystack flutterwave</code> starts
+      three servers in one process, on one port each. That is the difference
+      between one container and three, and between 51MB and 153MB.
+    </p>
+    <p>
+      It also means the mocks share a fate: one <code>SIGTERM</code> stops
+      all of them, and the ports are freed properly.
+    </p>
+  </section>
+
+  <section id="control">
+    <h2>The control surface</h2>
+    <p>
+      <code>/_control</code> is the API the command line and the panel both
+      drive.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Route</th><th>What it does</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>POST /_control/outcome</code></td><td>Choose how the next payment goes</td></tr>
+        <tr><td><code>POST /_control/fail</code></td><td>Make the next call fail — server, unauthorised, unavailable, timeout, network</td></tr>
+        <tr><td><code>POST /_control/webhook</code></td><td>Set the webhook settings, and send it</td></tr>
+        <tr><td><code>POST /_control/reset</code></td><td>Forget everything</td></tr>
+        <tr><td><code>GET /_control/requests</code></td><td>Everything the mock was asked</td></tr>
+        <tr><td><code>GET /_control/logs</code></td><td>The requests, as they happen (SSE)</td></tr>
+      </tbody>
+    </table>
+    <p>
+      The panel is a view of it. The command line is a client of it. They
+      cannot drift, because there is only one implementation.
+    </p>
+  </section>
+
+  <section id="rules">
+    <h2>The rules a mock keeps</h2>
+    <div class="grid">
+      <div class="card">
+        <h4>The real shape</h4>
+        <p>The paths, the fields and the status codes are the provider's, so
+        the code under test does not change when it is pointed at a
+        mock.</p>
+      </div>
+      <div class="card">
+        <h4>The state is kept</h4>
+        <p>What the service was asked, and what it decided, is on
+        <code>service.state</code> and <code>service.requests</code>.</p>
+      </div>
+      <div class="card">
+        <h4>The reference decides</h4>
+        <p>A reference with <code>success</code> in it comes back successful,
+        one with <code>failed</code> in it comes back failed — so a test can
+        ask for either without a special flag.</p>
+      </div>
+      <div class="card">
+        <h4>No dependencies</h4>
+        <p>Node's own server, so it runs anywhere.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="not-taken">
+    <h2>Deliberate decisions, and why</h2>
+
+    <h3>Not DNS masquerading</h3>
+    <p>
+      Hijacking <code>api.paystack.co</code> needs a CA certificate
+      installed, rights to change <code>/etc/hosts</code>, and it leaks real
+      traffic for any domain the mock does not cover. The alternative is one
+      line with no certificate and nothing to clean up:
+    </p>
+    <pre><code>eval $(api-mock-services env)</code></pre>
+
+    <h3>Not a Go or Rust rewrite</h3>
+    <p>
+      A native binary would be lighter and start faster. It would also mean
+      a build step, a toolchain, and a contributor who cannot simply add a
+      mock. The memory is already 51MB for eighteen mocks, and it is
+      measured. The shareability is worth more than the last 30MB.
+    </p>
+
+    <h3>Not schema-driven everywhere</h3>
+    <p>
+      A specification describes a shape; it does not describe a state
+      machine. A payment that is created, then paid, then refunded cannot
+      be expressed in a <code>.yaml</code>, so those mocks are written as
+      code. For the services that are only read from, a route file is
+      enough — and <code>createSpecMock</code> fills the placeholders in
+      without a YAML parser and without a dependency.
+    </p>
+  </section>
+
+  <div class="pager">
+    <a href="overview.html">← Overview</a>
+    <a href="../guides/ci-gates.html">CI gates →</a>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap row">
+    <span>MIT licensed. Built to be light, green and sustainable.</span>
+    <span>
+      <a href="https://github.com/omeiza-workspace/api-mock-services">Source</a> ·
+      <a href="https://github.com/omeiza-workspace/ci-kit">Works beautifully with CI Kit →</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>

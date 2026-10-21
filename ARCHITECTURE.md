@@ -146,6 +146,34 @@ the ports are freed properly.
   for either without a special flag.
 - **No dependencies.** Node's own server, so it runs anywhere.
 
+## The specifications, kept current
+
+The mocks are written by hand, but the shapes they answer with are the
+providers'. Those two things drift apart unless something keeps them
+together.
+
+So the specifications are fetched from the providers' own repositories, on a
+schedule, and the difference is committed for a human to look at:
+
+```json
+{
+  "specs": {
+    "twilio": {
+      "url": "https://raw.githubusercontent.com/twilio/twilio-oai/main/spec/yaml/twilio_api_v2010.yaml",
+      "path": "specs/twilio_api_v2010.yaml"
+    }
+  }
+}
+```
+
+`scripts/update-specs.js` reads that manifest and refreshes what it points
+at. The `Specs` workflow runs it on Mondays and commits what changed — so a
+provider that changes its API shows up as a diff rather than as a broken
+mock three months later.
+
+The specifications are not in the published package. They are for checking
+the mocks against, not for running them.
+
 ## Where it fits next to CI Kit
 
 [CI Kit](https://github.com/omeiza-workspace/ci-kit) runs a repository's
