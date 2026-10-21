@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Offline testing — API Mock Services</title>
+<meta name="description" content="Testing against the mocks with no network: pointing an application at them, starting a category with a compose profile, writing a mock as a route file, and driving the failure paths.">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <span class="brand">API Mock Services</span>
+      <a href="../index.html">Home</a>
+      <a href="../introduction/overview.html">Overview</a>
+      <a href="../introduction/architecture.html">Architecture</a>
+      <a href="ci-gates.html">CI gates</a>
+      <a href="offline-testing.html" aria-current="page">Offline testing</a>
+      <a href="../community/impact.html">Community</a>
+      <a href="https://github.com/omeiza-workspace/api-mock-services">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="breadcrumb">Documentation / Guides</div>
+
+  <div class="hero">
+    <h1>Testing against the mocks, offline.</h1>
+    <p class="lede">
+      The mocks answer on the machine. Nothing leaves it, nothing is billed
+      for it, and the answer is the same every time. This page is how to
+      point a project at them, and how to drive the paths that only happen
+      when something goes wrong.
+    </p>
+  </div>
+
+  <section id="pointing">
+    <h2>Pointing an application at them</h2>
+    <p>
+      Every mock has an environment variable that points an application at
+      it. The command line prints the value as the mock starts, so there is
+      nothing to copy by hand.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Mock</th><th>Environment variable</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>stripe</code></td><td><code>NUXT_STRIPE_API_BASE</code></td></tr>
+        <tr><td><code>resend</code></td><td><code>NUXT_RESEND_API_BASE</code></td></tr>
+        <tr><td><code>xero</code></td><td><code>NUXT_XERO_API_BASE</code></td></tr>
+        <tr><td><code>cloudflare</code></td><td><code>NUXT_CLOUDFLARE_API_BASE</code></td></tr>
+        <tr><td><code>paystack</code></td><td><code>PAYSTACK_API_URL</code></td></tr>
+        <tr><td><code>interswitch</code></td><td><code>INTERSWITCH_API_URL</code></td></tr>
+        <tr><td><code>youverify</code></td><td><code>YOUVERIFY_API_URL</code></td></tr>
+        <tr><td><code>onesignal</code></td><td><code>ONESIGNAL_API_URL</code></td></tr>
+        <tr><td><code>twilio</code></td><td><code>TWILIO_API_URL</code></td></tr>
+        <tr><td><code>flutterwave</code></td><td><code>FLUTTERWAVE_API_URL</code></td></tr>
+        <tr><td><code>monnify</code></td><td><code>MONNIFY_API_URL</code></td></tr>
+        <tr><td><code>termii</code></td><td><code>TERMII_API_URL</code></td></tr>
+        <tr><td><code>smileid</code></td><td><code>SMILEID_API_URL</code></td></tr>
+        <tr><td><code>identitypass</code></td><td><code>IDENTITYPASS_API_URL</code></td></tr>
+        <tr><td><code>whatsapp</code></td><td><code>WHATSAPP_API_URL</code></td></tr>
+        <tr><td><code>fcm</code></td><td><code>FCM_API_URL</code></td></tr>
+        <tr><td><code>openai</code></td><td><code>OPENAI_API_BASE</code></td></tr>
+        <tr><td><code>s3</code></td><td><code>S3_ENDPOINT</code></td></tr>
+      </tbody>
+    </table>
+    <p>
+      The printed value carries the path each provider expects — <code>/v1</code>
+      for Stripe, <code>/v3</code> for Flutterwave,
+      <code>/api.xro/2.0</code> for Xero, <code>/client/v4</code> for
+      Cloudflare, and <code>/v1</code> for the model API.
+    </p>
+    <p>
+      Pointing a whole application at the stack is one line:
+    </p>
+    <pre><code>eval $(api-mock-services env)</code></pre>
+    <p>
+      It exports the variable for every mock in the stack, so an application
+      that reads more than one of them needs nothing else.
+    </p>
+  </section>
+
+  <section id="category">
+    <h2>Starting a category</h2>
+    <p>
+      The compose file is grouped into profiles, so a project only starts
+      what it needs — a category of two or three containers rather than all
+      eighteen.
+    </p>
+    <pre><code>docker compose -f examples/docker-compose.yml --profile payments up -d
+docker compose -f examples/docker-compose.yml --profile identity up -d
+docker compose -f examples/docker-compose.yml --profile messaging up -d
+docker compose -f examples/docker-compose.yml --profile all up -d</code></pre>
+    <p>
+      The profiles are <code>payments</code>, <code>identity</code>,
+      <code>messaging</code>, <code>email</code>, <code>accounting</code>,
+      <code>dns</code>, <code>ai</code>, <code>storage</code> and
+      <code>all</code>.
+    </p>
+    <p>
+      The lightest way of all is one container holding several mocks — one
+      process, one image, several ports:
+    </p>
+    <pre><code>docker run --rm -p 4001:4001 -p 4005:4005 api-mock-services stripe paystack</code></pre>
+    <p>
+      The command line uses each mock's own port. The compose file
+      publishes some of them on other ports — Paystack on 5001, for
+      instance — so check the compose file if that is the route you take.
+    </p>
+  </section>
+
+  <section id="route-file">
+    <h2>Writing a mock as a route file</h2>
+    <p>
+      Most providers are worth a hand-written mock, because their flows
+      have state. But a service that is only read from does not — and for
+      those, a route file is enough.
+    </p>
+    <pre><code>{
+  "name": "acme",
+  "state": { "greeting": "hello" },
+  "routes": [
+    { "method": "GET", "path": "/v1/things", "body": { "things": [] } },
+    { "method": "GET", "path": "/v1/things/:id", "body": { "id": "{{params.id}}" } }
+  ]
+}</code></pre>
+    <p>
+      The same thing as a JavaScript module, which can compute:
+    </p>
+    <pre><code>import { createSpecMock } from '@bytesickle/api-mock-services'
+
+const acme = createSpecMock({
+  name: 'acme',
+  routes: [
+    { method: 'GET', path: '/v1/things', body: { things: [] } },
+    { method: 'GET', path: '/v1/things/:id', body: { id: '{{params.id}}' } },
+  ],
+})</code></pre>
+    <p>
+      And a route file can be a file on disk, started from the command
+      line:
+    </p>
+    <pre><code>api-mock-services file ./mocks/acme.json</code></pre>
+    <table>
+      <thead>
+        <tr><th>Key</th><th>What it does</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>name</code></td><td>The name of the mock.</td></tr>
+        <tr><td><code>state</code></td><td>The state the mock keeps. A route can read it.</td></tr>
+        <tr><td><code>routes</code></td><td>The routes.</td></tr>
+        <tr><td><code>method</code></td><td>The HTTP method. <code>GET</code> if it is left out.</td></tr>
+        <tr><td><code>path</code></td><td>The path. A <code>:name</code> segment becomes a parameter.</td></tr>
+        <tr><td><code>status</code></td><td>The status code. <code>200</code> if it is left out.</td></tr>
+        <tr><td><code>body</code></td><td>The body, with the placeholders filled in.</td></tr>
+        <tr><td><code>headers</code></td><td>The response headers.</td></tr>
+        <tr><td><code>raw</code></td><td>The body is sent as it is, rather than as JSON.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="placeholders">
+    <h2>The placeholders</h2>
+    <p>
+      The placeholders are filled in from the request:
+    </p>
+    <table>
+      <thead>
+        <tr><th>Placeholder</th><th>Where it comes from</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>{{params.id}}</code></td><td>The path.</td></tr>
+        <tr><td><code>{{query.q}}</code></td><td>The query string.</td></tr>
+        <tr><td><code>{{body.email}}</code></td><td>The body.</td></tr>
+        <tr><td><code>{{header.authorization}}</code></td><td>A header.</td></tr>
+        <tr><td><code>{{state.anything}}</code></td><td>What the mock keeps.</td></tr>
+      </tbody>
+    </table>
+    <p>
+      A route file cannot hold a payment in progress — that is what a mock
+      written as code is for. A route file is JSON and a few placeholders,
+      with no new dependency.
+    </p>
+  </section>
+
+  <section id="failures">
+    <h2>Driving the failure paths</h2>
+    <p>
+      The failure paths are the ones worth testing. Once a mock is running,
+      it can be told what to do:
+    </p>
+    <pre><code>api-mock-services pay stripe failed       # the next payment fails
+api-mock-services error stripe server     # the next call answers 500
+api-mock-services error stripe timeout 3  # the next three calls time out
+api-mock-services webhook stripe resend   # send the webhook again
+api-mock-services reset stripe            # forget everything
+api-mock-services logs stripe             # watch the requests</code></pre>
+    <p>
+      The kinds of failure are <code>server</code>,
+      <code>unauthorised</code>, <code>unavailable</code>,
+      <code>timeout</code> and <code>network</code>. The outcome of the
+      next payment can be <code>success</code>, <code>failed</code> or
+      <code>cancelled</code>.
+    </p>
+    <p>
+      The panel does the same things, and shows the requests as they come
+      in. It is at <code>/_panel</code> on every mock:
+    </p>
+    <pre><code>http://127.0.0.1:4001/_panel</code></pre>
+    <p>
+      The buttons are real forms, so the page works even when the script
+      does not load.
+    </p>
+  </section>
+
+  <section id="examples">
+    <h2>Worked examples</h2>
+
+    <h3>A card refund, in a test</h3>
+    <pre><code>import { startMock } from '@bytesickle/api-mock-services'
+
+const stripe = await startMock('stripe')
+
+process.env.NUXT_STRIPE_API_BASE = `${stripe.url}/v1`
+
+// ... the test ...
+
+expect(stripe.last().path).toBe('/v1/refunds')
+expect(stripe.state.refunds[0].payment_intent).toBe('pi_test_1')
+
+await stripe.close()</code></pre>
+    <p>
+      The mock remembers what it was asked, so the test can say what really
+      happened. Nothing listens on a port and the mock stops when the test
+      ends.
+    </p>
+
+    <h3>A gateway reference that decides the outcome</h3>
+    <p>
+      A reference with <code>success</code> in it comes back successful, one
+      with <code>failed</code> in it comes back failed. A test can ask for
+      either without a special flag.
+    </p>
+    <pre><code>curl -s http://127.0.0.1:4005/transaction/initialize \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"you@example.com","amount":5000,"reference":"order_success_001"}'
+
+curl -s http://127.0.0.1:4005/transaction/verify/order_success_001</code></pre>
+    <p>The answer, trimmed:</p>
+    <pre><code>{
+  "status": true,
+  "message": "Verification successful",
+  "data": {
+    "reference": "order_success_001",
+    "amount": 5000,
+    "status": "success",
+    "gateway_response": "Successful",
+    "channel": "card",
+    "currency": "NGN"
+  }
+}</code></pre>
+    <p>
+      Change the reference to <code>order_failed_001</code> and the same
+      request answers <code>failed</code>, with
+      <code>Transaction failed</code> as the gateway response.
+    </p>
+
+    <h3>A contributed mock, as a route file</h3>
+    <p>
+      The M-Pesa mock in <code>contrib/</code> is a route file. It reads
+      the body it was sent, and it reads its own state:
+    </p>
+    <pre><code>{
+  "name": "mpesa",
+  "state": { "greeting": "hello" },
+  "routes": [
+    {
+      "method": "POST",
+      "path": "/mpesa/stkpush/v1/processrequest",
+      "status": 200,
+      "body": {
+        "ResponseCode": "0",
+        "ResponseDescription": "Accept the service request successfully.",
+        "CustomerMessage": "Success. CheckoutRequestID sent to your phone.",
+        "CheckoutRequestID": "{{state.greeting}}",
+        "MerchantCode": "{{body.BusinessShortCode}}",
+        "TransactionDesc": "{{body.TransactionDesc}}"
+      }
+    }
+  ]
+}</code></pre>
+    <pre><code>api-mock-services file contrib/mpesa.json</code></pre>
+    <p>
+      Nothing in <code>contrib/</code> is loaded by the package, and nothing
+      in it has to be reviewed as JavaScript.
+    </p>
+  </section>
+
+  <div class="pager">
+    <a href="ci-gates.html">← CI gates</a>
+    <a href="../community/impact.html">Impact →</a>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap row">
+    <span>MIT licensed. Built to be light, green and sustainable.</span>
+    <span>
+      <a href="https://github.com/omeiza-workspace/api-mock-services">Source</a> ·
+      <a href="https://github.com/omeiza-workspace/ci-kit">Works beautifully with CI Kit →</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>

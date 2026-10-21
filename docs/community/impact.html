@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Community — API Mock Services</title>
+<meta name="description" content="The public record of the project: who uses the mocks, where the project has been mentioned, what people say, and how to help.">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <span class="brand">API Mock Services</span>
+      <a href="../index.html">Home</a>
+      <a href="../introduction/overview.html">Overview</a>
+      <a href="../introduction/architecture.html">Architecture</a>
+      <a href="../guides/ci-gates.html">CI gates</a>
+      <a href="../guides/offline-testing.html">Offline testing</a>
+      <a href="../community/impact.html" aria-current="page">Community</a>
+      <a href="https://github.com/omeiza-workspace/api-mock-services">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="breadcrumb">Documentation / Community</div>
+
+  <div class="hero">
+    <h1>The public record.</h1>
+    <p class="lede">
+      Everything on this page is public, dated and checkable. Where a name
+      or a quote appears, it is there because it was published, and there is
+      a link to the place it was published.
+    </p>
+  </div>
+
+  <section id="adopters">
+    <h2>Adopters</h2>
+    <p>
+      The projects and teams that use the mocks. The list is a file in the
+      repository, <code>ADOPTERS.md</code>, and it grows by pull request —
+      so it is public, reviewable, and cannot be inflated.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Who</th><th>What it is used for</th><th>Since</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Example Co</td><td>Offline payment testing</td><td><em>add yours</em></td></tr>
+      </tbody>
+    </table>
+    <p>
+      The row above is an example. It shows the shape of a row, not a real
+      adopter.
+    </p>
+    <h3>Adding yourself</h3>
+    <p>
+      Open a pull request that adds a row to <code>ADOPTERS.md</code>. That
+      is all — no form, no email, no account. A row looks like this:
+    </p>
+    <pre><code>| Acme Ltd | The payment tests in our Laravel checkout | 2026 |</code></pre>
+    <p>
+      If you would like a logo next to your name, put an SVG in
+      <code>docs/logos/</code> — monochrome, about 32px tall — and link it.
+    </p>
+    <p>
+      If you use the mocks and would rather not be listed, that is
+      completely fine. The list is for the people who want to be found.
+    </p>
+  </section>
+
+  <section id="press">
+    <h2>Press and mentions</h2>
+    <p>
+      Links to blog posts, talks, newsletters and social posts about the
+      project belong here. If you have written about the mocks, or spoken
+      about them, or put them in a newsletter, the link goes in this table.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Where</th><th>What it says</th><th>Link</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><em>example only</em></td><td><em>an example of a post about the project</em></td><td><em>link to the post</em></td></tr>
+      </tbody>
+    </table>
+    <p>
+      The row above is a placeholder. It is not a real mention.
+    </p>
+    <h3>Submitting one</h3>
+    <p>
+      Open an issue with the link. That is enough, and it is the quickest
+      way to have it recorded. A pull request that adds a row to this page
+      is better still, because the entry is then dated, public and
+      reviewable in the same way as the adopters list.
+    </p>
+  </section>
+
+  <section id="what-people-say">
+    <h2>What people say</h2>
+    <p>
+      Words from the people who use it are collected from the public GitHub
+      Discussions. Each one links back to where it was written, so it can be
+      checked.
+    </p>
+    <p>
+      Nothing is published here that is not verifiable. If a quote cannot be
+      linked to a public discussion, it does not go here — not even as an
+      illustration of the kind of thing people say.
+    </p>
+    <blockquote>
+      <p>
+        <em>Placeholder — the format only, not a real quote. A real entry is
+        a sentence somebody actually wrote, in a public discussion, with a
+        link to that discussion.</em>
+      </p>
+    </blockquote>
+    <table>
+      <thead>
+        <tr><th>Discussion</th><th>Quote</th><th>Link</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><em>example only</em></td><td><em>the shape of a real quote, from a real public discussion</em></td><td><em>link to the discussion</em></td></tr>
+      </tbody>
+    </table>
+    <p>
+      The row above is a placeholder. It is not a quote from anybody. There
+      are no quotes yet — the first discussions are the ones that will fill
+      this.
+    </p>
+  </section>
+
+  <section id="help">
+    <h2>How to help the project</h2>
+    <p>
+      The project is small, and the useful contributions are unglamorous.
+      Here is what helps.
+    </p>
+    <div class="grid">
+      <div class="card">
+        <h4>Star it</h4>
+        <p>A star says the project is worth keeping an eye on. It is the
+        cheapest thing to do and it helps somebody find it.</p>
+      </div>
+      <div class="card">
+        <h4>Use it in a project</h4>
+        <p>Point a suite at the mocks and open a pull request adding
+        yourself to the adopters list. A working example is worth more than
+        a description of one.</p>
+      </div>
+      <div class="card">
+        <h4>Open an issue</h4>
+        <p>Report something that does not do what it should. A mock that is
+        wrong is worse than a mock that is missing, because a test will
+        trust it.</p>
+      </div>
+      <div class="card">
+        <h4>Add a mock</h4>
+        <p>The shape of a provider's API is in the provider's own
+        documentation. Give the mock the routes it really has and the state
+        it really keeps, register it in <code>src/index.js</code> with a
+        port, a category and a description, and add a test.</p>
+      </div>
+      <div class="card">
+        <h4>Add a spec</h4>
+        <p>A route file in <code>contrib/</code> is enough for a service
+        that is only read from. It is JSON, it needs no dependency, and it
+        does not have to be reviewed as JavaScript.</p>
+      </div>
+      <div class="card">
+        <h4>Refresh a specification</h4>
+        <p>The specifications the mocks are checked against are fetched from
+        the providers' own repositories by a scheduled job. If one of them
+        has moved, that is worth knowing.</p>
+      </div>
+    </div>
+    <p>
+      The house rules are short: no new dependencies, the provider's real
+      shapes, and a test that would fail without your change. The
+      <a href="https://github.com/omeiza-workspace/api-mock-services/blob/main/CONTRIBUTING.md">contributing guide</a>
+      has the rest, and
+      <a href="https://github.com/omeiza-workspace/api-mock-services/blob/main/contrib/README.md">the
+      contributing folder</a> has the route-file rules.
+    </p>
+  </section>
+
+  <div class="pager">
+    <a href="../guides/offline-testing.html">← Offline testing</a>
+    <a href="../index.html">Home →</a>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap row">
+    <span>MIT licensed. Built to be light, green and sustainable.</span>
+    <span>
+      <a href="https://github.com/omeiza-workspace/api-mock-services">Source</a> ·
+      <a href="https://github.com/omeiza-workspace/ci-kit">Works beautifully with CI Kit →</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>
