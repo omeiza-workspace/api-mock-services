@@ -517,7 +517,14 @@ export function createOneSignalMock(options = {}) {
   service.on('POST', '/api/v1/notifications', (req, res) => {
     const body = req.json ?? {}
 
-    if (!body.app_id || !body.included_segments || !body.headings || !body.contents) {
+    // OneSignal accepts three ways of saying who the notification is for:
+    // a segment, a list of external user ids, or a list of player ids. The
+    // app targets users by their external id, so requiring a segment
+    // rejected every notification it sent.
+    const targets =
+      body.included_segments ?? body.include_external_user_ids ?? body.include_player_ids
+
+    if (!body.app_id || !targets || !body.headings || !body.contents) {
       json(res, 400, { errors: [{ message: 'Missing required fields' }] })
       return
     }
@@ -531,7 +538,7 @@ export function createOneSignalMock(options = {}) {
     const answer = () =>
       json(res, 200, {
         id: `mock-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`,
-        recipients: body.included_segments.length,
+        recipients: Array.isArray(targets) ? targets.length : 0,
       })
 
     if (!ntfyUrl) {
