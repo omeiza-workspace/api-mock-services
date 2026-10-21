@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question or discussion
+    url: https://github.com/omeiza-workspace/api-mock-services/discussions
+    about: Ask how to use the mocks, or how to add one of your own.
+  - name: Security problem
+    url: https://github.com/omeiza-workspace/api-mock-services/security/advisories/new
+    about: Report a vulnerability privately. Please do not open a public issue.

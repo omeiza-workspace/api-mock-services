@@ -1,0 +1,41 @@
+name: Feature request
+description: A mock, or a behaviour, that is missing
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A missing mock is usually a flow that cannot be tested offline today.
+        Saying what that flow is makes the request much easier to act on.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What are you trying to test that is hard today?
+      placeholder: |
+        Our onboarding asks for a BVN check, and the only test environment
+        we have charges per request and is slow, so the test suite is
+        flaky.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you would like to happen
+      description: The mock, the route, or the behaviour you are missing.
+    validations:
+      required: true
+
+  - type: textarea
+    id: provider
+    attributes:
+      label: Which provider, and which fields
+      description: The paths, the fields and the status codes that matter. A link to the provider's documentation is ideal.
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What you have tried instead
+      description: Including a mock you wrote yourself — that is often the best starting point.

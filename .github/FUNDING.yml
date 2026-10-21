@@ -1,0 +1,12 @@
+# The buttons GitHub shows at the top of the repository.
+#
+# Only accounts that actually exist are listed. A sponsor button that
+# leads to a page 404 is worse than no button at all.
+#
+# The Buy Me a Coffee and Ko-fi lines are left out until those accounts
+# exist — uncomment them and put the username in when they do.
+
+github: [omeiza-workspace]
+
+# buy_me_a_coffee: your-bmc-username
+# ko_fi: your-kofi-username

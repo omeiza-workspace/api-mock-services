@@ -1,0 +1,89 @@
+name: Bug report
+description: Something in the mocks does not do what it should
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this. The more precise the
+        report, the faster it gets fixed.
+
+  - type: dropdown
+    id: mock
+    attributes:
+      label: Which mock
+      description: The one that misbehaved.
+      options:
+        - stripe
+        - resend
+        - xero
+        - cloudflare
+        - paystack
+        - interswitch
+        - youverify
+        - onesignal
+        - twilio
+        - flutterwave
+        - monnify
+        - termii
+        - smileid
+        - identitypass
+        - whatsapp
+        - fcm
+        - openai
+        - s3
+        - The harness itself
+        - The panel
+        - The command line
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did you do, and what did the mock do instead?
+      placeholder: |
+        I started the Paystack mock and called POST /transaction/initialize
+        with a reference of "ref_success_1". The verify call came back with
+        status "pending" instead of "success".
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-expected
+    attributes:
+      label: What you expected
+      description: If it is a provider's behaviour, say which provider and link to their documentation.
+    validations:
+      required: true
+
+  - type: textarea
+    id: output
+    attributes:
+      label: The output
+      description: The terminal output, with anything private removed.
+      render: shell
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: 1.1.0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - macOS
+        - Linux
+        - Windows
+        - Docker
+        - Other
+    validations:
+      required: true

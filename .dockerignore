@@ -1,0 +1,14 @@
+# The container needs the package and the source, and nothing else.
+
+.git
+.github
+.act-artifacts
+node_modules
+npm-debug.log
+test
+scripts
+examples
+prism
+*.md
+.env
+.env.*

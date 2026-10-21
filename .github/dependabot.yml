@@ -1,0 +1,26 @@
+version: 2
+
+# Patch and minor updates come in on their own. Major bumps wait for a
+# human: a new major of a GitHub Action or a base image is a decision, not a
+# merge.
+
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 3
+    labels:
+      - dependencies
+    ignore:
+      - update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: docker
+    directory: /docker
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 2
+    labels:
+      - dependencies
+    ignore:
+      - update-types: ["version-update:semver-major"]
