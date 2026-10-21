@@ -9,6 +9,11 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Added
 
+- A documentation site in `docs/` — plain HTML, no build step, published by
+  the Pages workflow.
+- `ARCHITECTURE.md` — why the project is built the way it is.
+- `ADOPTERS.md` — the list of who uses it, added by pull request.
+- `llms.txt` — a short guide for the coding agents that read repositories.
 - Flutterwave, Monnify, Termii, Smile ID, Identity Pass, WhatsApp Cloud API,
   Firebase Cloud Messaging, an OpenAI-compatible model mock and an
   S3-compatible storage mock — 18 mocks in all.

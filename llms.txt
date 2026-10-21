@@ -1,0 +1,99 @@
+# API Mock Services
+
+> Stand-ins for the outside world. One implementation, shared: the payment
+> gateways, identity checks, email, DNS, messaging, AI and storage a project
+> talks to in a test — running locally, offline, with no dependencies.
+
+Repository: https://github.com/omeiza-workspace/api-mock-services
+Package: `@bytesickle/api-mock-services` (npm)
+Licence: MIT
+
+## What this is
+
+A set of mock HTTP servers that answer like the real provider does, and
+remember what they were asked. They run in a Node test, in a container, or
+over HTTP for a project in any language.
+
+18 mocks: stripe, resend, xero, cloudflare, paystack, interswitch,
+youverify, onesignal, twilio, flutterwave, monnify, termii, smileid,
+identitypass, whatsapp, fcm, openai, s3.
+
+## Install
+
+```sh
+npm install --save-dev @bytesickle/api-mock-services
+```
+
+There are no runtime dependencies. Node 20 or newer.
+
+## Use it in a test
+
+```js
+import { startMock } from '@bytesickle/api-mock-services'
+
+const stripe = await startMock('stripe')
+
+process.env.NUXT_STRIPE_API_BASE = `${stripe.url}/v1`
+
+// ... the test ...
+
+expect(stripe.last().path).toBe('/v1/refunds')
+expect(stripe.state.refunds[0].payment_intent).toBe('pi_test_1')
+
+await stripe.close()
+```
+
+## The command line
+
+```
+api-mock-services list                    # what there is, by category
+api-mock-services start stripe resend     # start some (one process, many ports)
+api-mock-services env                     # the environment for the whole stack
+api-mock-services file ./mocks/acme.json  # a mock written as a route file
+api-mock-services pay stripe failed       # the next payment fails
+api-mock-services error stripe server     # the next call answers 500
+api-mock-services webhook stripe resend   # send the webhook again
+api-mock-services reset stripe            # forget everything
+api-mock-services logs stripe             # watch the requests
+```
+
+The control surface is `/_control` on every mock. The panel is `/_panel`.
+
+## Layout
+
+```
+src/harness.js     the engine — routes, state, the control surface. No HTML.
+src/index.js       the public API
+src/spec.js        a mock written as a route file
+src/providers/     the mocks, one file per group of them
+src/ui/            the browser layer: templates/, assets/
+```
+
+`src/ui/` is separate from the engine on purpose. The engine never imports
+the UI; the UI is attached with `attachViews(service)`.
+
+## Conventions for contributors
+
+- No new dependencies. Node is the whole toolchain, including the lint
+  (`npm run lint`) and the footprint budget (`npm run footprint`).
+- The real shape: the paths, fields and status codes are the provider's.
+- Keep the state: what was asked and what was decided lives on
+  `service.state` and `service.requests`.
+- The reference decides: a reference containing `success` succeeds, one
+  containing `failed` fails.
+- A provider that wants a checkout declares `service.checkout = { title,
+  find, onDone }`; it must not import the UI.
+- Every mock is registered in `src/index.js` with a port, a category and a
+  description, and has a test in `test/`.
+
+## Commands
+
+```sh
+npm test           # the tests (node --test)
+npm run lint       # the house style
+npm run check      # both
+npm run footprint  # the memory, CPU and startup budget
+make ci            # the tests, then the CI kit gate
+```
+
+Architecture notes: https://github.com/omeiza-workspace/api-mock-services/blob/main/ARCHITECTURE.md

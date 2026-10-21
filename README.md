@@ -449,6 +449,12 @@ that is expected of everyone taking part.
 The short version: no new dependencies, the provider's real shapes, and a
 test that would fail without your change.
 
+### Adding yourself as an adopter
+
+If your team uses these mocks, add a row to [ADOPTERS.md](ADOPTERS.md) in a
+pull request — a name, what you use it for, and a logo if you have one. It
+is a pull request, so the list is public, dated, and cannot be inflated.
+
 ---
 
 ## Support the project
@@ -473,6 +479,18 @@ platforms it runs on, and the releases.
 
 If sponsoring is not your thing, a star, an issue report, or a pull request
 that fixes something is worth just as much.
+
+---
+
+## More
+
+- [ARCHITECTURE.md](ARCHITECTURE.md) — why it is built this way.
+- [ADOPTERS.md](ADOPTERS.md) — who uses it.
+- [The site](https://omeiza-workspace.github.io/api-mock-services) — the same
+  thing, as a page.
+- [CI Kit](https://github.com/omeiza-workspace/ci-kit) — works beautifully
+  with this: the gates that run a repository's tests locally, before
+  anything reaches a runner.
 
 ---
 
