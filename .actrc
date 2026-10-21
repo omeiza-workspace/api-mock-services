@@ -1,0 +1,11 @@
+# act configuration for this repository.
+# The shared kit (ci act) also sets --bind, --pull=false and the env file.
+
+# Runner label to container image.
+-P ubuntu-latest=catthehacker/ubuntu:act-latest
+
+# Reuse the image when it is already local.
+--pull=false
+
+# Where act stores uploaded artifacts.
+--artifact-server-path=./.act-artifacts

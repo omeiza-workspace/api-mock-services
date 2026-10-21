@@ -1,0 +1,131 @@
+# The mocks, as containers.
+#
+# Copy this into a project and use it with:
+#
+#   docker compose -f docker-compose.yml up -d
+#
+# The ports are the ones the projects already use, so nothing else has to
+# change.
+#
+# The image is built once, from this package, and every mock runs from it —
+# so there is one implementation of each service, not one per project.
+
+services:
+  paystack-mock:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    command: ["paystack"]
+    environment:
+      PORT: "5001"
+    ports:
+      - "5001:5001"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:5001/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  interswitch-mock:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    command: ["interswitch"]
+    environment:
+      PORT: "5002"
+    ports:
+      - "5002:5002"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:5002/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  youverify-mock:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    command: ["youverify"]
+    environment:
+      PORT: "9010"
+    ports:
+      - "9010:9010"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9010/v1/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  onesignal-mock:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    command: ["onesignal"]
+    environment:
+      PORT: "8080"
+      NTFY_URL: http://ntfy:80
+      NTFY_TOPIC: gefix-notifications
+    ports:
+      - "8080:8080"
+    depends_on:
+      ntfy:
+        condition: service_healthy
+
+  stripe-mock:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    command: ["stripe"]
+    environment:
+      PORT: "4001"
+    ports:
+      - "4001:4001"
+
+  resend-mock:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    command: ["resend"]
+    environment:
+      PORT: "4002"
+    ports:
+      - "4002:4002"
+
+  xero-mock:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    command: ["xero"]
+    environment:
+      PORT: "4003"
+    ports:
+      - "4003:4003"
+
+  cloudflare-mock:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    command: ["cloudflare"]
+    environment:
+      PORT: "4004"
+    ports:
+      - "4004:4004"
+
+  twilio-mock:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    command: ["twilio"]
+    environment:
+      PORT: "4009"
+    ports:
+      - "4009:4009"
+
+  # The messages are shown here.
+  ntfy:
+    image: binwiederhier/ntfy:latest
+    ports:
+      - "8090:80"
+    command: serve
+    environment:
+      - NTFY_BASE_URL=http://localhost:8090

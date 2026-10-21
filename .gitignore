@@ -1,0 +1,11 @@
+
+# Local CI kit
+.act-artifacts/
+.env.act
+.secrets
+
+# The registry of running mocks
+.mocks.json
+
+# macOS
+.DS_Store

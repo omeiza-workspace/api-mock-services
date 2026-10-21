@@ -1,0 +1,47 @@
+{
+  "name": "@bytesickle/api-mock-services",
+  "version": "1.0.0",
+  "description": "Stand-ins for the outside world: the payment gateways, the email provider, the accounting service, the DNS provider, the messaging and the identity checks. One implementation, used by every project.",
+  "type": "module",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js"
+    },
+    "./providers/commerce": "./src/providers/commerce.js",
+    "./providers/nigeria": "./src/providers/nigeria.js",
+    "./harness": "./src/harness.js"
+  },
+  "bin": {
+    "api-mock-services": "./bin/api-mock-services.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "docker",
+    "examples",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "node bin/api-mock-services.js start",
+    "list": "node bin/api-mock-services.js list",
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": [
+    "mock",
+    "stripe",
+    "resend",
+    "xero",
+    "cloudflare",
+    "paystack",
+    "interswitch",
+    "youverify",
+    "onesignal",
+    "twilio",
+    "testing"
+  ],
+  "license": "UNLICENSED",
+  "private": true
+}

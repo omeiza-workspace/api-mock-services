@@ -1,0 +1,87 @@
+openapi: 3.0.0
+info:
+  title: Twilio SMS API Mock
+  version: 2010-04-01
+paths:
+  /2010-04-01/Accounts/{AccountSid}.json:
+    get:
+      summary: Fetch an account
+      operationId: get_Account__AccountSid_
+      parameters:
+        - name: AccountSid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Account fetched successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sid:
+                    type: string
+                    example: "ACtest"
+                  friendlyName:
+                    type: string
+                    example: "Test Account"
+                  status:
+                    type: string
+                    example: "active"
+  /2010-04-01/Accounts/{AccountSid}/Messages.json:
+    post:
+      summary: Send an SMS message
+      operationId: post_Messages__AccountSid_
+      parameters:
+        - name: AccountSid
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                To:
+                  type: string
+                  example: "+1234567890"
+                From:
+                  type: string
+                  example: "+9876543210"
+                Body:
+                  type: string
+                  example: "Your verification code is 123456"
+      responses:
+        '201':
+          description: Message queued successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sid:
+                    type: string
+                    example: "SMxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                  status:
+                    type: string
+                    example: "queued"
+                  to:
+                    type: string
+                    example: "+1234567890"
+                  from:
+                    type: string
+                    example: "+9876543210"
+                  body:
+                    type: string
+                    example: "Your verification code is 123456"
+                  price:
+                    type: string
+                    example: "0.00750"
+                  price_unit:
+                    type: string
+                    example: "USD"

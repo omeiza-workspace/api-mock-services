@@ -1,0 +1,4 @@
+{
+  "stack": ["node"],
+  "act": { "image": "catthehacker/ubuntu:act-latest", "envFile": ".env.act", "secretFile": ".secrets" }
+}
