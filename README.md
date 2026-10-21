@@ -24,16 +24,28 @@ engine costs per container.
 
 ## What it costs
 
-Measured on a laptop with all nine mocks running, against the four
-containers this replaces:
+Measured against the four containers this replaces. The engine's own column
+is a range, because the figure varies with the machine and what else is
+running on it — a single sample would be a number nobody could reproduce.
 
 | | this engine | four containers |
 |---|---|---|
 | processes | 1 | 4 |
-| memory | 50 MB | 250 MB |
-| idle CPU | 0.0% | 7.9%, almost all of it the OpenAPI proxy |
-| time to first request answered | 1.4 s | 20 s and rising |
+| memory | 50–51 MB | 250 MB |
+| idle CPU | 0–0.5% | 7.9%, almost all of it the OpenAPI proxy |
+| time to first request answered | 0.4–1.4 s | 20 s and rising |
 | things to start, stop and clean up | 1 | 4 |
+
+**How this was measured.** `npm run footprint` starts the engine with every
+mock it carries, waits for the first request to be answered, samples the
+resident size with `ps`, and samples the CPU with two `ps -o time=` reads
+ten seconds apart. The engine's figures are from that script, on an
+Apple Silicon laptop, and they move with the machine — the same script on a
+busy build machine reports a slower first request and a higher idle figure.
+
+The container figures come from `docker compose up -d`, sampled with
+`docker stats --no-stream` once immediately and once after the containers
+had settled.
 
 The numbers are the reason for the rules below.
 

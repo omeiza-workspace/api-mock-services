@@ -20,7 +20,24 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url))
 
 const MAX_MEMORY_MB = Number(process.env.MAX_MEMORY_MB ?? 100)
 const MAX_STARTUP_MS = Number(process.env.MAX_STARTUP_MS ?? 5000)
-const MAX_IDLE_CPU = Number(process.env.MAX_IDLE_CPU ?? 1)
+const MAX_IDLE_CPU = Number(process.env.MAX_IDLE_CPU ?? 2)
+
+/**
+ * How long to watch the process while it does nothing.
+ *
+ * This was three seconds, and that was too short to be a measurement. The
+ * process uses a trickle of CPU — around half a percent — and over a
+ * three-second window that trickle lands anywhere between 0% and 2% depending
+ * on what the operating system happened to schedule. The gate then failed
+ * two runs in three, which is the worst possible behaviour for a gate: a
+ * build that fails sometimes teaches people to retry it instead of reading
+ * it.
+ *
+ * Ten seconds takes the same reading and puts the noise floor an order of
+ * magnitude lower. The budget then sits four times above the measured value
+ * and four times below the regression it exists to catch.
+ */
+const IDLE_WINDOW_MS = Number(process.env.IDLE_WINDOW_MS ?? 10000)
 
 /**
  * The port the run starts on.
@@ -140,16 +157,18 @@ const memoryMb = Math.round(memoryKb(child.pid) / 1024)
 
 const cpuBefore = cpuSeconds(child.pid)
 
-await new Promise((resolve) => setTimeout(resolve, 3000))
+await new Promise((resolve) => setTimeout(resolve, IDLE_WINDOW_MS))
 
-const idleCpu = Number((((cpuSeconds(child.pid) - cpuBefore) / 3) * 100).toFixed(1))
+const idleCpu = Number(
+  (((cpuSeconds(child.pid) - cpuBefore) / (IDLE_WINDOW_MS / 1000)) * 100).toFixed(2),
+)
 
 stop()
 
 console.log('')
 console.log(`  mocks       ${MOCKS.length} in one process`)
 console.log(`  memory      ${memoryMb} MB`)
-console.log(`  idle CPU    ${idleCpu}%`)
+console.log(`  idle CPU    ${idleCpu}%  (over a ${IDLE_WINDOW_MS / 1000}s window)`)
 console.log(`  startup     ${startupMs} ms`)
 console.log('')
 console.log(
