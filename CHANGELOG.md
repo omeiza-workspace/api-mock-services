@@ -5,6 +5,40 @@ All notable changes to this project are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2026-10-21
+
+### Added
+
+- Eighteen mocks in one dependency-free process: Stripe, Paystack,
+  Interswitch, Flutterwave, Monnify, YouVerify, Smile ID, Identity Pass,
+  Twilio, Termii, OneSignal, WhatsApp, Firebase Cloud Messaging, Resend,
+  Xero, Cloudflare, an OpenAI-compatible model mock and an S3-compatible
+  storage mock.
+- A documentation site, an architecture note, an adopter list that grows by
+  pull request, and a `llms.txt` for the coding agents that read
+  repositories.
+- Mocks written as route files, contributed as files, and started from the
+  command line.
+- A `/health` endpoint on every mock.
+
+### Fixed
+
+- The footprint gate was intermittently failing. Its idle budget was 1%
+  over a three-second sampling window, and the engine's idle figure is a
+  trickle of around half a percent — so over three seconds the reading
+  landed anywhere between 0% and 2% depending on what the operating system
+  happened to schedule. The gate failed two runs in three on an idle
+  machine, and CI runs it. The window is now ten seconds and the budget 2%,
+  which is four times above what the engine uses and four times below the
+  7.9% it exists to catch.
+
+### Changed
+
+- The README now quotes ranges for memory, idle CPU and time to the first
+  request, and names the script that produces them. The first-request
+  measurement moves by a factor of three with machine load, so publishing
+  one sample as *the* figure was a number that happened to be true once.
+
 ## [Unreleased]
 
 ### Added
