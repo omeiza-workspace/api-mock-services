@@ -1,4 +1,5 @@
 import { createServer } from 'node:http'
+import { panelRoutes, readControlForm } from './panel.js'
 
 /**
  * The harness every mock is built on.
@@ -156,6 +157,9 @@ export class MockService {
     this.url = ''
     this.port = 0
     this.listeners = new Set()
+
+    // The control panel — the page a person uses.
+    panelRoutes(this)
   }
 
   /** Register a route. */
@@ -362,34 +366,39 @@ export class MockService {
   async control(request, res) {
     const action = request.path.replace('/_control/', '')
 
+    // The panel sends a form; the command line sends JSON.
+    const sent = request.json && typeof request.json === 'object' && !Array.isArray(request.json)
+      ? request.json
+      : readControlForm(request.raw ?? '')
+
     switch (action) {
       case 'outcome': {
-        const outcome = request.json?.outcome ?? 'success'
+        const outcome = sent.outcome ?? 'success'
         this.setOutcome(outcome)
         json(res, 200, { outcome: this.state.outcome })
         return
       }
 
       case 'fail': {
-        const kind = request.json?.kind ?? 'server'
-        const times = Number(request.json?.times ?? 1)
+        const kind = sent.kind ?? 'server'
+        const times = Number(sent.times ?? 1)
         this.failNext(kind, times)
         json(res, 200, { failure: this.state.failure, times: this.state.failureCount })
         return
       }
 
       case 'webhook': {
-        Object.assign(this.state.webhook, request.json ?? {})
+        Object.assign(this.state.webhook, sent)
 
-        if (request.json?.intentId) {
+        if (sent.intentId) {
           this.state.webhook.intentId = String(request.json.intentId)
         }
 
-        if (request.json?.event) {
+        if (sent.event) {
           this.state.webhook.event = request.json.event
         }
 
-        if (request.json?.send) {
+        if (sent.send) {
           await this.sendWebhook()
         }
 

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Runs the local CI gate before a push. Installed by the CI kit.
+set -e
+if ! command -v make >/dev/null 2>&1; then
+  exit 0
+fi
+if [ -f Makefile ] || [ -f makefile ]; then
+  echo "[pre-push] running the local CI gate..."
+  make ci
+fi
