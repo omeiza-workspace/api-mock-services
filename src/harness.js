@@ -257,7 +257,15 @@ export class MockService {
   /** Start listening. Port 0 means "any free port". */
   async listen(port = 0, host = '127.0.0.1') {
     this.server = createServer((req, res) => {
-      void this.handle(req, res)
+      // One bad request must not take the engine down. An unhandled
+      // rejection ends the process, and the process holds every mock.
+      void this.handle(req, res).catch((error) => {
+        console.error(`[${this.name}] ${error?.message ?? error}`)
+
+        if (!res.headersSent) {
+          json(res, 500, { error: { message: 'The mock could not answer that request' } })
+        }
+      })
     })
 
     await new Promise((resolve, reject) => {
@@ -459,7 +467,11 @@ export class MockService {
 
         this.listeners.add(send)
 
-        req.on('close', () => {
+        // The response is what closes when the client goes away. The
+        // request is not in scope here, and reaching for it took the whole
+        // engine down: the ReferenceError escaped as an unhandled rejection
+        // and Node exited, so one diagnostic call stopped every mock.
+        res.on('close', () => {
           this.listeners.delete(send)
         })
 
