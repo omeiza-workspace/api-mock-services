@@ -18,9 +18,17 @@ import { join } from 'node:path'
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url))
 
-const MAX_MEMORY_MB = Number(process.env.MAX_MEMORY_MB ?? 120)
+const MAX_MEMORY_MB = Number(process.env.MAX_MEMORY_MB ?? 100)
 const MAX_STARTUP_MS = Number(process.env.MAX_STARTUP_MS ?? 5000)
 const MAX_IDLE_CPU = Number(process.env.MAX_IDLE_CPU ?? 1)
+
+/**
+ * The port the run starts on.
+ *
+ * The mocks' own ports are left alone, so a footprint run never takes a
+ * port that a mock somebody else is using already has.
+ */
+const FIRST_PORT = Number(process.env.FOOTPRINT_PORT ?? 4500)
 
 /** The mocks that are started to measure them. */
 const MOCKS = [
@@ -44,29 +52,51 @@ const MOCKS = [
   's3',
 ]
 
-const FIRST_PORT = 4001
-
-/** The resident set of a process, in kilobytes. */
+/**
+ * The resident set of a process, in kilobytes.
+ *
+ * Zero when the process is gone — the caller decides whether that is a
+ * problem.
+ */
 function memoryKb(pid) {
-  const out = execFileSync('ps', ['-o', 'rss=', '-p', String(pid)], { encoding: 'utf8' })
+  try {
+    const out = execFileSync('ps', ['-o', 'rss=', '-p', String(pid)], { encoding: 'utf8' })
 
-  return Number(out.trim())
+    return Number(out.trim())
+  } catch {
+    return 0
+  }
 }
 
 /** The time a process has used, as [[dd-]hh:]mm:ss. */
 function cpuSeconds(pid) {
-  const out = execFileSync('ps', ['-o', 'time=', '-p', String(pid)], { encoding: 'utf8' }).trim()
+  try {
+    const out = execFileSync('ps', ['-o', 'time=', '-p', String(pid)], { encoding: 'utf8' }).trim()
 
-  const parts = out.split(':').map(Number)
+    const parts = out.split(':').map(Number)
 
-  return parts.reduce((total, part) => total * 60 + part, 0)
+    return parts.reduce((total, part) => total * 60 + part, 0)
+  } catch {
+    return 0
+  }
 }
 
 const child = spawn(
   process.execPath,
-  [join(ROOT, 'bin/api-mock-services.js'), 'start', ...MOCKS],
-  { cwd: ROOT, stdio: 'ignore' },
+  [join(ROOT, 'bin/api-mock-services.js'), 'start', ...MOCKS, '--port', String(FIRST_PORT)],
+  {
+    cwd: ROOT,
+    stdio: ['ignore', 'ignore', 'pipe'],
+    // The run brings its own port, so an inherited PORT would fight it.
+    env: { ...process.env, PORT: undefined, HOST: undefined },
+  },
 )
+
+let complaint = ''
+
+child.stderr?.on('data', (chunk) => {
+  complaint += chunk.toString()
+})
 
 const stop = () => {
   child.kill('SIGTERM')
@@ -79,6 +109,13 @@ const started = Date.now()
 let startupMs = null
 
 while (Date.now() - started < MAX_STARTUP_MS * 2) {
+  if (child.exitCode !== null) {
+    console.error('[footprint] the mocks stopped before they came up')
+    console.error(complaint.trim() || 'the command exited with no message')
+
+    process.exit(1)
+  }
+
   try {
     const res = await fetch(`http://127.0.0.1:${FIRST_PORT}/health`)
 

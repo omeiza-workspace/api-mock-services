@@ -160,7 +160,7 @@ async function start() {
 
   let base = options.port ?? 0
 
-  for (const name of options.names) {
+  for (const [index, name] of options.names.entries()) {
     if (!MOCKS[name]) {
       console.error(
         `There is no mock called "${name}". The ones there are: ${Object.keys(MOCKS).join(', ')}.`,
@@ -168,7 +168,11 @@ async function start() {
       process.exit(1)
     }
 
-    const port = options.port ?? MOCKS[name].port ?? base
+    // A port given on the command line is the first one; the rest follow it.
+    // Each mock has its own port otherwise, so they do not fight.
+    const port =
+      options.port !== undefined ? options.port + index : (MOCKS[name].port ?? base)
+
     const service = await startMock(name, { port, host })
 
     base = port + 1

@@ -48,11 +48,8 @@ lint: ## Check the house style
 
 check: lint test ## The lint and the tests
 
-footprint: ## Check the mocks are still light — memory, CPU and startup
-	@npm run footprint
-
 footprint: ## Measure what the engine costs, and fail if it costs too much
-	@bash test/footprint.sh
+	@npm run footprint
 
 pre-ci: test ## The local tests, before anything else
 	@:
