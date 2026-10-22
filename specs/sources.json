@@ -1,10 +1,20 @@
 {
-  "$comment": "The specifications the mocks are kept in step with. Each one is fetched from the provider's own repository, so the mocks stay current without anybody rewriting them. Add an entry, open a pull request, and the refresh keeps it up to date.",
+  "$comment": "The specifications the mocks are checked against. Each one is fetched from the provider's own repository, so the mocks stay in step with the real API. A specification with `check: true` is also compared with the routes the mock serves — a route the provider does not have is a route that has drifted, and it fails the build.",
   "specs": {
     "twilio": {
       "url": "https://raw.githubusercontent.com/twilio/twilio-oai/main/spec/yaml/twilio_api_v2010.yaml",
       "path": "specs/twilio_api_v2010.yaml",
+      "mock": "twilio",
+      "check": true,
       "note": "Twilio API v2010 — the SMS routes"
+    },
+    "stripe": {
+      "url": "https://raw.githubusercontent.com/stripe/openapi/master/openapi/spec3.sdk.json",
+      "path": "specs/stripe_openapi.json",
+      "mock": "stripe",
+      "check": true,
+      "cache": true,
+      "note": "Stripe's OpenAPI description. It is kept out of the repository — it is large, and it is checked, not shipped."
     }
   }
 }

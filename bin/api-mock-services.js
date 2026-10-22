@@ -39,6 +39,16 @@ const POINTERS = {
   fcm: 'FCM_API_URL={url}',
   openai: 'OPENAI_API_BASE={url}/v1',
   s3: 'S3_ENDPOINT={url}',
+  facebook: 'FACEBOOK_GRAPH_API={url}',
+  instagram: 'INSTAGRAM_GRAPH_API={url}',
+  x: 'X_API_BASE={url}/2',
+  bluesky: 'BLUESKY_API_BASE={url}',
+  telegram: 'TELEGRAM_API_BASE={url}',
+  reddit: 'REDDIT_API_BASE={url}',
+  linkedin: 'LINKEDIN_API_BASE={url}',
+  linkedinauth: 'LINKEDIN_AUTH_BASE={url}',
+  tiktok: 'TIKTOK_API_BASE={url}',
+  youtube: 'YOUTUBE_API_BASE={url}/youtube/v3',
 }
 
 /** Where a running mock is, so the control commands can find it. */

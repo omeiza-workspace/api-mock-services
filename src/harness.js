@@ -185,7 +185,15 @@ export class MockService {
 
   /** Register a route. */
   on(method, path, handler) {
-    this.routes.push({ method: method.toUpperCase(), path: toMatcher(path), handler })
+    // The path is kept as it was written, and the matcher is kept beside
+    // it — so the routes of a mock can be read, listed and checked against
+    // a provider's specification.
+    this.routes.push({
+      method: method.toUpperCase(),
+      path,
+      matcher: toMatcher(path),
+      handler,
+    })
 
     return this
   }
@@ -304,6 +312,24 @@ export class MockService {
     this.requests.push(request)
 
     res.setHeader('x-mock-service', this.name)
+    res.setHeader('x-mock-service-kind', 'mock')
+
+    // The mock says what it is.
+    //
+    // Anything talking to it — an agent, a proxy, a test — can ask, and
+    // will be told. It is a local answer, not the real service, it holds no
+    // credentials, and it makes no request to the provider it stands in
+    // for.
+    if (request.path === '/_mock') {
+      json(res, 200, {
+        kind: 'mock',
+        service: this.name,
+        real_service: false,
+        notice:
+          'This is a local mock. It is not the real service, it holds no credentials for it, and it makes no request to it.',
+      })
+      return
+    }
 
     // The control surface — how the mock is told what to do next.
     if (request.path.startsWith('/_control')) {
@@ -339,11 +365,11 @@ export class MockService {
     const route = this.routes.find((candidate) => {
       if (candidate.method !== '*' && candidate.method !== request.method) return false
 
-      if (typeof candidate.path === 'string') {
-        return candidate.path === request.path
+      if (typeof candidate.matcher === 'string') {
+        return candidate.matcher === request.path
       }
 
-      return candidate.path.test(request.path)
+      return candidate.matcher.test(request.path)
     })
 
     if (!route) {
@@ -366,8 +392,8 @@ export class MockService {
     }
 
     // The path parameters, for the routes that have them.
-    if (route.path instanceof RegExp) {
-      const match = route.path.exec(request.path)
+    if (route.matcher instanceof RegExp) {
+      const match = route.matcher.exec(request.path)
 
       request.params = { ...(match?.groups ?? {}) }
 

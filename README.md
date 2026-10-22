@@ -65,8 +65,8 @@ this file.
   a Python environment all add to the footprint before a single request is
   served. Node is already on the machine, because the project under test
   runs on it.
-- **One process for every mock.** Nine mocks in one process cost 50MB. Nine
-  containers cost nine runtimes.
+- **One process for every mock.** Twenty-seven mocks in one process cost
+  51MB. Twenty-seven containers cost twenty-seven runtimes.
 - **In the test, not beside it.** A test that needs a mock starts it in the
   test process, with `startMock()`. Nothing listens on a port, no container
   starts, and the mock stops when the test ends. This is the cheapest way
@@ -74,6 +74,32 @@ this file.
   service second.
 - **Idle means idle.** A mock answers a request and then stops computing.
   Polling, watching and retrying are how a mock turns into a battery drain.
+
+## What a mock is not
+
+These mocks are not connected to the providers they stand in for. They hold
+no credentials, they make no request to a provider, and every answer says
+what they are:
+
+```js
+await fetch(`${stripe.url}/_mock`)
+// { kind: 'mock', service: 'stripe', real_service: false, notice: '…' }
+```
+
+Every answer also carries `x-mock-service-kind: mock`.
+
+That is not only a technical fact — it is what keeps this project, and the
+projects that use it, on the right side of every provider's terms. The
+detail is in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md); the rules for
+anything calling a mock — an agent, a script, a crawler — are in
+[AGENT-SAFETY.md](AGENT-SAFETY.md).
+
+The guarantees are checked, not promised:
+
+```sh
+npm run specs    # every route, against the provider's own specification
+npm test         # including the check that no route bridges to a provider
+```
 
 ---
 
@@ -117,8 +143,26 @@ this file.
 | `openai` | The model calls — OpenAI and Anthropic shapes | 4017 |
 | `s3` | The buckets and the objects (S3) | 4018 |
 
+**Social**
+
+| Mock | What it stands in for | Port |
+|---|---|---|
+| `facebook` | The social network — pages, posts, comments, insights | 4019 |
+| `instagram` | The photo sharing — media, comments, insights | 4020 |
+| `x` | The short messages — tweets, users, followers | 4021 |
+| `bluesky` | The open protocol — the AT Protocol, over JSON-RPC | 4022 |
+| `telegram` | The channels and the bots | 4023 |
+| `reddit` | The communities — posts, comments, subreddits | 4024 |
+| `linkedin` | The professional network — posts, organisations, OAuth | 4025 |
+| `tiktok` | The short video — publishing, queries, comments | 4026 |
+| `youtube` | The video library — videos, channels, search, comments | 4027 |
+
 Every mock answers `/health`, so a container can be checked without knowing
-which mock it is.
+which mock it is — and every mock says what it is at `/_mock`, so anything
+calling one can tell it is not the real service.
+
+Every endpoint every mock serves is listed in
+[the routes](docs/ROUTES.md), which is generated from the code.
 
 ---
 

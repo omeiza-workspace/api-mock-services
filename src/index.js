@@ -26,6 +26,18 @@ import {
 } from './providers/messaging.js'
 import { createOpenAIMock as openaiMock } from './providers/ai.js'
 import { createS3Mock as s3Mock } from './providers/storage.js'
+import {
+  createFacebookMock as facebookMock,
+  createInstagramMock as instagramMock,
+  createXMock as xMock,
+} from './providers/social.js'
+import {
+  createBlueskyMock as blueskyMock,
+  createTelegramMock as telegramMock,
+  createRedditMock as redditMock,
+  createLinkedinMock as linkedinMock,
+} from './providers/community.js'
+import { createTiktokMock as tiktokMock, createYoutubeMock as youtubeMock } from './providers/video.js'
 import { createSpecMock as specMock, createSpecMockFromFile as specMockFromFile } from './spec.js'
 import { attachViews } from './ui/index.js'
 
@@ -55,6 +67,7 @@ export const CATEGORIES = {
   dns: { title: 'DNS', description: 'The zones and the records' },
   ai: { title: 'AI', description: 'The model calls' },
   storage: { title: 'Storage', description: 'The buckets and the objects' },
+  social: { title: 'Social', description: 'The networks, the video platforms and the community apps' },
 }
 
 /** Every mock this package can start. */
@@ -167,6 +180,60 @@ export const MOCKS = {
     category: 'storage',
     description: 'The buckets and the objects (S3)',
   },
+  facebook: {
+    create: facebookMock,
+    port: 4019,
+    category: 'social',
+    description: 'The social network (Facebook Graph API)',
+  },
+  instagram: {
+    create: instagramMock,
+    port: 4020,
+    category: 'social',
+    description: 'The photo sharing (Instagram Graph API)',
+  },
+  x: {
+    create: xMock,
+    port: 4021,
+    category: 'social',
+    description: 'The short messages (X, formerly Twitter)',
+  },
+  bluesky: {
+    create: blueskyMock,
+    port: 4022,
+    category: 'social',
+    description: 'The open protocol (Bluesky, AT Protocol)',
+  },
+  telegram: {
+    create: telegramMock,
+    port: 4023,
+    category: 'social',
+    description: 'The channels and the bots (Telegram)',
+  },
+  reddit: {
+    create: redditMock,
+    port: 4024,
+    category: 'social',
+    description: 'The communities (Reddit)',
+  },
+  linkedin: {
+    create: linkedinMock,
+    port: 4025,
+    category: 'social',
+    description: 'The professional network (LinkedIn)',
+  },
+  tiktok: {
+    create: tiktokMock,
+    port: 4026,
+    category: 'social',
+    description: 'The short video (TikTok)',
+  },
+  youtube: {
+    create: youtubeMock,
+    port: 4027,
+    category: 'social',
+    description: 'The video library (YouTube)',
+  },
 }
 
 /**
@@ -230,6 +297,15 @@ export const createWhatsAppMock = withViews(whatsappMock)
 export const createFcmMock = withViews(fcmMock)
 export const createOpenAIMock = withViews(openaiMock)
 export const createS3Mock = withViews(s3Mock)
+export const createFacebookMock = withViews(facebookMock)
+export const createInstagramMock = withViews(instagramMock)
+export const createXMock = withViews(xMock)
+export const createBlueskyMock = withViews(blueskyMock)
+export const createTelegramMock = withViews(telegramMock)
+export const createRedditMock = withViews(redditMock)
+export const createLinkedinMock = withViews(linkedinMock)
+export const createTiktokMock = withViews(tiktokMock)
+export const createYoutubeMock = withViews(youtubeMock)
 
 /** A mock written as a route file rather than as code. */
 export const createSpecMock = withViews(specMock)

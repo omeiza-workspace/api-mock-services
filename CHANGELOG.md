@@ -43,6 +43,42 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Added
 
+- Nine social mocks: Facebook, Instagram, X, Bluesky, Telegram, Reddit,
+  LinkedIn, TikTok and YouTube — 27 mocks in all. The LinkedIn mock serves
+  both the older `/v2/posts` shape and the current `/rest/posts` one, with
+  the id in the `x-restli-id` header, the OAuth exchange, and the
+  authorization redirect.
+- Every mock answers `/_mock` with what it is, and every answer carries
+  `x-mock-service-kind: mock` — so an agent, a script or a crawler can tell
+  it is not talking to the real service.
+- `AGENT-SAFETY.md` — the rules for anything calling a mock.
+- `THIRD-PARTY-NOTICES.md` — what each mock stands in for, and where the
+  line is with every provider's terms.
+- `npm run specs` — every route a mock serves, checked against the
+  provider's own published specification. A route that has drifted fails the
+  build.
+- `npm run routes` and `docs/ROUTES.md` — the inventory of every endpoint
+  every mock serves, generated from the code.
+- The `social` category, and a compose profile for it.
+
+### Changed
+
+- A mock keeps the path a route was written with, beside the matcher it is
+  matched by — so the routes of a mock can be read, listed and checked.
+
+### Fixed
+
+- The container listens on every interface, so a published port actually
+  reaches the mock. It was bound to the container's own loopback, and
+  answered nothing.
+- `make footprint` works again: two targets had been defined for it, and the
+  stale one won.
+- `--port` was applied to every mock named, so starting two of them with a
+  port put them both on the same one. A port given on the command line is
+  now the first one, and the rest follow it.
+- The footprint run picks a free port from the private range, so a run left
+  behind by an earlier one cannot get in its way — and it fails loudly
+  rather than reporting a measurement of a process that is not there.
 - A documentation site in `docs/` — plain HTML, one stylesheet, no build
   step, published by the Pages workflow.
 - `scripts/update-specs.js` and a `Specs` workflow: the specifications the

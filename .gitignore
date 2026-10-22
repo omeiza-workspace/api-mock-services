@@ -8,8 +8,8 @@
 .mocks.log
 .mocks.pid
 
-# Node
-node_modules/
+# The specifications that are checked, not shipped
+specs/.cache/
 npm-debug.log*
 *.tgz
 
@@ -18,3 +18,4 @@ npm-debug.log*
 .idea/
 .vscode/
 *.swp
+# Node

@@ -43,31 +43,51 @@ const IDLE_WINDOW_MS = Number(process.env.IDLE_WINDOW_MS ?? 10000)
  * The port the run starts on.
  *
  * The mocks' own ports are left alone, so a footprint run never takes a
- * port that a mock somebody else is using already has.
+ * port that a mock somebody else is using already has. The port is picked
+ * rather than fixed, so a run left behind by an earlier one cannot get in
+ * the way of this one.
  */
-const FIRST_PORT = Number(process.env.FOOTPRINT_PORT ?? 4500)
+const FIRST_PORT = Number(process.env.FOOTPRINT_PORT ?? (await freePort()))
+
+/**
+ * A port nothing is listening on.
+ *
+ * Not one the operating system hands out: those come from the ephemeral
+ * range, which is also where outbound connections come from, and the two
+ * meet. A port from the private range is asked for directly, and checked.
+ */
+async function freePort() {
+  const { createServer } = await import('node:net')
+
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    const port = 20000 + Math.floor(Math.random() * 20000)
+
+    const server = createServer()
+
+    const taken = await new Promise((resolve) => {
+      server.once('error', () => resolve(true))
+      server.listen(port, '127.0.0.1', () => resolve(false))
+    })
+
+    if (taken) continue
+
+    await new Promise((resolve) => server.close(resolve))
+
+    return port
+  }
+
+  throw new Error('no free port could be found')
+}
 
 /** The mocks that are started to measure them. */
-const MOCKS = [
-  'stripe',
-  'resend',
-  'xero',
-  'cloudflare',
-  'paystack',
-  'interswitch',
-  'youverify',
-  'onesignal',
-  'twilio',
-  'flutterwave',
-  'monnify',
-  'termii',
-  'smileid',
-  'identitypass',
-  'whatsapp',
-  'fcm',
-  'openai',
-  's3',
-]
+const MOCKS = await mockNames()
+
+/** Every mock the package carries, so the list can never go stale. */
+async function mockNames() {
+  const { MOCKS: registry } = await import('../src/index.js')
+
+  return Object.keys(registry)
+}
 
 /**
  * The resident set of a process, in kilobytes.
@@ -155,9 +175,23 @@ if (startupMs === null) {
 // How much memory, and how much CPU while nothing is happening.
 const memoryMb = Math.round(memoryKb(child.pid) / 1024)
 
+if (memoryMb === 0) {
+  console.error('[footprint] the process is gone — the measurement would be a fiction')
+  console.error(complaint.trim() || 'the command exited with no message')
+
+  process.exit(1)
+}
+
 const cpuBefore = cpuSeconds(child.pid)
 
 await new Promise((resolve) => setTimeout(resolve, IDLE_WINDOW_MS))
+
+if (child.exitCode !== null) {
+  console.error('[footprint] the process stopped while it was being measured')
+  console.error(complaint.trim() || 'the command exited with no message')
+
+  process.exit(1)
+}
 
 const idleCpu = Number(
   (((cpuSeconds(child.pid) - cpuBefore) / (IDLE_WINDOW_MS / 1000)) * 100).toFixed(2),

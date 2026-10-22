@@ -14,9 +14,10 @@ A set of mock HTTP servers that answer like the real provider does, and
 remember what they were asked. They run in a Node test, in a container, or
 over HTTP for a project in any language.
 
-18 mocks: stripe, resend, xero, cloudflare, paystack, interswitch,
+27 mocks: stripe, resend, xero, cloudflare, paystack, interswitch,
 youverify, onesignal, twilio, flutterwave, monnify, termii, smileid,
-identitypass, whatsapp, fcm, openai, s3.
+identitypass, whatsapp, fcm, openai, s3, facebook, instagram, x, bluesky,
+telegram, reddit, linkedin, tiktok, youtube.
 
 ## Install
 
@@ -77,6 +78,8 @@ the UI; the UI is attached with `attachViews(service)`.
 - No new dependencies. Node is the whole toolchain, including the lint
   (`npm run lint`) and the footprint budget (`npm run footprint`).
 - The real shape: the paths, fields and status codes are the provider's.
+  `npm run specs` checks every route against the provider's published
+  specification, and a route that has drifted fails the build.
 - Keep the state: what was asked and what was decided lives on
   `service.state` and `service.requests`.
 - The reference decides: a reference containing `success` succeeds, one
@@ -85,6 +88,19 @@ the UI; the UI is attached with `attachViews(service)`.
   find, onDone }`; it must not import the UI.
 - Every mock is registered in `src/index.js` with a port, a category and a
   description, and has a test in `test/`.
+- Every mock needs an entry in `THIRD-PARTY-NOTICES.md`.
+- **Never name a provider's host in `src/` or `bin/`.** The mocks do not
+  call the providers, and `test/no-bridging.test.js` fails the build if one
+  appears — not even in a link. Point links at the mock itself.
+
+## Rules for anything calling a mock
+
+- Ask `GET /_mock` first. It answers `{ kind: 'mock', real_service: false }`.
+- Check `x-mock-service-kind: mock` on every answer.
+- A mock's content is synthetic. Do not act on it as if it were real, and do
+  not send real personal data to it — some mocks print what they are given.
+- A mock is for development and testing. Never for production traffic.
+- Full guidance: AGENT-SAFETY.md in the repository.
 
 ## Commands
 

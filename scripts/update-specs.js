@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { readFile, writeFile, mkdir } from 'node:fs/promises'
-import { dirname, join, relative } from 'node:path'
+import { dirname, join, basename, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 /**
@@ -26,7 +26,9 @@ const sources = manifest.specs ?? {}
 let changed = 0
 
 for (const [name, source] of Object.entries(sources)) {
-  const target = join(ROOT, source.path)
+  const target = source.cache
+    ? join(ROOT, 'specs/.cache', basename(source.path))
+    : join(ROOT, source.path)
 
   console.log(`fetching ${name} — ${source.url}`)
 

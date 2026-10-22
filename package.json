@@ -41,6 +41,8 @@
     "test:watch": "node --test --watch test/*.test.js",
     "lint": "node scripts/lint.js",
     "footprint": "node scripts/footprint.js",
+    "routes": "node scripts/routes.js",
+    "specs": "node scripts/check-specs.js",
     "check": "npm run lint && npm test"
   },
   "keywords": [

@@ -1,0 +1,1071 @@
+import { MockService, json, counter } from '../harness.js'
+
+/**
+ * The places people talk.
+ *
+ * Bluesky, Telegram, Reddit and LinkedIn — the four an app asks when it
+ * wants to publish something, read what people said, or find out who a
+ * person is.
+ *
+ * Each one answers with the shape the real API uses, so a test can check
+ * what the app did with the answer. What was sent is kept as well, so a
+ * test can look at that too.
+ */
+
+/** The letters and numbers a content id is written with. */
+const BASE32 = 'abcdefghijklmnopqrstuvwxyz234567'
+
+/**
+ * A content id for a piece of text.
+ *
+ * The same text always gets the same id, so asking twice gives the same
+ * answer twice.
+ */
+const makeCid = (seed) => {
+  const text = String(seed ?? '')
+  let hash = 0
+
+  for (const character of text) {
+    hash = (hash * 31 + character.charCodeAt(0)) % 1_000_003
+  }
+
+  let id = 'bafyrei'
+
+  while (id.length < 32) {
+    hash = (hash * 33 + id.length) % 1_000_003
+    id += BASE32[hash % 32]
+  }
+
+  return id
+}
+
+/** A DID, the way the AT Protocol writes one. */
+const makeDid = (seed) => `did:plc:${makeCid(seed).slice(0, 24)}`
+
+/**
+ * The key of a new record — a short id that sorts by time, like the real
+ * one.
+ */
+const makeKey = () => {
+  const stamp = Date.now().toString(32).padStart(9, '0')
+  const rest = Math.random().toString(32).slice(2, 6).padEnd(4, '0')
+
+  return `${stamp}${rest}`
+}
+
+/** The name a person goes by, taken from their handle. */
+const displayNameOf = (handle) => {
+  const text = String(handle ?? '')
+
+  // A DID is not a name, so one is made up for it.
+  if (!text || text.startsWith('did:')) return 'A person'
+
+  const name = text.split('.')[0]
+
+  return name.charAt(0).toUpperCase() + name.slice(1)
+}
+
+/**
+ * Bluesky.
+ *
+ * The AT Protocol: every call is a method name and a JSON body, and the
+ * answer is a JSON object. A method can be asked over GET as well, with the
+ * arguments in the query string.
+ *
+ * The posts that were made are kept, so a timeline asked for afterwards can
+ * show them.
+ */
+export function createBlueskyMock() {
+  const service = new MockService('bluesky')
+
+  /** The posts the service has been given. */
+  service.state.posts = []
+
+  /** The accounts it has met, by handle. */
+  service.state.profiles = new Map()
+
+  /** The records that were created. */
+  service.state.records = []
+
+  const nextRecord = counter('rec')
+
+  service.on('GET', '/health', (req, res) => {
+    json(res, 200, { status: 'healthy', service: 'bluesky-mock' })
+  })
+
+  /** The profile of an account — the same shape however it was asked for. */
+  const profileOf = (actor) => {
+    const handle = String(actor ?? 'ada.bsky.social')
+    const known = service.state.profiles.get(handle)
+
+    if (known) return known
+
+    const did = makeDid(handle)
+
+    const profile = {
+      did,
+      handle,
+      displayName: displayNameOf(handle),
+      description: 'A person on the internet, posting about the internet.',
+      avatar: `https://example.test/avatar/${did}.jpeg`,
+      followersCount: 1284,
+      followsCount: 342,
+      postsCount: 87,
+      createdAt: '2023-04-18T09:12:00.000Z',
+    }
+
+    service.state.profiles.set(handle, profile)
+
+    return profile
+  }
+
+  /** A post, the shape the feed uses. */
+  const makePost = ({ text, handle, createdAt }) => {
+    const did = makeDid(handle)
+    const uri = `at://${did}/app.bsky.feed.post/${makeKey()}`
+
+    return {
+      uri,
+      cid: makeCid(uri),
+      record: { text, createdAt },
+      author: { handle, displayName: displayNameOf(handle), did },
+      replyCount: 0,
+      likeCount: 0,
+      repostCount: 0,
+    }
+  }
+
+  /** The timeline, asked for over POST or over GET. */
+  const timelineOf = (params) => {
+    const limit = Number(params.limit ?? 20)
+    const posts = service.state.posts.slice(0, limit > 0 ? limit : undefined)
+
+    return {
+      cursor: `cursor_${service.state.posts.length}`,
+      feed: posts.map((post) => ({
+        post,
+        reason: { indexedAt: post.record.createdAt },
+      })),
+    }
+  }
+
+  /** The results of a search, asked for over POST or over GET. */
+  const searchOf = (params) => {
+    const term = String(params.q ?? '').toLowerCase()
+    const limit = Number(params.limit ?? 25)
+
+    const found = service.state.posts.filter((post) =>
+      String(post.record.text ?? '').toLowerCase().includes(term),
+    )
+
+    return {
+      cursor: `cursor_${found.length}`,
+      posts: found.slice(0, limit > 0 ? limit : undefined).map((post) => ({
+        uri: post.uri,
+        cid: post.cid,
+        record: { text: post.record.text },
+        author: { handle: post.author.handle, displayName: post.author.displayName },
+        likeCount: post.likeCount,
+      })),
+    }
+  }
+
+  /** The thread of a post, asked for over POST or over GET. */
+  const threadOf = (params) => {
+    const uri = String(params.uri ?? '')
+    const post = service.state.posts.find((candidate) => candidate.uri === uri)
+
+    if (!post) return null
+
+    return {
+      thread: {
+        post: {
+          uri: post.uri,
+          cid: post.cid,
+          record: { text: post.record.text },
+          author: { handle: post.author.handle },
+        },
+        replies: [],
+        parent: null,
+      },
+    }
+  }
+
+  service.on('POST', '/xrpc/app.bsky.actor.getProfile', (req, res) => {
+    json(res, 200, profileOf(req.json?.actor))
+  })
+
+  service.on('GET', '/xrpc/app.bsky.actor.getProfile', (req, res) => {
+    json(res, 200, profileOf(req.query.actor))
+  })
+
+  service.on('POST', '/xrpc/app.bsky.feed.getTimeline', (req, res) => {
+    json(res, 200, timelineOf(req.json ?? {}))
+  })
+
+  service.on('GET', '/xrpc/app.bsky.feed.getTimeline', (req, res) => {
+    json(res, 200, timelineOf(req.query))
+  })
+
+  service.on('POST', '/xrpc/app.bsky.feed.searchPosts', (req, res) => {
+    json(res, 200, searchOf(req.json ?? {}))
+  })
+
+  service.on('GET', '/xrpc/app.bsky.feed.searchPosts', (req, res) => {
+    json(res, 200, searchOf(req.query))
+  })
+
+  service.on('POST', '/xrpc/app.bsky.feed.getPostThread', (req, res) => {
+    const thread = threadOf(req.json ?? {})
+
+    if (!thread) {
+      json(res, 404, { error: 'NotFound', message: 'There is no post with that uri' })
+      return
+    }
+
+    json(res, 200, thread)
+  })
+
+  service.on('GET', '/xrpc/app.bsky.feed.getPostThread', (req, res) => {
+    const thread = threadOf(req.query)
+
+    if (!thread) {
+      json(res, 404, { error: 'NotFound', message: 'There is no post with that uri' })
+      return
+    }
+
+    json(res, 200, thread)
+  })
+
+  service.on('POST', '/xrpc/app.bsky.repo.createRecord', (req, res) => {
+    const body = req.json ?? {}
+
+    if (!body.repo || !body.collection) {
+      json(res, 400, { error: 'InvalidRequest', message: 'repo and collection are required' })
+      return
+    }
+
+    const key = makeKey()
+    const uri = `at://${body.repo}/${body.collection}/${key}`
+    const cid = makeCid(uri)
+    const createdAt = body.record?.createdAt ?? new Date().toISOString()
+    const author = profileOf(body.record?.handle ?? body.repo)
+
+    service.state.records.push({
+      name: nextRecord(),
+      uri,
+      cid,
+      repo: body.repo,
+      collection: body.collection,
+      record: body.record ?? {},
+      created_at: createdAt,
+    })
+
+    // The new post goes into the feed, so a timeline asked for after it
+    // shows it.
+    service.state.posts.push({
+      uri,
+      cid,
+      record: { text: String(body.record?.text ?? ''), createdAt },
+      author: {
+        handle: author.handle,
+        displayName: author.displayName,
+        did: body.repo,
+      },
+      replyCount: 0,
+      likeCount: 0,
+      repostCount: 0,
+    })
+
+    json(res, 200, { uri, cid })
+  })
+
+  // A method the mock does not know, answered the way the AT Protocol does.
+  service.on('POST', '/xrpc/:method', (req, res) => {
+    json(res, 501, {
+      error: 'MethodNotImplemented',
+      message: `The mock does not know ${req.params.method}`,
+    })
+  })
+
+  service.on('GET', '/xrpc/:method', (req, res) => {
+    json(res, 501, {
+      error: 'MethodNotImplemented',
+      message: `The mock does not know ${req.params.method}`,
+    })
+  })
+
+  // A first post, so the feed is not empty when a test looks at it.
+  service.state.posts.push(
+    makePost({
+      text: 'Hello from the mock.',
+      handle: 'ada.bsky.social',
+      createdAt: '2026-10-01T08:30:00.000Z',
+    }),
+  )
+
+  return service
+}
+
+/**
+ * Telegram.
+ *
+ * The Bot API: the token is part of the path, so every call is
+ * `/bot<token>/<method>`. Any token is accepted.
+ *
+ * The messages that were sent are kept, so `getUpdates` can hand them back.
+ */
+export function createTelegramMock() {
+  const service = new MockService('telegram')
+
+  /** The messages that were sent. */
+  service.state.messages = []
+
+  /** The bot itself. */
+  service.state.bot = {
+    id: 7000000001,
+    is_bot: true,
+    first_name: 'Mock Bot',
+    username: 'mock_delivery_bot',
+  }
+
+  /** The tokens the mock was called with. */
+  service.state.tokens = new Set()
+
+  let messageNumber = 0
+
+  const nextFileId = counter('file')
+
+  /** The number of the next message, the way Telegram counts them. */
+  const nextMessageId = () => {
+    messageNumber += 1
+
+    return messageNumber
+  }
+
+  /** The time the bot would say it sent the message. */
+  const now = () => Math.floor(Date.now() / 1000)
+
+  service.on('GET', '/health', (req, res) => {
+    json(res, 200, { status: 'healthy', service: 'telegram-mock' })
+  })
+
+  /** The bot, as it introduces itself. */
+  const from = () => ({
+    id: service.state.bot.id,
+    is_bot: service.state.bot.is_bot,
+    username: service.state.bot.username,
+  })
+
+  /** A message, the shape Telegram answers with. */
+  const makeMessage = (body, chatType) => ({
+    message_id: nextMessageId(),
+    from: from(),
+    chat: { id: body.chat_id, type: chatType },
+    date: now(),
+    text: body.text,
+  })
+
+  service.on('POST', /^\/bot(?<token>[^/]+)\/sendMessage$/, (req, res) => {
+    const body = req.json ?? {}
+
+    service.state.tokens.add(String(req.params.token))
+
+    if (!body.chat_id || !body.text) {
+      json(res, 400, {
+        ok: false,
+        error_code: 400,
+        description: 'chat_id and text are required',
+      })
+      return
+    }
+
+    const message = makeMessage(body, 'private')
+
+    service.state.messages.push(message)
+
+    json(res, 200, { ok: true, result: message })
+  })
+
+  service.on('POST', /^\/bot(?<token>[^/]+)\/sendChannelPost$/, (req, res) => {
+    const body = req.json ?? {}
+
+    service.state.tokens.add(String(req.params.token))
+
+    if (!body.chat_id || !body.text) {
+      json(res, 400, {
+        ok: false,
+        error_code: 400,
+        description: 'chat_id and text are required',
+      })
+      return
+    }
+
+    const message = makeMessage(body, 'channel')
+
+    service.state.messages.push(message)
+
+    json(res, 200, { ok: true, result: message })
+  })
+
+  service.on('POST', /^\/bot(?<token>[^/]+)\/sendPhoto$/, (req, res) => {
+    const body = req.json ?? {}
+
+    service.state.tokens.add(String(req.params.token))
+
+    if (!body.chat_id || !body.photo) {
+      json(res, 400, {
+        ok: false,
+        error_code: 400,
+        description: 'chat_id and photo are required',
+      })
+      return
+    }
+
+    const message = {
+      message_id: nextMessageId(),
+      from: from(),
+      chat: { id: body.chat_id, type: 'private' },
+      date: now(),
+      caption: body.caption ?? '',
+      photo: [
+        {
+          file_id: `AgAC${nextFileId()}`,
+          file_unique_id: 'AQADmock',
+          width: 1280,
+          height: 720,
+          file_size: 48213,
+        },
+      ],
+    }
+
+    service.state.messages.push(message)
+
+    json(res, 200, { ok: true, result: message })
+  })
+
+  service.on('POST', /^\/bot(?<token>[^/]+)\/editMessageText$/, (req, res) => {
+    const body = req.json ?? {}
+
+    service.state.tokens.add(String(req.params.token))
+
+    if (!body.chat_id || !body.message_id || !body.text) {
+      json(res, 400, {
+        ok: false,
+        error_code: 400,
+        description: 'chat_id, message_id and text are required',
+      })
+      return
+    }
+
+    const message = service.state.messages.find(
+      (candidate) => Number(candidate.message_id) === Number(body.message_id),
+    )
+
+    if (!message) {
+      json(res, 400, {
+        ok: false,
+        error_code: 400,
+        description: 'the message to edit was not found',
+      })
+      return
+    }
+
+    message.text = body.text
+    message.edited = true
+    message.edit_date = now()
+
+    json(res, 200, { ok: true, result: message })
+  })
+
+  service.on('POST', /^\/bot(?<token>[^/]+)\/setWebhook$/, (req, res) => {
+    const body = req.json ?? {}
+
+    service.state.tokens.add(String(req.params.token))
+
+    if (!body.url) {
+      json(res, 400, {
+        ok: false,
+        error_code: 400,
+        description: 'url is required',
+      })
+      return
+    }
+
+    service.state.webhook.url = body.url
+    service.state.webhook.secret = body.secret_token ?? null
+
+    json(res, 200, { ok: true, result: true })
+  })
+
+  service.on('GET', /^\/bot(?<token>[^/]+)\/getMe$/, (req, res) => {
+    const bot = service.state.bot
+
+    service.state.tokens.add(String(req.params.token))
+
+    json(res, 200, {
+      ok: true,
+      result: {
+        id: bot.id,
+        is_bot: true,
+        first_name: bot.first_name,
+        username: bot.username,
+      },
+    })
+  })
+
+  service.on('GET', /^\/bot(?<token>[^/]+)\/getUpdates$/, (req, res) => {
+    service.state.tokens.add(String(req.params.token))
+
+    const updates = service.state.messages.map((message, index) => ({
+      update_id: index + 1,
+      message: {
+        message_id: message.message_id,
+        chat: message.chat,
+        date: message.date,
+        text: message.text ?? message.caption ?? '',
+      },
+    }))
+
+    json(res, 200, { ok: true, result: updates })
+  })
+
+  return service
+}
+
+/**
+ * Reddit.
+ *
+ * The oauth API: the account that is asking, the posts it makes, and the
+ * comments it leaves. Everything is wrapped in `kind` and `data`, the way
+ * Reddit wraps everything.
+ *
+ * The posts that were submitted are kept, so the hot listing of a subreddit
+ * can show them.
+ */
+export function createRedditMock() {
+  const service = new MockService('reddit')
+
+  /** The posts that were submitted. */
+  service.state.posts = []
+
+  /** The comments that were left. */
+  service.state.comments = []
+
+  /** The account the mock is signed in as. */
+  service.state.account = {
+    id: 'mock_reddit_user',
+    name: 'mock_user',
+    created_utc: 1610000000,
+    verified: true,
+    has_verified_email: true,
+    icon_img: 'https://example.test/avatar.png',
+  }
+
+  let idNumber = 0
+
+  /** An id, the way Reddit writes them: a short run of letters and numbers. */
+  const nextId = () => {
+    idNumber += 1
+
+    return idNumber.toString(36)
+  }
+
+  /** The time the post was made, the way Reddit counts it. */
+  const now = () => Math.floor(Date.now() / 1000)
+
+  service.on('GET', '/health', (req, res) => {
+    json(res, 200, { status: 'healthy', service: 'reddit-mock' })
+  })
+
+  service.on('GET', '/api/v1/me', (req, res) => {
+    json(res, 200, service.state.account)
+  })
+
+  service.on('GET', '/api/v1/user/:username/about', (req, res) => {
+    const username = String(req.params.username)
+
+    json(res, 200, {
+      kind: 't2',
+      data: {
+        name: username,
+        id: `mock_${username}`,
+        created_utc: 1600000000,
+        total_karma: { post_karma: 512, comment_karma: 128 },
+        icon_img: 'https://example.test/avatar.png',
+      },
+    })
+  })
+
+  service.on('POST', '/api/submit', (req, res) => {
+    const body = req.json ?? {}
+
+    if (!body.sr || !body.title) {
+      json(res, 400, {
+        json: {
+          errors: [['SUBREDDIT_REQUIRED', 'you must specify a subreddit', 'sr']],
+          data: null,
+        },
+      })
+      return
+    }
+
+    const id = nextId()
+    const subreddit = String(body.sr)
+    const slug = String(body.title)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '')
+
+    const post = {
+      id,
+      name: `t3_${id}`,
+      title: body.title,
+      text: body.text ?? '',
+      kind: body.kind ?? 'self',
+      subreddit,
+      author: service.state.account.name,
+      score: 1,
+      num_comments: 0,
+      created_utc: now(),
+      permalink: `/r/${subreddit}/comments/${id}/${slug}/`,
+      url: `https://example.test/r/${subreddit}/comments/${id}/${slug}/`,
+    }
+
+    service.state.posts.push(post)
+
+    json(res, 200, {
+      json: {
+        errors: [],
+        data: { id, name: post.name, url: post.url },
+      },
+    })
+  })
+
+  service.on('POST', '/api/comment', (req, res) => {
+    const body = req.json ?? {}
+
+    if (!body.thing_id || !body.text) {
+      json(res, 400, {
+        json: {
+          errors: [['THING_ID_REQUIRED', 'you must say what you are commenting on', 'thing_id']],
+          data: null,
+        },
+      })
+      return
+    }
+
+    const id = nextId()
+
+    const comment = {
+      id,
+      name: `t1_${id}`,
+      thing_id: body.thing_id,
+      body: body.text,
+      author: service.state.account.name,
+      created_utc: now(),
+    }
+
+    service.state.comments.push(comment)
+
+    json(res, 200, {
+      json: {
+        errors: [],
+        data: {
+          id,
+          things: [
+            {
+              kind: 't1',
+              data: {
+                id: comment.id,
+                body: comment.body,
+                author: comment.author,
+                created_utc: comment.created_utc,
+              },
+            },
+          ],
+        },
+      },
+    })
+  })
+
+  service.on('GET', '/r/:subreddit/about', (req, res) => {
+    const subreddit = String(req.params.subreddit)
+
+    json(res, 200, {
+      kind: 't5',
+      data: {
+        display_name: subreddit,
+        title: `The ${subreddit} subreddit`,
+        public_description: 'A place to talk about things.',
+        subscribers: 128000,
+        active_user_count: 2400,
+        created_utc: 1300000000,
+      },
+    })
+  })
+
+  service.on('GET', '/r/:subreddit/hot', (req, res) => {
+    const subreddit = String(req.params.subreddit)
+
+    const posts = service.state.posts.filter((post) => post.subreddit === subreddit)
+
+    json(res, 200, {
+      kind: 'Listing',
+      data: {
+        after: null,
+        children: posts.map((post) => ({
+          kind: 't3',
+          data: {
+            id: post.id,
+            title: post.title,
+            author: post.author,
+            score: post.score,
+            num_comments: post.num_comments,
+            created_utc: post.created_utc,
+            permalink: post.permalink,
+            subreddit: post.subreddit,
+          },
+        })),
+      },
+    })
+  })
+
+  // A first post, so the listing is not empty when a test looks at it.
+  service.state.posts.push({
+    id: nextId(),
+    name: 't3_seeded',
+    title: 'The mock is awake',
+    text: 'This post came with the mock.',
+    kind: 'self',
+    subreddit: 'mock',
+    author: service.state.account.name,
+    score: 12,
+    num_comments: 2,
+    created_utc: now(),
+    permalink: '/r/mock/comments/seeded/the-mock-is-awake/',
+    url: 'https://example.test/r/mock/comments/seeded/the-mock-is-awake/',
+  })
+
+  return service
+}
+
+/**
+ * LinkedIn.
+ *
+ * The API an app uses to post as a person or as a company, and to read the
+ * company pages it manages.
+ *
+ * The posts that were made are kept, so one of them can be asked for again
+ * by its id.
+ */
+export function createLinkedinMock() {
+  const service = new MockService('linkedin')
+
+  /** The posts that were made, by id. */
+  service.state.posts = new Map()
+
+  /** The companies the mock knows about. */
+  service.state.organizations = [
+    {
+      id: 'urn:li:organization:123',
+      name: 'Bytesickle',
+      description: 'The software shop.',
+      website: 'https://example.test',
+      logo: 'https://example.test/logo.png',
+      linkedin_url: 'https://example.test/company/bytesickle',
+    },
+  ]
+
+  /** The company access rules the mock knows about. */
+  service.state.organizationAcls = [
+    {
+      id: 'urn:li:organizationAcl:456',
+      roleAssignee: { id: 'urn:li:organization:123' },
+      role: 'ADMINISTRATOR',
+      organization: 'urn:li:organization:123',
+    },
+  ]
+
+  let postNumber = 0
+
+  service.on('GET', '/health', (req, res) => {
+    json(res, 200, { status: 'healthy', service: 'linkedin-mock' })
+  })
+
+  /** The id of a new post, the way LinkedIn writes one. */
+  const nextPostId = () => {
+    postNumber += 1
+
+    return `urn:li:share:${689000000000 + postNumber}`
+  }
+
+  /** The id as it was written, whether it was escaped or not. */
+  const readId = (raw) => {
+    const id = String(raw)
+
+    try {
+      return decodeURIComponent(id)
+    } catch {
+      return id
+    }
+  }
+
+  service.on('GET', '/v2/userinfo', (req, res) => {
+    json(res, 200, {
+      sub: 'urn:li:person:abc',
+      name: 'Ada Nwosu',
+      given_name: 'Ada',
+      family_name: 'Nwosu',
+      picture: 'https://example.test/person.jpg',
+      email: 'ada@example.com',
+      email_verified: true,
+    })
+  })
+
+  service.on('POST', '/v2/posts', (req, res) => {
+    const body = req.json ?? {}
+
+    if (!body.author) {
+      json(res, 400, { message: 'the author is required', status: 400 })
+      return
+    }
+
+    const post = {
+      id: nextPostId(),
+      author: body.author,
+      created: Date.now(),
+      commentary: body.commentary ?? '',
+      visibility: body.visibility ?? 'PUBLIC',
+      distribution: body.distribution ?? {
+        feedDistribution: 'MAIN_FEED',
+        targetEntities: [],
+        thirdPartyDistributionChannels: [],
+      },
+    }
+
+    service.state.posts.set(post.id, post)
+
+    json(res, 201, post)
+  })
+
+  service.on('GET', '/v2/posts/:id', (req, res) => {
+    const id = String(req.params.id)
+    const post = service.state.posts.get(id) ?? service.state.posts.get(readId(id))
+
+    if (!post) {
+      json(res, 404, { message: 'the post was not found', status: 404 })
+      return
+    }
+
+    json(res, 200, post)
+  })
+
+  service.on('GET', '/v2/organizations', (req, res) => {
+    const term = String(req.query.q ?? '').toLowerCase()
+
+    const found = service.state.organizations.filter((organization) =>
+      !term || organization.name.toLowerCase().includes(term),
+    )
+
+    json(res, 200, { elements: found, total: found.length })
+  })
+
+  service.on('GET', '/v2/organizationAcls', (req, res) => {
+    const term = String(req.query.q ?? '').toLowerCase()
+
+    const found = service.state.organizationAcls.filter((element) => {
+      if (!term) return true
+
+      // The search says which part of the entry to look in.
+      if (term.includes('roleassignee')) return true
+
+      return `${element.role} ${element.organization}`.toLowerCase().includes(term)
+    })
+
+    json(res, 200, { elements: found, total: found.length })
+  })
+
+  service.on('GET', '/v2/socialActions/:id', (req, res) => {
+    const id = String(req.params.id)
+
+    json(res, 200, {
+      id,
+      type: 'LIKE',
+      created: Date.now(),
+      actor: 'urn:li:person:abc',
+      target: 'urn:li:share:123',
+    })
+  })
+
+  // ---------------------------------------------------------------------
+  // The current API.
+  //
+  // The routes above are the older ugcPosts shape. The ones below are the
+  // Rest.li shape that LinkedIn serves now: /rest/posts, the id in the
+  // x-restli-id header, and the version headers that come with it.
+  // ---------------------------------------------------------------------
+
+  /** The version header, echoed back the way the API echoes it. */
+  const echoVersion = (req, res) => {
+    const version = req.headers['linkedin-version']
+
+    if (version) res.setHeader('LinkedIn-Version', version)
+  }
+
+  service.on('GET', '/v2/me', (req, res) => {
+    echoVersion(req, res)
+
+    // The id is what a person is written as: urn:li:person:{id}.
+    json(res, 200, {
+      id: 'abc',
+      localizedFirstName: 'Ada',
+      localizedLastName: 'Nwosu',
+      localizedHeadline: 'Building things.',
+      pictureUrl: 'https://example.test/person.jpg',
+      emailAddress: 'ada@example.test',
+    })
+  })
+
+  service.on('POST', '/rest/posts', (req, res) => {
+    echoVersion(req, res)
+
+    const body = req.json ?? {}
+
+    if (!body.author) {
+      json(res, 400, {
+        message: 'The author is required',
+        status: 400,
+        serviceErrorCode: 100,
+        serviceErrorMessage: 'author',
+        key: 'com.linkedin.voyager.growth.rest.PostCreationError',
+      })
+      return
+    }
+
+    const post = {
+      id: nextPostId(),
+      author: body.author,
+      created: Date.now(),
+      commentary: body.commentary ?? '',
+      visibility: body.visibility ?? 'PUBLIC',
+      distribution: body.distribution ?? {
+        feedDistribution: 'MAIN_FEED',
+        targetEntities: [],
+        thirdPartyDistributionChannels: [],
+      },
+      content: body.content ?? {},
+      lifecycleState: 'PUBLISHED',
+      lastModified: Date.now(),
+    }
+
+    service.state.posts.set(post.id, post)
+
+    // The id comes back in the header, and in the body for the callers
+    // that read it from there.
+    res.setHeader('x-restli-id', post.id)
+    res.setHeader('x-restli-protocol-version', '2.0.0')
+
+    json(res, 201, post)
+  })
+
+  service.on('GET', '/rest/posts', (req, res) => {
+    echoVersion(req, res)
+
+    const author = req.query.author
+    const term = String(req.query.q ?? '').toLowerCase()
+
+    const found = [...service.state.posts.values()].filter((post) => {
+      if (author && post.author !== author) return false
+
+      // The search says which part of the entry to look in.
+      if (!term) return true
+      if (term === 'author') return true
+
+      return `${post.commentary} ${post.author}`.toLowerCase().includes(term)
+    })
+
+    json(res, 200, {
+      elements: found,
+      paging: { count: found.length, start: 0, links: [] },
+      restli: { type: 'Collection', count: found.length },
+    })
+  })
+
+  service.on('GET', '/rest/posts/:id', (req, res) => {
+    echoVersion(req, res)
+
+    const id = String(req.params.id)
+    const post = service.state.posts.get(id) ?? service.state.posts.get(readId(id))
+
+    if (!post) {
+      json(res, 404, {
+        message: 'The post was not found',
+        status: 404,
+        serviceErrorCode: 404,
+        key: 'com.linkedin.voyager.growth.rest.NotFoundError',
+      })
+      return
+    }
+
+    res.setHeader('x-restli-id', post.id)
+
+    json(res, 200, post)
+  })
+
+  service.on('DELETE', '/rest/posts/:id', (req, res) => {
+    echoVersion(req, res)
+
+    const id = String(req.params.id)
+    const key = service.state.posts.has(id) ? id : readId(id)
+
+    if (!service.state.posts.has(key)) {
+      json(res, 404, {
+        message: 'The post was not found',
+        status: 404,
+        serviceErrorCode: 404,
+        key: 'com.linkedin.voyager.growth.rest.NotFoundError',
+      })
+      return
+    }
+
+    service.state.posts.delete(key)
+
+    res.statusCode = 204
+    res.end()
+  })
+
+  // The token exchange, and the authorization the browser is sent to.
+  service.on('POST', '/oauth/v2/accessToken', (req, res) => {
+    const body = req.json ?? {}
+
+    json(res, 200, {
+      access_token: 'mock-access-token',
+      expires_in: 5184000,
+      token_type: 'Bearer',
+      scope: body.scope ?? 'w_member_social r_liteprofile',
+    })
+  })
+
+  service.on('GET', '/oauth/v2/authorization', (req, res) => {
+    const redirect = String(req.query.redirect_uri ?? '')
+    const state = req.query.state
+
+    if (!redirect) {
+      json(res, 400, { error: 'invalid_request', error_description: 'redirect_uri is required' })
+      return
+    }
+
+    const target = new URL(redirect)
+
+    target.searchParams.set('code', 'mock-authorization-code')
+
+    if (state) target.searchParams.set('state', String(state))
+
+    res.statusCode = 302
+    res.setHeader('location', target.toString())
+    res.end()
+  })
+
+  return service
+}

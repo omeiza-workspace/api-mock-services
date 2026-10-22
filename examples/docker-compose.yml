@@ -205,3 +205,67 @@ services:
     command: ["s3"]
     ports:
       - "4018:4018"
+
+  # ── Social ──────────────────────────────────────────────────────────────
+  facebook-mock:
+    <<: *mock
+    profiles: [social, all]
+    command: ["facebook"]
+    ports:
+      - "4019:4019"
+
+  instagram-mock:
+    <<: *mock
+    profiles: [social, all]
+    command: ["instagram"]
+    ports:
+      - "4020:4020"
+
+  x-mock:
+    <<: *mock
+    profiles: [social, all]
+    command: ["x"]
+    ports:
+      - "4021:4021"
+
+  bluesky-mock:
+    <<: *mock
+    profiles: [social, all]
+    command: ["bluesky"]
+    ports:
+      - "4022:4022"
+
+  telegram-mock:
+    <<: *mock
+    profiles: [social, all]
+    command: ["telegram"]
+    ports:
+      - "4023:4023"
+
+  reddit-mock:
+    <<: *mock
+    profiles: [social, all]
+    command: ["reddit"]
+    ports:
+      - "4024:4024"
+
+  linkedin-mock:
+    <<: *mock
+    profiles: [social, all]
+    command: ["linkedin"]
+    ports:
+      - "4025:4025"
+
+  tiktok-mock:
+    <<: *mock
+    profiles: [social, all]
+    command: ["tiktok"]
+    ports:
+      - "4026:4026"
+
+  youtube-mock:
+    <<: *mock
+    profiles: [social, all]
+    command: ["youtube"]
+    ports:
+      - "4027:4027"
