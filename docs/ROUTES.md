@@ -39,6 +39,7 @@ whole API.
 | `GET` | `/paydirect/api/v1/payment/status/:transaction_ref` |
 | `POST` | `/paydirect/api/v1/payment/pay/:payment_id` |
 | `GET` | `/paydirect/api/v1/payment/query/:transaction_ref` |
+| `GET` | `/collections/api/v1/gettransaction.json` |
 | `POST` | `/webhook/test` |
 
 ### flutterwave

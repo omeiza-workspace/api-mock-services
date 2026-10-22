@@ -201,6 +201,44 @@ test('interswitch takes a card and says how it went', async () => {
   })
 })
 
+test('interswitch verifies a paid transaction the way the application asks', async () => {
+  await run('interswitch', async (service) => {
+    const init = await fetch(`${service.url}/paydirect/api/v1/payment/init`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount: 5000 }),
+    }).then((res) => res.json())
+
+    const paid = await fetch(
+      `${service.url}/paydirect/api/v1/payment/pay/${init.data.payment_id}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ card_number: '4084084084084081' }),
+      },
+    ).then((res) => res.json())
+
+    assert.equal(paid.data.status, 'SUCCESS')
+
+    const verified = await fetch(
+      `${service.url}/collections/api/v1/gettransaction.json?merchantcode=X&transactionreference=${init.data.transaction_ref}`,
+    ).then((res) => res.json())
+
+    // The shape the application reads: resp, txnref, amount (minor units), retRef.
+    assert.equal(verified.resp, '00')
+    assert.equal(verified.txnref, init.data.transaction_ref)
+    assert.equal(verified.amount, 500000)
+    assert.ok(verified.retRef)
+
+    // An unknown reference is reported, not crashed.
+    const missing = await fetch(
+      `${service.url}/collections/api/v1/gettransaction.json?merchantcode=X&transactionreference=NOPE`,
+    ).then((res) => res.json())
+
+    assert.notEqual(missing.resp, '00')
+  })
+})
+
 test('youverify starts a verification', async () => {
   await run('youverify', async (service) => {
     const res = await fetch(`${service.url}/v2/api/identity/verify`, {
