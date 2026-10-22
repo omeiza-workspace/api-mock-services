@@ -376,6 +376,38 @@ export function createInterswitchMock() {
     })
   })
 
+  // The real Interswitch gateway verifies a payment by GETting
+  // collections/api/v1/gettransaction.json with merchantcode and
+  // transactionreference. The application expects `resp === '00'`, `txnref`,
+  // `amount` (in minor units), `retRef` and `desc`.
+  service.on('GET', '/collections/api/v1/gettransaction.json', (req, res) => {
+    const reference = String(req.query.transactionreference ?? req.query.txnref ?? '')
+    const transaction = service.state.transactions.get(reference)
+
+    if (!transaction) {
+      json(res, 200, {
+        resp: '01',
+        desc: 'Transaction not found',
+        txnref: reference,
+        amount: 0,
+        retRef: null,
+      })
+      return
+    }
+
+    // The payment outcome is decided when the card is put in; a transaction
+    // that was never paid through is still pending.
+    const paid = transaction.status === 'SUCCESS'
+
+    json(res, 200, {
+      resp: paid ? '00' : '01',
+      desc: paid ? 'Approved' : 'Transaction not completed',
+      txnref: transaction.transaction_ref,
+      amount: transaction.amount * 100,
+      retRef: transaction.payment_id,
+    })
+  })
+
   // The checkout a person uses to pay. The browser layer mounts it.
   service.checkout = {
     title: 'Interswitch (mock)',
