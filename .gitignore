@@ -19,3 +19,7 @@ npm-debug.log*
 .vscode/
 *.swp
 # Node
+
+# Editor leftovers
+*.bak
+*.orig
