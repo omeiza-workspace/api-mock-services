@@ -43,11 +43,11 @@
   </div>
 
   <div class="stats">
-    <div class="stat"><b>18</b><span>mocks, from Stripe to S3</span></div>
+    <div class="stat"><b>27</b><span>mocks, from Stripe to TikTok</span></div>
     <div class="stat"><b>0</b><span>dependencies, at runtime or in the tests</span></div>
     <div class="stat"><b>51 MB</b><span>for every mock in one process</span></div>
-    <div class="stat"><b>0.3%</b><span>CPU while idle</span></div>
-    <div class="stat"><b>432 ms</b><span>to answer the first call</span></div>
+    <div class="stat"><b>0.2%</b><span>CPU while idle</span></div>
+    <div class="stat"><b>352 ms</b><span>to answer the first call</span></div>
   </div>
 
   <section>
@@ -75,8 +75,24 @@
         <tr><td><code>cloudflare</code></td><td>The DNS — zones, records</td><td>4004</td></tr>
         <tr><td><code>openai</code></td><td>The model calls — OpenAI and Anthropic shapes</td><td>4017</td></tr>
         <tr><td><code>s3</code></td><td>The buckets and the objects (S3)</td><td>4018</td></tr>
+        <tr><td><code>facebook</code></td><td>The social network — pages, posts, comments, insights</td><td>4019</td></tr>
+        <tr><td><code>instagram</code></td><td>The photo sharing — media, comments, insights</td><td>4020</td></tr>
+        <tr><td><code>x</code></td><td>The short messages — tweets, users, followers</td><td>4021</td></tr>
+        <tr><td><code>bluesky</code></td><td>The open protocol — the AT Protocol</td><td>4022</td></tr>
+        <tr><td><code>telegram</code></td><td>The channels and the bots</td><td>4023</td></tr>
+        <tr><td><code>reddit</code></td><td>The communities — posts, comments, subreddits</td><td>4024</td></tr>
+        <tr><td><code>linkedin</code></td><td>The professional network — posts, organisations, OAuth</td><td>4025</td></tr>
+        <tr><td><code>tiktok</code></td><td>The short video — publishing, queries, comments</td><td>4026</td></tr>
+        <tr><td><code>youtube</code></td><td>The video library — videos, channels, search</td><td>4027</td></tr>
       </tbody>
     </table>
+    <p>
+      Every endpoint every mock serves is listed in
+      <a href="https://github.com/omeiza-workspace/api-mock-services/blob/main/docs/ROUTES.md">the routes</a>,
+      which is generated from the code. Every route is checked against the
+      provider's own published specification, so a route that has drifted
+      fails the build.
+    </p>
   </section>
 
   <section>
