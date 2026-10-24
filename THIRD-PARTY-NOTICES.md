@@ -104,6 +104,9 @@ can be checked against them.
 | `linkedin` | LinkedIn | LinkedIn Corporation |
 | `telegram` | Telegram Bot API | Telegram FZ-LLC |
 | `reddit` | Reddit | Reddit, Inc. |
+| `paypal` | PayPal | PayPal Holdings, Inc. |
+| `square` | Square | Block, Inc. |
+| `adyen` | Adyen | Adyen N.V. |
 
 The list is checked by a test: a mock that ships without a row here fails the
 build.

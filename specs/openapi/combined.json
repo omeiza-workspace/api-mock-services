@@ -602,6 +602,370 @@
         "x-mock-service": "monnify"
       }
     },
+    "/v2/checkout/orders": {
+      "post": {
+        "summary": "POST /v2/checkout/orders (paypal)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "paypal"
+      }
+    },
+    "/v2/checkout/orders/{id}": {
+      "get": {
+        "summary": "GET /v2/checkout/orders/{id} (paypal)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "paypal"
+      }
+    },
+    "/v2/checkout/orders/{id}/capture": {
+      "post": {
+        "summary": "POST /v2/checkout/orders/{id}/capture (paypal)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "paypal"
+      }
+    },
+    "/v1/webhooks": {
+      "post": {
+        "summary": "POST /v1/webhooks (paypal)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "paypal"
+      },
+      "get": {
+        "summary": "GET /v1/webhooks (paypal)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "paypal"
+      }
+    },
+    "/v2/payments": {
+      "post": {
+        "summary": "POST /v2/payments (square)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "square"
+      }
+    },
+    "/v2/payments/{id}": {
+      "get": {
+        "summary": "GET /v2/payments/{id} (square)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "square"
+      }
+    },
+    "/v2/refunds": {
+      "post": {
+        "summary": "POST /v2/refunds (square)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "square"
+      }
+    },
+    "/v2/webhooks/subscriptions": {
+      "post": {
+        "summary": "POST /v2/webhooks/subscriptions (square)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "square"
+      }
+    },
+    "/checkout/v68/payments": {
+      "post": {
+        "summary": "POST /checkout/v68/payments (adyen)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "adyen"
+      }
+    },
+    "/checkout/v68/payments/details": {
+      "post": {
+        "summary": "POST /checkout/v68/payments/details (adyen)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "adyen"
+      }
+    },
+    "/checkout/v68/payments/{pspRef}/cancels": {
+      "post": {
+        "summary": "POST /checkout/v68/payments/{pspRef}/cancels (adyen)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "adyen"
+      }
+    },
+    "/checkout/v68/payments/{pspRef}/refunds": {
+      "post": {
+        "summary": "POST /checkout/v68/payments/{pspRef}/refunds (adyen)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "adyen"
+      }
+    },
+    "/binlookup/v31/getCostEstimate": {
+      "post": {
+        "summary": "POST /binlookup/v31/getCostEstimate (adyen)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "adyen"
+      }
+    },
+    "/notifications/webhook": {
+      "post": {
+        "summary": "POST /notifications/webhook (adyen)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "adyen"
+      },
+      "get": {
+        "summary": "GET /notifications/webhook (adyen)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "adyen"
+      }
+    },
     "/v1/health": {
       "get": {
         "summary": "GET /v1/health (youverify)",

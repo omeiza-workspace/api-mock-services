@@ -5,6 +5,11 @@ import {
   createCloudflareMock as cloudflareMock,
 } from './providers/commerce.js'
 import {
+  createPaypalMock as paypalMock,
+  createSquareMock as squareMock,
+  createAdyenMock as adyenMock,
+} from './providers/payments.js'
+import {
   createPaystackMock as paystackMock,
   createInterswitchMock as interswitchMock,
   createYouVerifyMock as youverifyMock,
@@ -234,6 +239,24 @@ export const MOCKS = {
     category: 'social',
     description: 'The video library (YouTube)',
   },
+  paypal: {
+    create: paypalMock,
+    port: 4028,
+    category: 'payments',
+    description: 'The card and digital payments (PayPal Orders API v2)',
+  },
+  square: {
+    create: squareMock,
+    port: 4029,
+    category: 'payments',
+    description: 'The card payments (Square Payments API)',
+  },
+  adyen: {
+    create: adyenMock,
+    port: 4030,
+    category: 'payments',
+    description: 'The global payments (Adyen Payments API v68)',
+  },
 }
 
 /**
@@ -306,6 +329,9 @@ export const createRedditMock = withViews(redditMock)
 export const createLinkedinMock = withViews(linkedinMock)
 export const createTiktokMock = withViews(tiktokMock)
 export const createYoutubeMock = withViews(youtubeMock)
+export const createPaypalMock = withViews(paypalMock)
+export const createSquareMock = withViews(squareMock)
+export const createAdyenMock = withViews(adyenMock)
 
 /** A mock written as a route file rather than as code. */
 export const createSpecMock = withViews(specMock)

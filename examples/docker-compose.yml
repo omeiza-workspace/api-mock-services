@@ -85,6 +85,27 @@ services:
     ports:
       - "4011:4011"
 
+  paypal-mock:
+    <<: *mock
+    profiles: [payments, all]
+    command: ["paypal"]
+    ports:
+      - "4028:4028"
+
+  square-mock:
+    <<: *mock
+    profiles: [payments, all]
+    command: ["square"]
+    ports:
+      - "4029:4029"
+
+  adyen-mock:
+    <<: *mock
+    profiles: [payments, all]
+    command: ["adyen"]
+    ports:
+      - "4030:4030"
+
   # ── Identity ────────────────────────────────────────────────────────────
   youverify-mock:
     <<: *mock

@@ -59,6 +59,40 @@ whole API.
 | `POST` | `/api/v1/transactions` |
 | `GET` | `/api/v1/transactions/:reference` |
 
+### paypal
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/v2/checkout/orders` |
+| `GET` | `/v2/checkout/orders/:id` |
+| `POST` | `/v2/checkout/orders/:id/capture` |
+| `POST` | `/v1/webhooks` |
+| `GET` | `/v1/webhooks` |
+
+### square
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/v2/payments` |
+| `GET` | `/v2/payments/:id` |
+| `POST` | `/v2/refunds` |
+| `POST` | `/v2/webhooks/subscriptions` |
+
+### adyen
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/checkout/v68/payments` |
+| `POST` | `/checkout/v68/payments/details` |
+| `POST` | `/checkout/v68/payments/:pspRef/cancels` |
+| `POST` | `/checkout/v68/payments/:pspRef/refunds` |
+| `POST` | `/binlookup/v31/getCostEstimate` |
+| `POST` | `/notifications/webhook` |
+| `GET` | `/notifications/webhook` |
+
 ## Identity
 
 ### youverify
