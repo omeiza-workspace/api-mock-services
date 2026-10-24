@@ -43,6 +43,7 @@
     "footprint": "node scripts/footprint.js",
     "routes": "node scripts/routes.js",
     "specs": "node scripts/check-specs.js",
+    "openapi": "node scripts/openapi.js",
     "check": "npm run lint && npm test"
   },
   "keywords": [

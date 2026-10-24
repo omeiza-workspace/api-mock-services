@@ -1,0 +1,3160 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "API Mock Services — Combined OpenAPI Spec",
+    "version": "1.0.0",
+    "description": "All mocks in one spec. Each operation is tagged with its category and carries x-mock-service."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:4000",
+      "description": "Local mock servers (each mock on its own port)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "payments",
+      "description": "Payments"
+    },
+    {
+      "name": "identity",
+      "description": "Identity"
+    },
+    {
+      "name": "messaging",
+      "description": "Messaging"
+    },
+    {
+      "name": "email",
+      "description": "Email"
+    },
+    {
+      "name": "accounting",
+      "description": "Accounting"
+    },
+    {
+      "name": "dns",
+      "description": "DNS"
+    },
+    {
+      "name": "ai",
+      "description": "AI"
+    },
+    {
+      "name": "storage",
+      "description": "Storage"
+    },
+    {
+      "name": "social",
+      "description": "Social"
+    }
+  ],
+  "paths": {
+    "/v1/payment_intents": {
+      "post": {
+        "summary": "POST /v1/payment_intents (stripe)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "stripe"
+      }
+    },
+    "/v1/payment_intents/{id}": {
+      "get": {
+        "summary": "GET /v1/payment_intents/{id} (stripe)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "stripe"
+      }
+    },
+    "/v1/refunds": {
+      "post": {
+        "summary": "POST /v1/refunds (stripe)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "stripe"
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "GET /health (youtube)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "youtube"
+      }
+    },
+    "/transaction/initialize": {
+      "post": {
+        "summary": "POST /transaction/initialize (paystack)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "paystack"
+      }
+    },
+    "/transaction/verify/{reference}": {
+      "get": {
+        "summary": "GET /transaction/verify/{reference} (paystack)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "paystack"
+      }
+    },
+    "/transaction/charge_authorization": {
+      "post": {
+        "summary": "POST /transaction/charge_authorization (paystack)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "paystack"
+      }
+    },
+    "/transferrecipient": {
+      "post": {
+        "summary": "POST /transferrecipient (paystack)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "paystack"
+      }
+    },
+    "/transfer": {
+      "post": {
+        "summary": "POST /transfer (paystack)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "paystack"
+      }
+    },
+    "/transfer/finalize": {
+      "post": {
+        "summary": "POST /transfer/finalize (paystack)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "paystack"
+      }
+    },
+    "/bank": {
+      "get": {
+        "summary": "GET /bank (paystack)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "paystack"
+      }
+    },
+    "/paydirect/api/v1/payment/init": {
+      "post": {
+        "summary": "POST /paydirect/api/v1/payment/init (interswitch)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "interswitch"
+      }
+    },
+    "/paydirect/api/v1/payment/status/{transaction_ref}": {
+      "get": {
+        "summary": "GET /paydirect/api/v1/payment/status/{transaction_ref} (interswitch)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "interswitch"
+      }
+    },
+    "/paydirect/api/v1/payment/pay/{payment_id}": {
+      "post": {
+        "summary": "POST /paydirect/api/v1/payment/pay/{payment_id} (interswitch)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "interswitch"
+      }
+    },
+    "/paydirect/api/v1/payment/query/{transaction_ref}": {
+      "get": {
+        "summary": "GET /paydirect/api/v1/payment/query/{transaction_ref} (interswitch)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "interswitch"
+      }
+    },
+    "/collections/api/v1/gettransaction.json": {
+      "get": {
+        "summary": "GET /collections/api/v1/gettransaction.json (interswitch)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "interswitch"
+      }
+    },
+    "/webhook/test": {
+      "post": {
+        "summary": "POST /webhook/test (interswitch)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "interswitch"
+      }
+    },
+    "/v3/payments": {
+      "post": {
+        "summary": "POST /v3/payments (flutterwave)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "flutterwave"
+      }
+    },
+    "/v3/transactions/{tx_ref}/verify": {
+      "get": {
+        "summary": "GET /v3/transactions/{tx_ref}/verify (flutterwave)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "flutterwave"
+      }
+    },
+    "/v3/transfers": {
+      "post": {
+        "summary": "POST /v3/transfers (flutterwave)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "flutterwave"
+      }
+    },
+    "/api/v1/accounts": {
+      "post": {
+        "summary": "POST /api/v1/accounts (monnify)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "monnify"
+      }
+    },
+    "/api/v1/accounts/{accountReference}": {
+      "get": {
+        "summary": "GET /api/v1/accounts/{accountReference} (monnify)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "monnify"
+      }
+    },
+    "/api/v1/transactions": {
+      "post": {
+        "summary": "POST /api/v1/transactions (monnify)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "monnify"
+      }
+    },
+    "/api/v1/transactions/{reference}": {
+      "get": {
+        "summary": "GET /api/v1/transactions/{reference} (monnify)",
+        "tags": [
+          "payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "monnify"
+      }
+    },
+    "/v1/health": {
+      "get": {
+        "summary": "GET /v1/health (youverify)",
+        "tags": [
+          "identity"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "youverify"
+      }
+    },
+    "/v2/api/identity/verify": {
+      "post": {
+        "summary": "POST /v2/api/identity/verify (youverify)",
+        "tags": [
+          "identity"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "youverify"
+      }
+    },
+    "/v2/api/address/verify": {
+      "post": {
+        "summary": "POST /v2/api/address/verify (youverify)",
+        "tags": [
+          "identity"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "youverify"
+      }
+    },
+    "/v2/api/identity/verify/{id}": {
+      "get": {
+        "summary": "GET /v2/api/identity/verify/{id} (youverify)",
+        "tags": [
+          "identity"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "youverify"
+      }
+    },
+    "/v2/verification": {
+      "post": {
+        "summary": "POST /v2/verification (smileid)",
+        "tags": [
+          "identity"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "smileid"
+      }
+    },
+    "/v1/verification": {
+      "post": {
+        "summary": "POST /v1/verification (identitypass)",
+        "tags": [
+          "identity"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "identitypass"
+      }
+    },
+    "/v2/verification/{smile_id_id}": {
+      "get": {
+        "summary": "GET /v2/verification/{smile_id_id} (smileid)",
+        "tags": [
+          "identity"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "smileid"
+      }
+    },
+    "/v1/business": {
+      "post": {
+        "summary": "POST /v1/business (identitypass)",
+        "tags": [
+          "identity"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "identitypass"
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "GET / (s3)",
+        "tags": [
+          "storage"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "s3"
+      }
+    },
+    "/api/v1/notifications": {
+      "post": {
+        "summary": "POST /api/v1/notifications (onesignal)",
+        "tags": [
+          "messaging"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "onesignal"
+      }
+    },
+    "/2010-04-01/Accounts/{accountSid}.json": {
+      "get": {
+        "summary": "GET /2010-04-01/Accounts/{accountSid}.json (twilio)",
+        "tags": [
+          "messaging"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "twilio"
+      }
+    },
+    "/2010-04-01/Accounts/{accountSid}/Messages.json": {
+      "post": {
+        "summary": "POST /2010-04-01/Accounts/{accountSid}/Messages.json (twilio)",
+        "tags": [
+          "messaging"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "twilio"
+      }
+    },
+    "/2010-04-01/Accounts/{accountSid}/Messages/{sid}.json": {
+      "get": {
+        "summary": "GET /2010-04-01/Accounts/{accountSid}/Messages/{sid}.json (twilio)",
+        "tags": [
+          "messaging"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "twilio"
+      }
+    },
+    "/api/v1/send": {
+      "post": {
+        "summary": "POST /api/v1/send (termii)",
+        "tags": [
+          "messaging"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "termii"
+      }
+    },
+    "/api/v1/messages/{id}": {
+      "get": {
+        "summary": "GET /api/v1/messages/{id} (termii)",
+        "tags": [
+          "messaging"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "termii"
+      }
+    },
+    "/v1/messages": {
+      "post": {
+        "summary": "POST /v1/messages (openai)",
+        "tags": [
+          "ai"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "openai"
+      }
+    },
+    "/webhook": {
+      "get": {
+        "summary": "GET /webhook (whatsapp)",
+        "tags": [
+          "messaging"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "whatsapp"
+      },
+      "post": {
+        "summary": "POST /webhook (whatsapp)",
+        "tags": [
+          "messaging"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "whatsapp"
+      }
+    },
+    "/v1/projects/{projectId}/messages:send": {
+      "post": {
+        "summary": "POST /v1/projects/{projectId}/messages:send (fcm)",
+        "tags": [
+          "messaging"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "fcm"
+      }
+    },
+    "/v1/projects/{projectId}/messages:batchSend": {
+      "post": {
+        "summary": "POST /v1/projects/{projectId}/messages:batchSend (fcm)",
+        "tags": [
+          "messaging"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "fcm"
+      }
+    },
+    "/domains": {
+      "get": {
+        "summary": "GET /domains (resend)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "resend"
+      },
+      "post": {
+        "summary": "POST /domains (resend)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "resend"
+      }
+    },
+    "/emails": {
+      "post": {
+        "summary": "POST /emails (resend)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "resend"
+      }
+    },
+    "/connect/token": {
+      "post": {
+        "summary": "POST /connect/token (xero)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "xero"
+      }
+    },
+    "/connections": {
+      "get": {
+        "summary": "GET /connections (xero)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "xero"
+      }
+    },
+    "/api.xro/2.0/Invoices": {
+      "post": {
+        "summary": "POST /api.xro/2.0/Invoices (xero)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "xero"
+      }
+    },
+    "/api.xro/2.0/": {
+      "get": {
+        "summary": "GET /api.xro/2.0/ (xero)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "xero"
+      }
+    },
+    "/?(?:client/v4/)?zones": {
+      "get": {
+        "summary": "GET /?(?:client/v4/)?zones (cloudflare)",
+        "tags": [
+          "dns"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "cloudflare"
+      }
+    },
+    "/?(?:client/v4/)?zones/{zone}/dns_records": {
+      "get": {
+        "summary": "GET /?(?:client/v4/)?zones/{zone}/dns_records (cloudflare)",
+        "tags": [
+          "dns"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "cloudflare"
+      },
+      "post": {
+        "summary": "POST /?(?:client/v4/)?zones/{zone}/dns_records (cloudflare)",
+        "tags": [
+          "dns"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "cloudflare"
+      }
+    },
+    "/v1/models": {
+      "get": {
+        "summary": "GET /v1/models (openai)",
+        "tags": [
+          "ai"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "openai"
+      }
+    },
+    "/v1/chat/completions": {
+      "post": {
+        "summary": "POST /v1/chat/completions (openai)",
+        "tags": [
+          "ai"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "openai"
+      }
+    },
+    "/v1/embeddings": {
+      "post": {
+        "summary": "POST /v1/embeddings (openai)",
+        "tags": [
+          "ai"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "openai"
+      }
+    },
+    "/{bucket}": {
+      "put": {
+        "summary": "PUT /{bucket} (s3)",
+        "tags": [
+          "storage"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "s3"
+      },
+      "delete": {
+        "summary": "DELETE /{bucket} (s3)",
+        "tags": [
+          "storage"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "s3"
+      },
+      "head": {
+        "summary": "HEAD /{bucket} (s3)",
+        "tags": [
+          "storage"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "s3"
+      },
+      "get": {
+        "summary": "GET /{bucket} (s3)",
+        "tags": [
+          "storage"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "s3"
+      }
+    },
+    "/{bucket}/(?<key>.+)": {
+      "put": {
+        "summary": "PUT /{bucket}/(?<key>.+) (s3)",
+        "tags": [
+          "storage"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "s3"
+      },
+      "get": {
+        "summary": "GET /{bucket}/(?<key>.+) (s3)",
+        "tags": [
+          "storage"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "s3"
+      },
+      "delete": {
+        "summary": "DELETE /{bucket}/(?<key>.+) (s3)",
+        "tags": [
+          "storage"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "s3"
+      },
+      "post": {
+        "summary": "POST /{bucket}/(?<key>.+) (s3)",
+        "tags": [
+          "storage"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "s3"
+      }
+    },
+    "/v21.0/me": {
+      "get": {
+        "summary": "GET /v21.0/me (facebook)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "facebook"
+      }
+    },
+    "/v21.0/me/accounts": {
+      "get": {
+        "summary": "GET /v21.0/me/accounts (facebook)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "facebook"
+      }
+    },
+    "/v21.0/{id}": {
+      "get": {
+        "summary": "GET /v21.0/{id} (instagram)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "instagram"
+      }
+    },
+    "/v21.0/{id}/posts": {
+      "post": {
+        "summary": "POST /v21.0/{id}/posts (facebook)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "facebook"
+      },
+      "get": {
+        "summary": "GET /v21.0/{id}/posts (facebook)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "facebook"
+      }
+    },
+    "/v21.0/{id}/comments": {
+      "get": {
+        "summary": "GET /v21.0/{id}/comments (instagram)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "instagram"
+      },
+      "post": {
+        "summary": "POST /v21.0/{id}/comments (instagram)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "instagram"
+      }
+    },
+    "/v21.0/{id}/insights": {
+      "get": {
+        "summary": "GET /v21.0/{id}/insights (instagram)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "instagram"
+      }
+    },
+    "/v21.0/{id}/likes": {
+      "get": {
+        "summary": "GET /v21.0/{id}/likes (facebook)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "facebook"
+      }
+    },
+    "/v21.0/{id}/media": {
+      "post": {
+        "summary": "POST /v21.0/{id}/media (instagram)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "instagram"
+      },
+      "get": {
+        "summary": "GET /v21.0/{id}/media (instagram)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "instagram"
+      }
+    },
+    "/v21.0/{id}/media_published": {
+      "get": {
+        "summary": "GET /v21.0/{id}/media_published (instagram)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "instagram"
+      }
+    },
+    "/v21.0/ig_hashtag_search": {
+      "get": {
+        "summary": "GET /v21.0/ig_hashtag_search (instagram)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "instagram"
+      }
+    },
+    "/v21.0/{id}/top_media": {
+      "get": {
+        "summary": "GET /v21.0/{id}/top_media (instagram)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "instagram"
+      }
+    },
+    "/2/oauth2/token": {
+      "post": {
+        "summary": "POST /2/oauth2/token (x)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "x"
+      }
+    },
+    "/2/users/me": {
+      "get": {
+        "summary": "GET /2/users/me (x)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "x"
+      }
+    },
+    "/2/users/by/username/{username}": {
+      "get": {
+        "summary": "GET /2/users/by/username/{username} (x)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "x"
+      }
+    },
+    "/2/users/{id}": {
+      "get": {
+        "summary": "GET /2/users/{id} (x)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "x"
+      }
+    },
+    "/2/tweets": {
+      "post": {
+        "summary": "POST /2/tweets (x)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "x"
+      }
+    },
+    "/2/tweets/{id}": {
+      "get": {
+        "summary": "GET /2/tweets/{id} (x)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "x"
+      }
+    },
+    "/2/users/{id}/tweets": {
+      "get": {
+        "summary": "GET /2/users/{id}/tweets (x)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "x"
+      }
+    },
+    "/2/users/{id}/followers": {
+      "get": {
+        "summary": "GET /2/users/{id}/followers (x)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "x"
+      }
+    },
+    "/2/users/{id}/mentions": {
+      "get": {
+        "summary": "GET /2/users/{id}/mentions (x)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "x"
+      }
+    },
+    "/2/users/{id}/liked_tweets": {
+      "get": {
+        "summary": "GET /2/users/{id}/liked_tweets (x)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "x"
+      }
+    },
+    "/xrpc/app.bsky.actor.getProfile": {
+      "post": {
+        "summary": "POST /xrpc/app.bsky.actor.getProfile (bluesky)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "bluesky"
+      },
+      "get": {
+        "summary": "GET /xrpc/app.bsky.actor.getProfile (bluesky)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "bluesky"
+      }
+    },
+    "/xrpc/app.bsky.feed.getTimeline": {
+      "post": {
+        "summary": "POST /xrpc/app.bsky.feed.getTimeline (bluesky)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "bluesky"
+      },
+      "get": {
+        "summary": "GET /xrpc/app.bsky.feed.getTimeline (bluesky)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "bluesky"
+      }
+    },
+    "/xrpc/app.bsky.feed.searchPosts": {
+      "post": {
+        "summary": "POST /xrpc/app.bsky.feed.searchPosts (bluesky)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "bluesky"
+      },
+      "get": {
+        "summary": "GET /xrpc/app.bsky.feed.searchPosts (bluesky)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "bluesky"
+      }
+    },
+    "/xrpc/app.bsky.feed.getPostThread": {
+      "post": {
+        "summary": "POST /xrpc/app.bsky.feed.getPostThread (bluesky)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "bluesky"
+      },
+      "get": {
+        "summary": "GET /xrpc/app.bsky.feed.getPostThread (bluesky)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "bluesky"
+      }
+    },
+    "/xrpc/app.bsky.repo.createRecord": {
+      "post": {
+        "summary": "POST /xrpc/app.bsky.repo.createRecord (bluesky)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "bluesky"
+      }
+    },
+    "/xrpc/{method}": {
+      "post": {
+        "summary": "POST /xrpc/{method} (bluesky)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "bluesky"
+      },
+      "get": {
+        "summary": "GET /xrpc/{method} (bluesky)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "bluesky"
+      }
+    },
+    "/bot{token}/sendMessage": {
+      "post": {
+        "summary": "POST /bot{token}/sendMessage (telegram)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "telegram"
+      }
+    },
+    "/bot{token}/sendChannelPost": {
+      "post": {
+        "summary": "POST /bot{token}/sendChannelPost (telegram)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "telegram"
+      }
+    },
+    "/bot{token}/sendPhoto": {
+      "post": {
+        "summary": "POST /bot{token}/sendPhoto (telegram)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "telegram"
+      }
+    },
+    "/bot{token}/editMessageText": {
+      "post": {
+        "summary": "POST /bot{token}/editMessageText (telegram)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "telegram"
+      }
+    },
+    "/bot{token}/setWebhook": {
+      "post": {
+        "summary": "POST /bot{token}/setWebhook (telegram)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "telegram"
+      }
+    },
+    "/bot{token}/getMe": {
+      "get": {
+        "summary": "GET /bot{token}/getMe (telegram)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "telegram"
+      }
+    },
+    "/bot{token}/getUpdates": {
+      "get": {
+        "summary": "GET /bot{token}/getUpdates (telegram)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "telegram"
+      }
+    },
+    "/api/v1/me": {
+      "get": {
+        "summary": "GET /api/v1/me (reddit)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "reddit"
+      }
+    },
+    "/api/v1/user/{username}/about": {
+      "get": {
+        "summary": "GET /api/v1/user/{username}/about (reddit)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "reddit"
+      }
+    },
+    "/api/submit": {
+      "post": {
+        "summary": "POST /api/submit (reddit)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "reddit"
+      }
+    },
+    "/api/comment": {
+      "post": {
+        "summary": "POST /api/comment (reddit)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "reddit"
+      }
+    },
+    "/r/{subreddit}/about": {
+      "get": {
+        "summary": "GET /r/{subreddit}/about (reddit)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "reddit"
+      }
+    },
+    "/r/{subreddit}/hot": {
+      "get": {
+        "summary": "GET /r/{subreddit}/hot (reddit)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "reddit"
+      }
+    },
+    "/v2/me": {
+      "get": {
+        "summary": "GET /v2/me (linkedin)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "linkedin"
+      }
+    },
+    "/v2/posts": {
+      "post": {
+        "summary": "POST /v2/posts (linkedin)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "linkedin"
+      }
+    },
+    "/v2/posts/{id}": {
+      "get": {
+        "summary": "GET /v2/posts/{id} (linkedin)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "linkedin"
+      }
+    },
+    "/v2/organizations": {
+      "get": {
+        "summary": "GET /v2/organizations (linkedin)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "linkedin"
+      }
+    },
+    "/v2/organizationAcls": {
+      "get": {
+        "summary": "GET /v2/organizationAcls (linkedin)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "linkedin"
+      }
+    },
+    "/rest/posts": {
+      "get": {
+        "summary": "GET /rest/posts (linkedin)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "linkedin"
+      },
+      "post": {
+        "summary": "POST /rest/posts (linkedin)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "linkedin"
+      }
+    },
+    "/rest/posts/{urn}": {
+      "delete": {
+        "summary": "DELETE /rest/posts/{urn} (linkedin)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "linkedin"
+      }
+    },
+    "/rest/posts/{id}": {
+      "get": {
+        "summary": "GET /rest/posts/{id} (linkedin)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "linkedin"
+      },
+      "delete": {
+        "summary": "DELETE /rest/posts/{id} (linkedin)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "linkedin"
+      }
+    },
+    "/v2/socialActions/{id}": {
+      "get": {
+        "summary": "GET /v2/socialActions/{id} (linkedin)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "linkedin"
+      }
+    },
+    "/oauth/v2/accessToken": {
+      "post": {
+        "summary": "POST /oauth/v2/accessToken (linkedin)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "linkedin"
+      }
+    },
+    "/oauth/v2/authorization": {
+      "get": {
+        "summary": "GET /oauth/v2/authorization (linkedin)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "linkedin"
+      }
+    },
+    "/v1.3/video/publish/?": {
+      "post": {
+        "summary": "POST /v1.3/video/publish/? (tiktok)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "tiktok"
+      }
+    },
+    "/v1.3/video/query/?": {
+      "get": {
+        "summary": "GET /v1.3/video/query/? (tiktok)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "tiktok"
+      }
+    },
+    "/v1.3/user/info/?": {
+      "get": {
+        "summary": "GET /v1.3/user/info/? (tiktok)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "tiktok"
+      }
+    },
+    "/v1.3/comment/list/?": {
+      "get": {
+        "summary": "GET /v1.3/comment/list/? (tiktok)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "tiktok"
+      }
+    },
+    "/youtube/v3/videos": {
+      "get": {
+        "summary": "GET /youtube/v3/videos (youtube)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "youtube"
+      },
+      "post": {
+        "summary": "POST /youtube/v3/videos (youtube)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "youtube"
+      }
+    },
+    "/youtube/v3/channels": {
+      "get": {
+        "summary": "GET /youtube/v3/channels (youtube)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "youtube"
+      }
+    },
+    "/youtube/v3/search": {
+      "get": {
+        "summary": "GET /youtube/v3/search (youtube)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "youtube"
+      }
+    },
+    "/youtube/v3/comments": {
+      "get": {
+        "summary": "GET /youtube/v3/comments (youtube)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "youtube"
+      }
+    },
+    "/youtube/v3/playlists": {
+      "get": {
+        "summary": "GET /youtube/v3/playlists (youtube)",
+        "tags": [
+          "social"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "youtube"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "apiKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}

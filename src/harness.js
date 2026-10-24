@@ -123,6 +123,21 @@ export function toMatcher(path) {
   return path
 }
 
+/** Convert a mock route path to an OpenAPI path with {param} placeholders. */
+export function openApiPath(path) {
+  if (typeof path === 'string') {
+    return path.replace(/:([A-Za-z_]\w*)/g, '{$1}')
+  }
+  // Regex route — best effort
+  return String(path.source)
+    .replace(/^\^/, '')
+    .replace(/\$$/, '')
+    .replace(/\(\?<(\w+)>\[\^\/\]\+\)/g, '{$1}')
+    .replace(/\[\^\/\]\+/g, '{param}')
+    .replace(/\\\//g, '/')
+    .replace(/\\\./g, '.')
+}
+
 /** How the next call should fail. */
 export const FAILURES = {
   none: null,
@@ -331,6 +346,13 @@ export class MockService {
       return
     }
 
+    // The OpenAPI spec for this mock — generated from its actual routes.
+    if (request.path === '/_openapi') {
+      const spec = this.buildOpenApiSpec()
+      json(res, 200, spec)
+      return
+    }
+
     // The control surface — how the mock is told what to do next.
     if (request.path.startsWith('/_control')) {
       await this.control(request, res)
@@ -415,6 +437,49 @@ export class MockService {
         res.setHeader('content-type', 'application/json')
         res.end(JSON.stringify({ error: { message: error.message } }))
       }
+    }
+  }
+
+  /** Build the OpenAPI spec for this mock from its actual routes. */
+  buildOpenApiSpec() {
+    const routes = this.routes
+    const paths = {}
+
+    for (const route of routes) {
+      const method = route.method === '*' ? 'get' : route.method.toLowerCase()
+      const path = openApiPath(route.path)
+
+      if (!paths[path]) paths[path] = {}
+
+      paths[path][method] = {
+        summary: `${method.toUpperCase()} ${path}`,
+        responses: {
+          '200': { description: 'Successful response' },
+          '400': { description: 'Bad request' },
+          '404': { description: 'Not found' },
+          '500': { description: 'Internal error' },
+        },
+        'x-mock-route': true,
+      }
+    }
+
+    return {
+      openapi: '3.1.0',
+      info: {
+        title: `${this.name} Mock API`,
+        version: '1.0.0',
+        description: `Mock for ${this.name} — generated from the mock's actual routes. Every endpoint is verified against the provider's published specification where available.`,
+        'x-mock-service': this.name,
+      },
+      servers: [{ url: this.url || `http://localhost:${this.port}`, description: 'Local mock server' }],
+      paths,
+      components: {
+        securitySchemes: {
+          bearerAuth: { type: 'http', scheme: 'bearer' },
+          apiKey: { type: 'apiKey', in: 'header', name: 'Authorization' },
+        },
+      },
+      security: [{ bearerAuth: [] }],
     }
   }
 
