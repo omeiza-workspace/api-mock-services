@@ -10,6 +10,13 @@ import {
   createAdyenMock as adyenMock,
 } from './providers/payments.js'
 import {
+  createShippoMock as shippoMock,
+  createEasyPostMock as easypostMock,
+  createFedexMock as fedexMock,
+  createUpsMock as upsMock,
+  createDhlMock as dhlMock,
+} from './providers/shipping.js'
+import {
   createPaystackMock as paystackMock,
   createInterswitchMock as interswitchMock,
   createYouVerifyMock as youverifyMock,
@@ -72,6 +79,7 @@ export const CATEGORIES = {
   dns: { title: 'DNS', description: 'The zones and the records' },
   ai: { title: 'AI', description: 'The model calls' },
   storage: { title: 'Storage', description: 'The buckets and the objects' },
+  shipping: { title: 'Shipping', description: 'The labels, the rates and the tracking' },
   social: { title: 'Social', description: 'The networks, the video platforms and the community apps' },
 }
 
@@ -257,6 +265,36 @@ export const MOCKS = {
     category: 'payments',
     description: 'The global payments (Adyen Payments API v68)',
   },
+  shippo: {
+    create: shippoMock,
+    port: 4031,
+    category: 'shipping',
+    description: 'The shipping labels and tracking (Shippo)',
+  },
+  easypost: {
+    create: easypostMock,
+    port: 4032,
+    category: 'shipping',
+    description: 'The shipping labels and tracking (EasyPost)',
+  },
+  fedex: {
+    create: fedexMock,
+    port: 4033,
+    category: 'shipping',
+    description: 'The shipping labels and tracking (FedEx)',
+  },
+  ups: {
+    create: upsMock,
+    port: 4034,
+    category: 'shipping',
+    description: 'The shipping labels and tracking (UPS)',
+  },
+  dhl: {
+    create: dhlMock,
+    port: 4035,
+    category: 'shipping',
+    description: 'The shipping labels and tracking (DHL)',
+  },
 }
 
 /**
@@ -332,6 +370,11 @@ export const createYoutubeMock = withViews(youtubeMock)
 export const createPaypalMock = withViews(paypalMock)
 export const createSquareMock = withViews(squareMock)
 export const createAdyenMock = withViews(adyenMock)
+export const createShippoMock = withViews(shippoMock)
+export const createEasyPostMock = withViews(easypostMock)
+export const createFedexMock = withViews(fedexMock)
+export const createUpsMock = withViews(upsMock)
+export const createDhlMock = withViews(dhlMock)
 
 /** A mock written as a route file rather than as code. */
 export const createSpecMock = withViews(specMock)

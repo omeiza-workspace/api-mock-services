@@ -106,6 +106,41 @@ services:
     ports:
       - "4030:4030"
 
+  shippo-mock:
+    <<: *mock
+    profiles: [shipping, all]
+    command: ["shippo"]
+    ports:
+      - "4031:4031"
+
+  easypost-mock:
+    <<: *mock
+    profiles: [shipping, all]
+    command: ["easypost"]
+    ports:
+      - "4032:4032"
+
+  fedex-mock:
+    <<: *mock
+    profiles: [shipping, all]
+    command: ["fedex"]
+    ports:
+      - "4033:4033"
+
+  ups-mock:
+    <<: *mock
+    profiles: [shipping, all]
+    command: ["ups"]
+    ports:
+      - "4034:4034"
+
+  dhl-mock:
+    <<: *mock
+    profiles: [shipping, all]
+    command: ["dhl"]
+    ports:
+      - "4035:4035"
+
   # ── Identity ────────────────────────────────────────────────────────────
   youverify-mock:
     <<: *mock

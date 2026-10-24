@@ -107,6 +107,11 @@ can be checked against them.
 | `paypal` | PayPal | PayPal Holdings, Inc. |
 | `square` | Square | Block, Inc. |
 | `adyen` | Adyen | Adyen N.V. |
+| `shippo` | Shippo | Shippo, Inc. |
+| `easypost` | EasyPost | EasyPost, Inc. |
+| `fedex` | FedEx | FedEx Corporation |
+| `ups` | UPS | United Parcel Service, Inc. |
+| `dhl` | DHL | Deutsche Post DHL Group |
 
 The list is checked by a test: a mock that ships without a row here fails the
 build.

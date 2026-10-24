@@ -45,6 +45,10 @@
       "description": "Storage"
     },
     {
+      "name": "shipping",
+      "description": "Shipping"
+    },
+    {
       "name": "social",
       "description": "Social"
     }
@@ -1889,6 +1893,604 @@
           }
         },
         "x-mock-service": "s3"
+      }
+    },
+    "/v1/addresses": {
+      "post": {
+        "summary": "POST /v1/addresses (shippo)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "shippo"
+      }
+    },
+    "/v1/addresses/{id}": {
+      "get": {
+        "summary": "GET /v1/addresses/{id} (shippo)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "shippo"
+      }
+    },
+    "/v1/parcels": {
+      "post": {
+        "summary": "POST /v1/parcels (shippo)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "shippo"
+      }
+    },
+    "/v1/customs_declarations": {
+      "post": {
+        "summary": "POST /v1/customs_declarations (shippo)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "shippo"
+      }
+    },
+    "/v1/shipments": {
+      "post": {
+        "summary": "POST /v1/shipments (shippo)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "shippo"
+      }
+    },
+    "/v1/shipments/{id}": {
+      "get": {
+        "summary": "GET /v1/shipments/{id} (shippo)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "shippo"
+      }
+    },
+    "/v1/transactions": {
+      "post": {
+        "summary": "POST /v1/transactions (shippo)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "shippo"
+      }
+    },
+    "/v1/transactions/{id}": {
+      "get": {
+        "summary": "GET /v1/transactions/{id} (shippo)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "shippo"
+      }
+    },
+    "/v1/tracks/{carrier}/{tracking_number}": {
+      "get": {
+        "summary": "GET /v1/tracks/{carrier}/{tracking_number} (shippo)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "shippo"
+      }
+    },
+    "/v2/shipments": {
+      "post": {
+        "summary": "POST /v2/shipments (easypost)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "easypost"
+      }
+    },
+    "/v2/shipments/{id}": {
+      "get": {
+        "summary": "GET /v2/shipments/{id} (easypost)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "easypost"
+      }
+    },
+    "/v2/shipments/{id}/buy": {
+      "post": {
+        "summary": "POST /v2/shipments/{id}/buy (easypost)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "easypost"
+      }
+    },
+    "/v2/trackers": {
+      "post": {
+        "summary": "POST /v2/trackers (easypost)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "easypost"
+      }
+    },
+    "/v2/trackers/{id}": {
+      "get": {
+        "summary": "GET /v2/trackers/{id} (easypost)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "easypost"
+      }
+    },
+    "/v2/webhooks": {
+      "post": {
+        "summary": "POST /v2/webhooks (easypost)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "easypost"
+      }
+    },
+    "/oauth/token": {
+      "post": {
+        "summary": "POST /oauth/token (dhl)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "dhl"
+      }
+    },
+    "/ship/v1/shipments": {
+      "post": {
+        "summary": "POST /ship/v1/shipments (fedex)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "fedex"
+      }
+    },
+    "/rate/v1/rates/quotes": {
+      "post": {
+        "summary": "POST /rate/v1/rates/quotes (fedex)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "fedex"
+      }
+    },
+    "/track/v1/trackingnumbers/{trackingNumber}": {
+      "get": {
+        "summary": "GET /track/v1/trackingnumbers/{trackingNumber} (fedex)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "fedex"
+      }
+    },
+    "/security/v1/oauth/token": {
+      "post": {
+        "summary": "POST /security/v1/oauth/token (ups)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "ups"
+      }
+    },
+    "/api/shipments/v1/ship": {
+      "post": {
+        "summary": "POST /api/shipments/v1/ship (ups)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "ups"
+      }
+    },
+    "/api/rating/v1/rate": {
+      "post": {
+        "summary": "POST /api/rating/v1/rate (ups)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "ups"
+      }
+    },
+    "/api/track/v1/details/{trackingNumber}": {
+      "get": {
+        "summary": "GET /api/track/v1/details/{trackingNumber} (ups)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "ups"
+      }
+    },
+    "/express/shipments": {
+      "post": {
+        "summary": "POST /express/shipments (dhl)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "dhl"
+      }
+    },
+    "/express/rates": {
+      "post": {
+        "summary": "POST /express/rates (dhl)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "dhl"
+      }
+    },
+    "/express/tracking/{trackingNumber}": {
+      "get": {
+        "summary": "GET /express/tracking/{trackingNumber} (dhl)",
+        "tags": [
+          "shipping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "dhl"
       }
     },
     "/v21.0/me": {

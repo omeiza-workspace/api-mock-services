@@ -218,6 +218,65 @@ whole API.
 | `DELETE` | `/:bucket/(?<key>.+)` |
 | `POST` | `/:bucket/(?<key>.+)` |
 
+## Shipping
+
+### shippo
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/v1/addresses` |
+| `GET` | `/v1/addresses/:id` |
+| `POST` | `/v1/parcels` |
+| `POST` | `/v1/customs_declarations` |
+| `POST` | `/v1/shipments` |
+| `GET` | `/v1/shipments/:id` |
+| `POST` | `/v1/transactions` |
+| `GET` | `/v1/transactions/:id` |
+| `GET` | `/v1/tracks/:carrier/:tracking_number` |
+
+### easypost
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/v2/shipments` |
+| `GET` | `/v2/shipments/:id` |
+| `POST` | `/v2/shipments/:id/buy` |
+| `POST` | `/v2/trackers` |
+| `GET` | `/v2/trackers/:id` |
+| `POST` | `/v2/webhooks` |
+
+### fedex
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/oauth/token` |
+| `POST` | `/ship/v1/shipments` |
+| `POST` | `/rate/v1/rates/quotes` |
+| `GET` | `/track/v1/trackingnumbers/:trackingNumber` |
+
+### ups
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/security/v1/oauth/token` |
+| `POST` | `/api/shipments/v1/ship` |
+| `POST` | `/api/rating/v1/rate` |
+| `GET` | `/api/track/v1/details/:trackingNumber` |
+
+### dhl
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/oauth/token` |
+| `POST` | `/express/shipments` |
+| `POST` | `/express/rates` |
+| `GET` | `/express/tracking/:trackingNumber` |
+
 ## Social
 
 ### facebook
