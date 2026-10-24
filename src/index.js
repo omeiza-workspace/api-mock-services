@@ -58,6 +58,12 @@ import {
   createLightspeedMock as lightspeedMock,
 } from './providers/pos.js'
 import {
+  createSegmentMock as segmentMock,
+  createMixpanelMock as mixpanelMock,
+  createAmplitudeMock as amplitudeMock,
+  createRudderStackMock as rudderstackMock,
+} from './providers/analytics.js'
+import {
   createPaystackMock as paystackMock,
   createInterswitchMock as interswitchMock,
   createYouVerifyMock as youverifyMock,
@@ -127,6 +133,7 @@ export const CATEGORIES = {
   erp: { title: 'ERP/Inventory', description: 'The products, orders and the stock' },
   tax: { title: 'Tax', description: 'The tax calculation and the compliance' },
   pos: { title: 'POS Hardware', description: 'The terminals, the registers and the payments' },
+  analytics: { title: 'Analytics', description: 'The events, the funnels and the cohorts' },
   social: { title: 'Social', description: 'The networks, the video platforms and the community apps' },
 }
 
@@ -504,6 +511,30 @@ export const MOCKS = {
     category: 'pos',
     description: 'The POS (Lightspeed Retail API)',
   },
+  segment: {
+    create: segmentMock,
+    port: 4063,
+    category: 'analytics',
+    description: 'The analytics (Segment API)',
+  },
+  mixpanel: {
+    create: mixpanelMock,
+    port: 4064,
+    category: 'analytics',
+    description: 'The analytics (Mixpanel API)',
+  },
+  amplitude: {
+    create: amplitudeMock,
+    port: 4065,
+    category: 'analytics',
+    description: 'The analytics (Amplitude API)',
+  },
+  rudderstack: {
+    create: rudderstackMock,
+    port: 4066,
+    category: 'analytics',
+    description: 'The analytics (RudderStack API)',
+  },
 }
 
 /**
@@ -611,6 +642,10 @@ export const createSquareTerminalMock = withViews(squareTerminalMock)
 export const createCloverMock = withViews(cloverMock)
 export const createToastMock = withViews(toastMock)
 export const createLightspeedMock = withViews(lightspeedMock)
+export const createSegmentMock = withViews(segmentMock)
+export const createMixpanelMock = withViews(mixpanelMock)
+export const createAmplitudeMock = withViews(amplitudeMock)
+export const createRudderStackMock = withViews(rudderstackMock)
 
 /** A mock written as a route file rather than as code. */
 export const createSpecMock = withViews(specMock)

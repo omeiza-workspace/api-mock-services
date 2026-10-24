@@ -69,6 +69,10 @@
       "description": "POS Hardware"
     },
     {
+      "name": "analytics",
+      "description": "Analytics"
+    },
+    {
       "name": "social",
       "description": "Social"
     }
@@ -6875,6 +6879,305 @@
           }
         },
         "x-mock-service": "lightspeed"
+      }
+    },
+    "/v1/track": {
+      "post": {
+        "summary": "POST /v1/track (rudderstack)",
+        "tags": [
+          "analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "rudderstack"
+      }
+    },
+    "/v1/identify": {
+      "post": {
+        "summary": "POST /v1/identify (rudderstack)",
+        "tags": [
+          "analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "rudderstack"
+      }
+    },
+    "/v1/group": {
+      "post": {
+        "summary": "POST /v1/group (rudderstack)",
+        "tags": [
+          "analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "rudderstack"
+      }
+    },
+    "/v1/alias": {
+      "post": {
+        "summary": "POST /v1/alias (rudderstack)",
+        "tags": [
+          "analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "rudderstack"
+      }
+    },
+    "/v1/page": {
+      "post": {
+        "summary": "POST /v1/page (rudderstack)",
+        "tags": [
+          "analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "rudderstack"
+      }
+    },
+    "/v1/batch": {
+      "post": {
+        "summary": "POST /v1/batch (rudderstack)",
+        "tags": [
+          "analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "rudderstack"
+      }
+    },
+    "/track": {
+      "post": {
+        "summary": "POST /track (mixpanel)",
+        "tags": [
+          "analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "mixpanel"
+      }
+    },
+    "/engage": {
+      "post": {
+        "summary": "POST /engage (mixpanel)",
+        "tags": [
+          "analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "mixpanel"
+      }
+    },
+    "/import": {
+      "post": {
+        "summary": "POST /import (mixpanel)",
+        "tags": [
+          "analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "mixpanel"
+      }
+    },
+    "/export": {
+      "get": {
+        "summary": "GET /export (mixpanel)",
+        "tags": [
+          "analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "mixpanel"
+      }
+    },
+    "/2/httpapi": {
+      "post": {
+        "summary": "POST /2/httpapi (amplitude)",
+        "tags": [
+          "analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "amplitude"
+      }
+    },
+    "/identify": {
+      "post": {
+        "summary": "POST /identify (amplitude)",
+        "tags": [
+          "analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "amplitude"
+      }
+    },
+    "/batch": {
+      "post": {
+        "summary": "POST /batch (amplitude)",
+        "tags": [
+          "analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "amplitude"
       }
     },
     "/v21.0/me": {

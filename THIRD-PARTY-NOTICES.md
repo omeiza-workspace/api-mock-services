@@ -139,6 +139,10 @@ can be checked against them.
 | `clover` | Clover | Fiserv, Inc. |
 | `toast` | Toast | Toast, Inc. |
 | `lightspeed` | Lightspeed | Lightspeed Commerce Inc. |
+| `segment` | Segment | Segment.io, Inc. (Twilio) |
+| `mixpanel` | Mixpanel | Mixpanel, Inc. |
+| `amplitude` | Amplitude | Amplitude, Inc. |
+| `rudderstack` | RudderStack | RudderStack, Inc. |
 
 The list is checked by a test: a mock that ships without a row here fails the
 build.

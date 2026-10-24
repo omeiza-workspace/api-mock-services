@@ -519,3 +519,32 @@ services:
     command: ["lightspeed"]
     ports:
       - "4062:4062"
+
+  # ── Analytics ────────────────────────────────────────────────────────────────
+  segment-mock:
+    <<: *mock
+    profiles: [analytics, all]
+    command: ["segment"]
+    ports:
+      - "4063:4063"
+
+  mixpanel-mock:
+    <<: *mock
+    profiles: [analytics, all]
+    command: ["mixpanel"]
+    ports:
+      - "4064:4064"
+
+  amplitude-mock:
+    <<: *mock
+    profiles: [analytics, all]
+    command: ["amplitude"]
+    ports:
+      - "4065:4065"
+
+  rudderstack-mock:
+    <<: *mock
+    profiles: [analytics, all]
+    command: ["rudderstack"]
+    ports:
+      - "4066:4066"

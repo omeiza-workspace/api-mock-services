@@ -650,6 +650,51 @@ whole API.
 | `GET` | `/api/v1/items.json` |
 | `GET` | `/api/v1/registers.json` |
 
+## Analytics
+
+### segment
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/v1/track` |
+| `POST` | `/v1/identify` |
+| `POST` | `/v1/group` |
+| `POST` | `/v1/alias` |
+| `POST` | `/v1/page` |
+| `POST` | `/v1/batch` |
+
+### mixpanel
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/track` |
+| `POST` | `/engage` |
+| `POST` | `/import` |
+| `GET` | `/export` |
+
+### amplitude
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/2/httpapi` |
+| `POST` | `/identify` |
+| `POST` | `/batch` |
+
+### rudderstack
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/v1/track` |
+| `POST` | `/v1/identify` |
+| `POST` | `/v1/group` |
+| `POST` | `/v1/alias` |
+| `POST` | `/v1/page` |
+| `POST` | `/v1/batch` |
+
 ## Social
 
 ### facebook
