@@ -417,3 +417,25 @@ services:
     command: ["attio"]
     ports:
       - "4048:4048"
+
+  # ── Accounting Additional ───────────────────────────────────────────────────
+  quickbooks-mock:
+    <<: *mock
+    profiles: [accounting, all]
+    command: ["quickbooks"]
+    ports:
+      - "4049:4049"
+
+  netsuite-mock:
+    <<: *mock
+    profiles: [accounting, all]
+    command: ["netsuite"]
+    ports:
+      - "4050:4050"
+
+  sage-mock:
+    <<: *mock
+    profiles: [accounting, all]
+    command: ["sage"]
+    ports:
+      - "4051:4051"

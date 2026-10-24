@@ -36,6 +36,11 @@ import {
   createAttioMock as attioMock,
 } from './providers/crm.js'
 import {
+  createQuickBooksMock as quickbooksMock,
+  createNetSuiteMock as netsuiteMock,
+  createSageMock as sageMock,
+} from './providers/accounting-additional.js'
+import {
   createPaystackMock as paystackMock,
   createInterswitchMock as interswitchMock,
   createYouVerifyMock as youverifyMock,
@@ -395,6 +400,24 @@ export const MOCKS = {
     category: 'crm',
     description: 'The CRM (Attio API)',
   },
+  quickbooks: {
+    create: quickbooksMock,
+    port: 4049,
+    category: 'accounting',
+    description: 'The accounting (QuickBooks Online API)',
+  },
+  netsuite: {
+    create: netsuiteMock,
+    port: 4050,
+    category: 'accounting',
+    description: 'The accounting (NetSuite SuiteTalk API)',
+  },
+  sage: {
+    create: sageMock,
+    port: 4051,
+    category: 'accounting',
+    description: 'The accounting (Sage Intacct API)',
+  },
 }
 
 /**
@@ -488,6 +511,9 @@ export const createHubspotMock = withViews(hubspotMock)
 export const createSalesforceMock = withViews(salesforceMock)
 export const createPipedriveMock = withViews(pipedriveMock)
 export const createAttioMock = withViews(attioMock)
+export const createQuickBooksMock = withViews(quickbooksMock)
+export const createNetSuiteMock = withViews(netsuiteMock)
+export const createSageMock = withViews(sageMock)
 
 /** A mock written as a route file rather than as code. */
 export const createSpecMock = withViews(specMock)

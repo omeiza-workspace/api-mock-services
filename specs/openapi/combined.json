@@ -2173,6 +2173,510 @@
         "x-mock-service": "xero"
       }
     },
+    "/oauth2/v1/tokens/bearer": {
+      "post": {
+        "summary": "POST /oauth2/v1/tokens/bearer (quickbooks)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "quickbooks"
+      }
+    },
+    "/v3/company/{realmId}/customer": {
+      "post": {
+        "summary": "POST /v3/company/{realmId}/customer (quickbooks)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "quickbooks"
+      }
+    },
+    "/v3/company/{realmId}/customer/{id}": {
+      "get": {
+        "summary": "GET /v3/company/{realmId}/customer/{id} (quickbooks)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "quickbooks"
+      }
+    },
+    "/v3/company/{realmId}/query": {
+      "get": {
+        "summary": "GET /v3/company/{realmId}/query (quickbooks)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "quickbooks"
+      }
+    },
+    "/v3/company/{realmId}/invoice": {
+      "post": {
+        "summary": "POST /v3/company/{realmId}/invoice (quickbooks)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "quickbooks"
+      }
+    },
+    "/v3/company/{realmId}/payment": {
+      "post": {
+        "summary": "POST /v3/company/{realmId}/payment (quickbooks)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "quickbooks"
+      }
+    },
+    "/v3/company/{realmId}/account": {
+      "post": {
+        "summary": "POST /v3/company/{realmId}/account (quickbooks)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "quickbooks"
+      }
+    },
+    "/services/rest/auth/oauth2/v1/token": {
+      "post": {
+        "summary": "POST /services/rest/auth/oauth2/v1/token (netsuite)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "netsuite"
+      }
+    },
+    "/services/rest/record/v1/customer": {
+      "post": {
+        "summary": "POST /services/rest/record/v1/customer (netsuite)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "netsuite"
+      }
+    },
+    "/services/rest/record/v1/customer/{id}": {
+      "get": {
+        "summary": "GET /services/rest/record/v1/customer/{id} (netsuite)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "netsuite"
+      }
+    },
+    "/services/rest/record/v1/salesOrder": {
+      "post": {
+        "summary": "POST /services/rest/record/v1/salesOrder (netsuite)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "netsuite"
+      }
+    },
+    "/services/rest/record/v1/salesOrder/{id}": {
+      "get": {
+        "summary": "GET /services/rest/record/v1/salesOrder/{id} (netsuite)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "netsuite"
+      }
+    },
+    "/services/rest/record/v1/inventoryItem": {
+      "post": {
+        "summary": "POST /services/rest/record/v1/inventoryItem (netsuite)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "netsuite"
+      }
+    },
+    "/services/rest/record/v1/invoice": {
+      "post": {
+        "summary": "POST /services/rest/record/v1/invoice (netsuite)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "netsuite"
+      }
+    },
+    "/api/auth/token": {
+      "post": {
+        "summary": "POST /api/auth/token (sage)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "sage"
+      }
+    },
+    "/api/v1/customers": {
+      "post": {
+        "summary": "POST /api/v1/customers (sage)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "sage"
+      },
+      "get": {
+        "summary": "GET /api/v1/customers (sage)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "sage"
+      }
+    },
+    "/api/v1/customers/{id}": {
+      "get": {
+        "summary": "GET /api/v1/customers/{id} (sage)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "sage"
+      }
+    },
+    "/api/v1/invoices": {
+      "post": {
+        "summary": "POST /api/v1/invoices (sage)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "sage"
+      }
+    },
+    "/api/v1/invoices/{id}": {
+      "get": {
+        "summary": "GET /api/v1/invoices/{id} (sage)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "sage"
+      }
+    },
+    "/api/v1/payments": {
+      "post": {
+        "summary": "POST /api/v1/payments (sage)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "sage"
+      }
+    },
+    "/api/v1/gl-entries": {
+      "post": {
+        "summary": "POST /api/v1/gl-entries (sage)",
+        "tags": [
+          "accounting"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "sage"
+      }
+    },
     "/?(?:client/v4/)?zones": {
       "get": {
         "summary": "GET /?(?:client/v4/)?zones (cloudflare)",

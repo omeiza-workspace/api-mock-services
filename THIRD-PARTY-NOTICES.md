@@ -125,6 +125,9 @@ can be checked against them.
 | `salesforce` | Salesforce | Salesforce, Inc. |
 | `pipedrive` | Pipedrive | Pipedrive, Inc. |
 | `attio` | Attio | Attio Technologies Ltd. |
+| `quickbooks` | QuickBooks | Intuit Inc. |
+| `netsuite` | NetSuite | Oracle Corporation |
+| `sage` | Sage | The Sage Group plc |
 
 The list is checked by a test: a mock that ships without a row here fails the
 build.

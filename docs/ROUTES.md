@@ -229,6 +229,46 @@ whole API.
 | `POST` | `/api.xro/2.0/Invoices` |
 | `ANY` | `/api.xro/2.0/` |
 
+### quickbooks
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/oauth2/v1/tokens/bearer` |
+| `POST` | `/v3/company/:realmId/customer` |
+| `GET` | `/v3/company/:realmId/customer/:id` |
+| `GET` | `/v3/company/:realmId/query` |
+| `POST` | `/v3/company/:realmId/invoice` |
+| `POST` | `/v3/company/:realmId/payment` |
+| `POST` | `/v3/company/:realmId/account` |
+
+### netsuite
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/services/rest/auth/oauth2/v1/token` |
+| `POST` | `/services/rest/record/v1/customer` |
+| `GET` | `/services/rest/record/v1/customer/:id` |
+| `POST` | `/services/rest/record/v1/salesOrder` |
+| `GET` | `/services/rest/record/v1/salesOrder/:id` |
+| `POST` | `/services/rest/record/v1/inventoryItem` |
+| `POST` | `/services/rest/record/v1/invoice` |
+
+### sage
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/api/auth/token` |
+| `POST` | `/api/v1/customers` |
+| `GET` | `/api/v1/customers` |
+| `GET` | `/api/v1/customers/:id` |
+| `POST` | `/api/v1/invoices` |
+| `GET` | `/api/v1/invoices/:id` |
+| `POST` | `/api/v1/payments` |
+| `POST` | `/api/v1/gl-entries` |
+
 ## DNS
 
 ### cloudflare
