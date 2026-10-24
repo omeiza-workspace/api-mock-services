@@ -123,8 +123,13 @@ export function createSendGridMock() {
   })
 
   service.on('DELETE', '/v3/suppression/bounces', (req, res) => {
+    // Support both query params (real API) and JSON body (test convenience)
+    const queryEmails = req.query.emails
+      ? (Array.isArray(req.query.emails) ? req.query.emails : [req.query.emails])
+      : []
     const body = req.json ?? {}
-    const emails = body.emails ?? []
+    const bodyEmails = body.emails ?? []
+    const emails = [...queryEmails, ...bodyEmails]
 
     for (const email of emails) {
       service.state.suppressions.delete(email)

@@ -93,25 +93,31 @@ test('sendgrid manages suppression lists', async () => {
   const service = MOCKS.sendgrid.create()
   await service.listen(0, '127.0.0.1')
 
-  const add = await post(`${service.url}/v3/suppression/bounces`, {
-    emails: ['bounce@example.com'],
-  })
+  try {
+    const add = await post(`${service.url}/v3/suppression/bounces`, {
+      emails: ['bounce@example.com'],
+    })
 
-  assert.equal(add.status, 201)
-  assert.equal(add.json.deleted, 1)
+    assert.equal(add.status, 201)
+    assert.equal(add.json.deleted, 1)
 
-  const get = await get(`${service.url}/v3/suppression/bounces`)
-  assert.equal(get.status, 200)
-  assert.ok(get.json.some((s) => s.email === 'bounce@example.com'))
+    const getResult = await get(`${service.url}/v3/suppression/bounces`)
+    assert.equal(getResult.status, 200)
+    assert.ok(getResult.json.some((s) => s.email === 'bounce@example.com'))
 
-  const remove = await del(`${service.url}/v3/suppression/bounces`, {
-    emails: ['bounce@example.com'],
-  })
+    const remove = await del(`${service.url}/v3/suppression/bounces`, {
+      emails: ['bounce@example.com'],
+    })
 
-  assert.equal(remove.status, 200)
-  assert.equal(remove.json.deleted, 1)
-
-  await service.close()
+    assert.equal(remove.status, 200)
+    assert.equal(remove.json.deleted, 1)
+  } catch (e) {
+    console.error('TEST FAILED:', e.message)
+    console.error(e.stack)
+    throw e
+  } finally {
+    await service.close()
+  }
 })
 
 test('mailchimp creates a list', async () => {
