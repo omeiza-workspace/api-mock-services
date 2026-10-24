@@ -37,7 +37,7 @@
   "scripts": {
     "start": "node bin/api-mock-services.js start",
     "list": "node bin/api-mock-services.js list",
-    "test": "node --test test/*.test.js",
+    "test": "node --test --test-timeout=120000 test/*.test.js",
     "test:watch": "node --test --watch test/*.test.js",
     "lint": "node scripts/lint.js",
     "footprint": "node scripts/footprint.js",

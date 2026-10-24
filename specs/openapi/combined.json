@@ -49,6 +49,10 @@
       "description": "Shipping"
     },
     {
+      "name": "marketplaces",
+      "description": "Marketplaces"
+    },
+    {
       "name": "social",
       "description": "Social"
     }
@@ -2491,6 +2495,908 @@
           }
         },
         "x-mock-service": "dhl"
+      }
+    },
+    "/auth/o2/token": {
+      "post": {
+        "summary": "POST /auth/o2/token (amazon-sp-api)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "amazon-sp-api"
+      }
+    },
+    "/orders/v0/orders": {
+      "get": {
+        "summary": "GET /orders/v0/orders (amazon-sp-api)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "amazon-sp-api"
+      },
+      "post": {
+        "summary": "POST /orders/v0/orders (amazon-sp-api)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "amazon-sp-api"
+      }
+    },
+    "/orders/v0/orders/{orderId}": {
+      "get": {
+        "summary": "GET /orders/v0/orders/{orderId} (amazon-sp-api)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "amazon-sp-api"
+      }
+    },
+    "/orders/v0/orders/{orderId}/orderItems": {
+      "get": {
+        "summary": "GET /orders/v0/orders/{orderId}/orderItems (amazon-sp-api)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "amazon-sp-api"
+      }
+    },
+    "/catalog/v0/items/{asin}": {
+      "get": {
+        "summary": "GET /catalog/v0/items/{asin} (amazon-sp-api)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "amazon-sp-api"
+      }
+    },
+    "/feeds/v2021-06-30/feeds": {
+      "post": {
+        "summary": "POST /feeds/v2021-06-30/feeds (amazon-sp-api)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "amazon-sp-api"
+      }
+    },
+    "/feeds/v2021-06-30/feeds/{feedId}": {
+      "get": {
+        "summary": "GET /feeds/v2021-06-30/feeds/{feedId} (amazon-sp-api)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "amazon-sp-api"
+      }
+    },
+    "/reports/v2021-06-30/reports": {
+      "post": {
+        "summary": "POST /reports/v2021-06-30/reports (amazon-sp-api)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "amazon-sp-api"
+      }
+    },
+    "/reports/v2021-06-30/reports/{reportId}": {
+      "get": {
+        "summary": "GET /reports/v2021-06-30/reports/{reportId} (amazon-sp-api)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "amazon-sp-api"
+      }
+    },
+    "/admin/api/2024-01/products.json": {
+      "get": {
+        "summary": "GET /admin/api/2024-01/products.json (shopify)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "shopify"
+      },
+      "post": {
+        "summary": "POST /admin/api/2024-01/products.json (shopify)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "shopify"
+      }
+    },
+    "/admin/api/2024-01/products/{id}.json": {
+      "get": {
+        "summary": "GET /admin/api/2024-01/products/{id}.json (shopify)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "shopify"
+      },
+      "put": {
+        "summary": "PUT /admin/api/2024-01/products/{id}.json (shopify)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "shopify"
+      },
+      "delete": {
+        "summary": "DELETE /admin/api/2024-01/products/{id}.json (shopify)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "shopify"
+      }
+    },
+    "/admin/api/2024-01/orders.json": {
+      "get": {
+        "summary": "GET /admin/api/2024-01/orders.json (shopify)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "shopify"
+      },
+      "post": {
+        "summary": "POST /admin/api/2024-01/orders.json (shopify)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "shopify"
+      }
+    },
+    "/admin/api/2024-01/orders/{id}.json": {
+      "get": {
+        "summary": "GET /admin/api/2024-01/orders/{id}.json (shopify)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "shopify"
+      }
+    },
+    "/admin/api/2024-01/customers.json": {
+      "get": {
+        "summary": "GET /admin/api/2024-01/customers.json (shopify)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "shopify"
+      },
+      "post": {
+        "summary": "POST /admin/api/2024-01/customers.json (shopify)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "shopify"
+      }
+    },
+    "/admin/api/2024-01/webhooks.json": {
+      "post": {
+        "summary": "POST /admin/api/2024-01/webhooks.json (shopify)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "shopify"
+      }
+    },
+    "/identity/v1/oauth2/token": {
+      "post": {
+        "summary": "POST /identity/v1/oauth2/token (ebay)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "ebay"
+      }
+    },
+    "/sell/inventory/v1/inventory_item/{sku}": {
+      "put": {
+        "summary": "PUT /sell/inventory/v1/inventory_item/{sku} (ebay)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "ebay"
+      },
+      "get": {
+        "summary": "GET /sell/inventory/v1/inventory_item/{sku} (ebay)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "ebay"
+      }
+    },
+    "/sell/inventory/v1/offer": {
+      "post": {
+        "summary": "POST /sell/inventory/v1/offer (ebay)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "ebay"
+      }
+    },
+    "/sell/inventory/v1/offer/{offerId}": {
+      "get": {
+        "summary": "GET /sell/inventory/v1/offer/{offerId} (ebay)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "ebay"
+      }
+    },
+    "/sell/fulfillment/v1/order": {
+      "get": {
+        "summary": "GET /sell/fulfillment/v1/order (ebay)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "ebay"
+      }
+    },
+    "/sell/fulfillment/v1/order/{orderId}": {
+      "get": {
+        "summary": "GET /sell/fulfillment/v1/order/{orderId} (ebay)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "ebay"
+      }
+    },
+    "/v3/oauth/token": {
+      "post": {
+        "summary": "POST /v3/oauth/token (etsy)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "etsy"
+      }
+    },
+    "/v3/application/shops/{shopId}/listings": {
+      "get": {
+        "summary": "GET /v3/application/shops/{shopId}/listings (etsy)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "etsy"
+      },
+      "post": {
+        "summary": "POST /v3/application/shops/{shopId}/listings (etsy)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "etsy"
+      }
+    },
+    "/v3/application/listings/{listingId}": {
+      "get": {
+        "summary": "GET /v3/application/listings/{listingId} (etsy)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "etsy"
+      }
+    },
+    "/v3/application/shops/{shopId}/receipts": {
+      "get": {
+        "summary": "GET /v3/application/shops/{shopId}/receipts (etsy)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "etsy"
+      }
+    },
+    "/v3/items": {
+      "get": {
+        "summary": "GET /v3/items (walmart)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "walmart"
+      },
+      "post": {
+        "summary": "POST /v3/items (walmart)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "walmart"
+      }
+    },
+    "/v3/items/{sku}": {
+      "get": {
+        "summary": "GET /v3/items/{sku} (walmart)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "walmart"
+      }
+    },
+    "/v3/orders": {
+      "get": {
+        "summary": "GET /v3/orders (walmart)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "walmart"
+      }
+    },
+    "/v3/orders/{orderId}": {
+      "get": {
+        "summary": "GET /v3/orders/{orderId} (walmart)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "walmart"
+      }
+    },
+    "/v3/feeds": {
+      "post": {
+        "summary": "POST /v3/feeds (walmart)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "walmart"
+      }
+    },
+    "/v3/feeds/{feedId}": {
+      "get": {
+        "summary": "GET /v3/feeds/{feedId} (walmart)",
+        "tags": [
+          "marketplaces"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "walmart"
       }
     },
     "/v21.0/me": {

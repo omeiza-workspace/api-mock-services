@@ -141,6 +141,41 @@ services:
     ports:
       - "4035:4035"
 
+  amazon-sp-api-mock:
+    <<: *mock
+    profiles: [marketplaces, all]
+    command: ["amazon-sp-api"]
+    ports:
+      - "4036:4036"
+
+  shopify-mock:
+    <<: *mock
+    profiles: [marketplaces, all]
+    command: ["shopify"]
+    ports:
+      - "4037:4037"
+
+  ebay-mock:
+    <<: *mock
+    profiles: [marketplaces, all]
+    command: ["ebay"]
+    ports:
+      - "4038:4038"
+
+  etsy-mock:
+    <<: *mock
+    profiles: [marketplaces, all]
+    command: ["etsy"]
+    ports:
+      - "4039:4039"
+
+  walmart-mock:
+    <<: *mock
+    profiles: [marketplaces, all]
+    command: ["walmart"]
+    ports:
+      - "4040:4040"
+
   # ── Identity ────────────────────────────────────────────────────────────
   youverify-mock:
     <<: *mock

@@ -112,6 +112,11 @@ can be checked against them.
 | `fedex` | FedEx | FedEx Corporation |
 | `ups` | UPS | United Parcel Service, Inc. |
 | `dhl` | DHL | Deutsche Post DHL Group |
+| `amazon-sp-api` | Amazon SP-API | Amazon.com, Inc. |
+| `shopify` | Shopify | Shopify Inc. |
+| `ebay` | eBay | eBay Inc. |
+| `etsy` | Etsy | Etsy, Inc. |
+| `walmart` | Walmart | Walmart Inc. |
 
 The list is checked by a test: a mock that ships without a row here fails the
 build.

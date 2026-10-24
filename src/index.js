@@ -17,6 +17,13 @@ import {
   createDhlMock as dhlMock,
 } from './providers/shipping.js'
 import {
+  createAmazonSpApiMock as amazonSpApiMock,
+  createShopifyMock as shopifyMock,
+  createEbayMock as ebayMock,
+  createEtsyMock as etsyMock,
+  createWalmartMock as walmartMock,
+} from './providers/marketplaces.js'
+import {
   createPaystackMock as paystackMock,
   createInterswitchMock as interswitchMock,
   createYouVerifyMock as youverifyMock,
@@ -80,6 +87,7 @@ export const CATEGORIES = {
   ai: { title: 'AI', description: 'The model calls' },
   storage: { title: 'Storage', description: 'The buckets and the objects' },
   shipping: { title: 'Shipping', description: 'The labels, the rates and the tracking' },
+  marketplaces: { title: 'Marketplaces', description: 'The stores and the orders' },
   social: { title: 'Social', description: 'The networks, the video platforms and the community apps' },
 }
 
@@ -295,6 +303,36 @@ export const MOCKS = {
     category: 'shipping',
     description: 'The shipping labels and tracking (DHL)',
   },
+  'amazon-sp-api': {
+    create: amazonSpApiMock,
+    port: 4036,
+    category: 'marketplaces',
+    description: 'The selling partner API (Amazon SP-API)',
+  },
+  shopify: {
+    create: shopifyMock,
+    port: 4037,
+    category: 'marketplaces',
+    description: 'The e-commerce platform (Shopify Admin API)',
+  },
+  ebay: {
+    create: ebayMock,
+    port: 4038,
+    category: 'marketplaces',
+    description: 'The marketplace (eBay Sell API)',
+  },
+  etsy: {
+    create: etsyMock,
+    port: 4039,
+    category: 'marketplaces',
+    description: 'The handmade marketplace (Etsy Open API)',
+  },
+  walmart: {
+    create: walmartMock,
+    port: 4040,
+    category: 'marketplaces',
+    description: 'The marketplace (Walmart Marketplace API)',
+  },
 }
 
 /**
@@ -375,6 +413,11 @@ export const createEasyPostMock = withViews(easypostMock)
 export const createFedexMock = withViews(fedexMock)
 export const createUpsMock = withViews(upsMock)
 export const createDhlMock = withViews(dhlMock)
+export const createAmazonSpApiMock = withViews(amazonSpApiMock)
+export const createShopifyMock = withViews(shopifyMock)
+export const createEbayMock = withViews(ebayMock)
+export const createEtsyMock = withViews(etsyMock)
+export const createWalmartMock = withViews(walmartMock)
 
 /** A mock written as a route file rather than as code. */
 export const createSpecMock = withViews(specMock)

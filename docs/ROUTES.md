@@ -277,6 +277,78 @@ whole API.
 | `POST` | `/express/rates` |
 | `GET` | `/express/tracking/:trackingNumber` |
 
+## Marketplaces
+
+### amazon-sp-api
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/auth/o2/token` |
+| `GET` | `/orders/v0/orders` |
+| `GET` | `/orders/v0/orders/:orderId` |
+| `GET` | `/orders/v0/orders/:orderId/orderItems` |
+| `POST` | `/orders/v0/orders` |
+| `GET` | `/catalog/v0/items/:asin` |
+| `POST` | `/feeds/v2021-06-30/feeds` |
+| `GET` | `/feeds/v2021-06-30/feeds/:feedId` |
+| `POST` | `/reports/v2021-06-30/reports` |
+| `GET` | `/reports/v2021-06-30/reports/:reportId` |
+
+### shopify
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `GET` | `/admin/api/2024-01/products.json` |
+| `GET` | `/admin/api/2024-01/products/:id.json` |
+| `POST` | `/admin/api/2024-01/products.json` |
+| `PUT` | `/admin/api/2024-01/products/:id.json` |
+| `DELETE` | `/admin/api/2024-01/products/:id.json` |
+| `GET` | `/admin/api/2024-01/orders.json` |
+| `GET` | `/admin/api/2024-01/orders/:id.json` |
+| `POST` | `/admin/api/2024-01/orders.json` |
+| `GET` | `/admin/api/2024-01/customers.json` |
+| `POST` | `/admin/api/2024-01/customers.json` |
+| `POST` | `/admin/api/2024-01/webhooks.json` |
+
+### ebay
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/identity/v1/oauth2/token` |
+| `PUT` | `/sell/inventory/v1/inventory_item/:sku` |
+| `GET` | `/sell/inventory/v1/inventory_item/:sku` |
+| `POST` | `/sell/inventory/v1/offer` |
+| `GET` | `/sell/inventory/v1/offer/:offerId` |
+| `GET` | `/sell/fulfillment/v1/order` |
+| `GET` | `/sell/fulfillment/v1/order/:orderId` |
+
+### etsy
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/v3/oauth/token` |
+| `GET` | `/v3/application/shops/:shopId/listings` |
+| `POST` | `/v3/application/shops/:shopId/listings` |
+| `GET` | `/v3/application/listings/:listingId` |
+| `GET` | `/v3/application/shops/:shopId/receipts` |
+
+### walmart
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `GET` | `/v3/items` |
+| `POST` | `/v3/items` |
+| `GET` | `/v3/items/:sku` |
+| `GET` | `/v3/orders` |
+| `GET` | `/v3/orders/:orderId` |
+| `POST` | `/v3/feeds` |
+| `GET` | `/v3/feeds/:feedId` |
+
 ## Social
 
 ### facebook
