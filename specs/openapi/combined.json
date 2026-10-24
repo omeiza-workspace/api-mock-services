@@ -1499,6 +1499,584 @@
         "x-mock-service": "resend"
       }
     },
+    "/v3/mail/send": {
+      "post": {
+        "summary": "POST /v3/mail/send (sendgrid)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "sendgrid"
+      }
+    },
+    "/v3/marketing/contacts": {
+      "post": {
+        "summary": "POST /v3/marketing/contacts (sendgrid)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "sendgrid"
+      },
+      "get": {
+        "summary": "GET /v3/marketing/contacts (sendgrid)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "sendgrid"
+      }
+    },
+    "/v3/suppression/bounces": {
+      "get": {
+        "summary": "GET /v3/suppression/bounces (sendgrid)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "sendgrid"
+      },
+      "post": {
+        "summary": "POST /v3/suppression/bounces (sendgrid)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "sendgrid"
+      },
+      "delete": {
+        "summary": "DELETE /v3/suppression/bounces (sendgrid)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "sendgrid"
+      }
+    },
+    "/v3/stats": {
+      "get": {
+        "summary": "GET /v3/stats (sendgrid)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "sendgrid"
+      }
+    },
+    "/oauth2/token": {
+      "post": {
+        "summary": "POST /oauth2/token (mailchimp)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "mailchimp"
+      }
+    },
+    "/3.0/lists": {
+      "get": {
+        "summary": "GET /3.0/lists (mailchimp)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "mailchimp"
+      },
+      "post": {
+        "summary": "POST /3.0/lists (mailchimp)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "mailchimp"
+      }
+    },
+    "/3.0/lists/{listId}/members": {
+      "post": {
+        "summary": "POST /3.0/lists/{listId}/members (mailchimp)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "mailchimp"
+      },
+      "get": {
+        "summary": "GET /3.0/lists/{listId}/members (mailchimp)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "mailchimp"
+      }
+    },
+    "/3.0/campaigns": {
+      "post": {
+        "summary": "POST /3.0/campaigns (mailchimp)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "mailchimp"
+      },
+      "get": {
+        "summary": "GET /3.0/campaigns (mailchimp)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "mailchimp"
+      }
+    },
+    "/api/profiles": {
+      "post": {
+        "summary": "POST /api/profiles (klaviyo)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "klaviyo"
+      },
+      "get": {
+        "summary": "GET /api/profiles (klaviyo)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "klaviyo"
+      }
+    },
+    "/api/lists": {
+      "post": {
+        "summary": "POST /api/lists (klaviyo)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "klaviyo"
+      },
+      "get": {
+        "summary": "GET /api/lists (klaviyo)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "klaviyo"
+      }
+    },
+    "/api/campaigns": {
+      "post": {
+        "summary": "POST /api/campaigns (klaviyo)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "klaviyo"
+      },
+      "get": {
+        "summary": "GET /api/campaigns (klaviyo)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "klaviyo"
+      }
+    },
+    "/email": {
+      "post": {
+        "summary": "POST /email (postmark)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "postmark"
+      }
+    },
+    "/email/batch": {
+      "post": {
+        "summary": "POST /email/batch (postmark)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "postmark"
+      }
+    },
+    "/templates": {
+      "post": {
+        "summary": "POST /templates (postmark)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "postmark"
+      },
+      "get": {
+        "summary": "GET /templates (postmark)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "postmark"
+      }
+    },
+    "/message-streams": {
+      "get": {
+        "summary": "GET /message-streams (postmark)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "postmark"
+      }
+    },
+    "/stats/outbound": {
+      "get": {
+        "summary": "GET /stats/outbound (postmark)",
+        "tags": [
+          "email"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "postmark"
+      }
+    },
     "/connect/token": {
       "post": {
         "summary": "POST /connect/token (xero)",

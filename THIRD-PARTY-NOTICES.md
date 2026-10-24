@@ -117,6 +117,10 @@ can be checked against them.
 | `ebay` | eBay | eBay Inc. |
 | `etsy` | Etsy | Etsy, Inc. |
 | `walmart` | Walmart | Walmart Inc. |
+| `sendgrid` | SendGrid | Twilio Inc. |
+| `mailchimp` | Mailchimp | The Rocket Science Group LLC (Intuit) |
+| `klaviyo` | Klaviyo | Klaviyo, Inc. |
+| `postmark` | Postmark | ActiveCampaign, LLC |
 
 The list is checked by a test: a mock that ships without a row here fails the
 build.

@@ -168,6 +168,56 @@ whole API.
 | `POST` | `/domains` |
 | `POST` | `/emails` |
 
+### sendgrid
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/v3/mail/send` |
+| `POST` | `/v3/marketing/contacts` |
+| `GET` | `/v3/marketing/contacts` |
+| `GET` | `/v3/suppression/bounces` |
+| `POST` | `/v3/suppression/bounces` |
+| `DELETE` | `/v3/suppression/bounces` |
+| `GET` | `/v3/stats` |
+
+### mailchimp
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/oauth2/token` |
+| `GET` | `/3.0/lists` |
+| `POST` | `/3.0/lists` |
+| `POST` | `/3.0/lists/:listId/members` |
+| `GET` | `/3.0/lists/:listId/members` |
+| `POST` | `/3.0/campaigns` |
+| `GET` | `/3.0/campaigns` |
+
+### klaviyo
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/api/profiles` |
+| `GET` | `/api/profiles` |
+| `POST` | `/api/lists` |
+| `GET` | `/api/lists` |
+| `POST` | `/api/campaigns` |
+| `GET` | `/api/campaigns` |
+
+### postmark
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/email` |
+| `POST` | `/email/batch` |
+| `POST` | `/templates` |
+| `GET` | `/templates` |
+| `GET` | `/message-streams` |
+| `GET` | `/stats/outbound` |
+
 ## Accounting
 
 ### xero

@@ -24,6 +24,12 @@ import {
   createWalmartMock as walmartMock,
 } from './providers/marketplaces.js'
 import {
+  createSendGridMock as sendgridMock,
+  createMailchimpMock as mailchimpMock,
+  createKlaviyoMock as klaviyoMock,
+  createPostmarkMock as postmarkMock,
+} from './providers/email-marketing.js'
+import {
   createPaystackMock as paystackMock,
   createInterswitchMock as interswitchMock,
   createYouVerifyMock as youverifyMock,
@@ -333,6 +339,30 @@ export const MOCKS = {
     category: 'marketplaces',
     description: 'The marketplace (Walmart Marketplace API)',
   },
+  sendgrid: {
+    create: sendgridMock,
+    port: 4041,
+    category: 'email',
+    description: 'The email API (SendGrid Web API v3)',
+  },
+  mailchimp: {
+    create: mailchimpMock,
+    port: 4042,
+    category: 'email',
+    description: 'The email marketing (Mailchimp Marketing API)',
+  },
+  klaviyo: {
+    create: klaviyoMock,
+    port: 4043,
+    category: 'email',
+    description: 'The email marketing (Klaviyo API)',
+  },
+  postmark: {
+    create: postmarkMock,
+    port: 4044,
+    category: 'email',
+    description: 'The transactional email (Postmark API)',
+  },
 }
 
 /**
@@ -418,6 +448,10 @@ export const createShopifyMock = withViews(shopifyMock)
 export const createEbayMock = withViews(ebayMock)
 export const createEtsyMock = withViews(etsyMock)
 export const createWalmartMock = withViews(walmartMock)
+export const createSendGridMock = withViews(sendgridMock)
+export const createMailchimpMock = withViews(mailchimpMock)
+export const createKlaviyoMock = withViews(klaviyoMock)
+export const createPostmarkMock = withViews(postmarkMock)
 
 /** A mock written as a route file rather than as code. */
 export const createSpecMock = withViews(specMock)

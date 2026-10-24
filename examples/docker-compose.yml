@@ -176,6 +176,34 @@ services:
     ports:
       - "4040:4040"
 
+  sendgrid-mock:
+    <<: *mock
+    profiles: [email, all]
+    command: ["sendgrid"]
+    ports:
+      - "4041:4041"
+
+  mailchimp-mock:
+    <<: *mock
+    profiles: [email, all]
+    command: ["mailchimp"]
+    ports:
+      - "4042:4042"
+
+  klaviyo-mock:
+    <<: *mock
+    profiles: [email, all]
+    command: ["klaviyo"]
+    ports:
+      - "4043:4043"
+
+  postmark-mock:
+    <<: *mock
+    profiles: [email, all]
+    command: ["postmark"]
+    ports:
+      - "4044:4044"
+
   # ── Identity ────────────────────────────────────────────────────────────
   youverify-mock:
     <<: *mock
