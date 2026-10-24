@@ -61,6 +61,10 @@
       "description": "ERP/Inventory"
     },
     {
+      "name": "tax",
+      "description": "Tax"
+    },
+    {
       "name": "social",
       "description": "Social"
     }
@@ -5892,6 +5896,351 @@
           }
         },
         "x-mock-service": "katana"
+      }
+    },
+    "/api/v2/auth/token": {
+      "post": {
+        "summary": "POST /api/v2/auth/token (avalara)",
+        "tags": [
+          "tax"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "avalara"
+      }
+    },
+    "/api/v2/transactions/create": {
+      "post": {
+        "summary": "POST /api/v2/transactions/create (avalara)",
+        "tags": [
+          "tax"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "avalara"
+      }
+    },
+    "/api/v2/transactions/calculate": {
+      "post": {
+        "summary": "POST /api/v2/transactions/calculate (avalara)",
+        "tags": [
+          "tax"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "avalara"
+      }
+    },
+    "/api/v2/addresses/resolve": {
+      "post": {
+        "summary": "POST /api/v2/addresses/resolve (avalara)",
+        "tags": [
+          "tax"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "avalara"
+      }
+    },
+    "/api/v2/definitions/taxcodes": {
+      "get": {
+        "summary": "GET /api/v2/definitions/taxcodes (avalara)",
+        "tags": [
+          "tax"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "avalara"
+      }
+    },
+    "/v2/taxes": {
+      "post": {
+        "summary": "POST /v2/taxes (taxjar)",
+        "tags": [
+          "tax"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "taxjar"
+      }
+    },
+    "/v2/taxes/orders": {
+      "post": {
+        "summary": "POST /v2/taxes/orders (taxjar)",
+        "tags": [
+          "tax"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "taxjar"
+      }
+    },
+    "/v2/rates/{zip}": {
+      "get": {
+        "summary": "GET /v2/rates/{zip} (taxjar)",
+        "tags": [
+          "tax"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "taxjar"
+      }
+    },
+    "/v2/categories": {
+      "get": {
+        "summary": "GET /v2/categories (taxjar)",
+        "tags": [
+          "tax"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "taxjar"
+      }
+    },
+    "/v2/nexus": {
+      "get": {
+        "summary": "GET /v2/nexus (taxjar)",
+        "tags": [
+          "tax"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "taxjar"
+      }
+    },
+    "/v2/summary": {
+      "get": {
+        "summary": "GET /v2/summary (taxjar)",
+        "tags": [
+          "tax"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "taxjar"
+      }
+    },
+    "/vertex-oauth/oauth/token": {
+      "post": {
+        "summary": "POST /vertex-oauth/oauth/token (vertex)",
+        "tags": [
+          "tax"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "vertex"
+      }
+    },
+    "/api/v1/calculatetax": {
+      "post": {
+        "summary": "POST /api/v1/calculatetax (vertex)",
+        "tags": [
+          "tax"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "vertex"
+      }
+    },
+    "/api/v1/cleanseaddress": {
+      "post": {
+        "summary": "POST /api/v1/cleanseaddress (vertex)",
+        "tags": [
+          "tax"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "vertex"
+      }
+    },
+    "/api/v1/taxcodes": {
+      "get": {
+        "summary": "GET /api/v1/taxcodes (vertex)",
+        "tags": [
+          "tax"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "vertex"
       }
     },
     "/v21.0/me": {

@@ -1,0 +1,175 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "taxjar Mock API",
+    "version": "1.0.0",
+    "description": "Mock for taxjar — generated from the mock's actual routes. Every endpoint is verified against the provider's published specification where available.",
+    "x-mock-service": "taxjar"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:4000",
+      "description": "Local mock server (port varies per mock)"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "GET /health",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-route": true
+      }
+    },
+    "/v2/taxes": {
+      "post": {
+        "summary": "POST /v2/taxes",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-route": true
+      }
+    },
+    "/v2/taxes/orders": {
+      "post": {
+        "summary": "POST /v2/taxes/orders",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-route": true
+      }
+    },
+    "/v2/rates/{zip}": {
+      "get": {
+        "summary": "GET /v2/rates/{zip}",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-route": true
+      }
+    },
+    "/v2/categories": {
+      "get": {
+        "summary": "GET /v2/categories",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-route": true
+      }
+    },
+    "/v2/nexus": {
+      "get": {
+        "summary": "GET /v2/nexus",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-route": true
+      }
+    },
+    "/v2/summary": {
+      "get": {
+        "summary": "GET /v2/summary",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-route": true
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "apiKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}

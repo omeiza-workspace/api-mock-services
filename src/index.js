@@ -47,6 +47,11 @@ import {
   createKatanaMock as katanaMock,
 } from './providers/erp-inventory.js'
 import {
+  createAvalaraMock as avalaraMock,
+  createTaxJarMock as taxjarMock,
+  createVertexMock as vertexMock,
+} from './providers/tax.js'
+import {
   createPaystackMock as paystackMock,
   createInterswitchMock as interswitchMock,
   createYouVerifyMock as youverifyMock,
@@ -114,6 +119,7 @@ export const CATEGORIES = {
   email: { title: 'Email', description: 'The sending domains and the mail itself' },
   crm: { title: 'CRM', description: 'The contacts, deals and the pipeline' },
   erp: { title: 'ERP/Inventory', description: 'The products, orders and the stock' },
+  tax: { title: 'Tax', description: 'The tax calculation and the compliance' },
   social: { title: 'Social', description: 'The networks, the video platforms and the community apps' },
 }
 
@@ -449,6 +455,24 @@ export const MOCKS = {
     category: 'erp',
     description: 'The ERP/Inventory (Katana MRP API)',
   },
+  avalara: {
+    create: avalaraMock,
+    port: 4056,
+    category: 'tax',
+    description: 'The tax calculation (Avalara AvaTax API)',
+  },
+  taxjar: {
+    create: taxjarMock,
+    port: 4057,
+    category: 'tax',
+    description: 'The tax calculation (TaxJar API)',
+  },
+  vertex: {
+    create: vertexMock,
+    port: 4058,
+    category: 'tax',
+    description: 'The tax calculation (Vertex Cloud API)',
+  },
 }
 
 /**
@@ -549,6 +573,9 @@ export const createCin7Mock = withViews(cin7Mock)
 export const createDearMock = withViews(dearMock)
 export const createTradeGeckoMock = withViews(tradegeckoMock)
 export const createKatanaMock = withViews(katanaMock)
+export const createAvalaraMock = withViews(avalaraMock)
+export const createTaxJarMock = withViews(taxjarMock)
+export const createVertexMock = withViews(vertexMock)
 
 /** A mock written as a route file rather than as code. */
 export const createSpecMock = withViews(specMock)

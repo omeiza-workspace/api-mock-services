@@ -468,3 +468,25 @@ services:
     command: ["katana"]
     ports:
       - "4055:4055"
+
+  # ── Tax ──────────────────────────────────────────────────────────────────────
+  avalara-mock:
+    <<: *mock
+    profiles: [tax, all]
+    command: ["avalara"]
+    ports:
+      - "4056:4056"
+
+  taxjar-mock:
+    <<: *mock
+    profiles: [tax, all]
+    command: ["taxjar"]
+    ports:
+      - "4057:4057"
+
+  vertex-mock:
+    <<: *mock
+    profiles: [tax, all]
+    command: ["vertex"]
+    ports:
+      - "4058:4058"

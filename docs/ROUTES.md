@@ -559,6 +559,41 @@ whole API.
 | `GET` | `/api/v1/manufacturing_orders` |
 | `GET` | `/api/v1/inventory` |
 
+## Tax
+
+### avalara
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/api/v2/auth/token` |
+| `POST` | `/api/v2/transactions/create` |
+| `POST` | `/api/v2/transactions/calculate` |
+| `POST` | `/api/v2/addresses/resolve` |
+| `GET` | `/api/v2/definitions/taxcodes` |
+
+### taxjar
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/v2/taxes` |
+| `POST` | `/v2/taxes/orders` |
+| `GET` | `/v2/rates/:zip` |
+| `GET` | `/v2/categories` |
+| `GET` | `/v2/nexus` |
+| `GET` | `/v2/summary` |
+
+### vertex
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/vertex-oauth/oauth/token` |
+| `POST` | `/api/v1/calculatetax` |
+| `POST` | `/api/v1/cleanseaddress` |
+| `GET` | `/api/v1/taxcodes` |
+
 ## Social
 
 ### facebook

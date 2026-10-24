@@ -132,6 +132,9 @@ can be checked against them.
 | `dear` | DEAR Systems | DEAR Systems (Cin7) |
 | `tradegecko` | TradeGecko | TradeGecko (Cin7) |
 | `katana` | Katana | Katana Manufacturing Software Limited |
+| `avalara` | Avalara | Avalara, Inc. |
+| `taxjar` | TaxJar | TaxJar (Stripe) |
+| `vertex` | Vertex | Vertex, Inc. |
 
 The list is checked by a test: a mock that ships without a row here fails the
 build.
