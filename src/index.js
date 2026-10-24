@@ -41,6 +41,12 @@ import {
   createSageMock as sageMock,
 } from './providers/accounting-additional.js'
 import {
+  createCin7Mock as cin7Mock,
+  createDearMock as dearMock,
+  createTradeGeckoMock as tradegeckoMock,
+  createKatanaMock as katanaMock,
+} from './providers/erp-inventory.js'
+import {
   createPaystackMock as paystackMock,
   createInterswitchMock as interswitchMock,
   createYouVerifyMock as youverifyMock,
@@ -107,6 +113,7 @@ export const CATEGORIES = {
   marketplaces: { title: 'Marketplaces', description: 'The stores and the orders' },
   email: { title: 'Email', description: 'The sending domains and the mail itself' },
   crm: { title: 'CRM', description: 'The contacts, deals and the pipeline' },
+  erp: { title: 'ERP/Inventory', description: 'The products, orders and the stock' },
   social: { title: 'Social', description: 'The networks, the video platforms and the community apps' },
 }
 
@@ -418,6 +425,30 @@ export const MOCKS = {
     category: 'accounting',
     description: 'The accounting (Sage Intacct API)',
   },
+  cin7: {
+    create: cin7Mock,
+    port: 4052,
+    category: 'erp',
+    description: 'The ERP/Inventory (Cin7 API)',
+  },
+  dear: {
+    create: dearMock,
+    port: 4053,
+    category: 'erp',
+    description: 'The ERP/Inventory (DEAR Systems API)',
+  },
+  tradegecko: {
+    create: tradegeckoMock,
+    port: 4054,
+    category: 'erp',
+    description: 'The ERP/Inventory (TradeGecko API)',
+  },
+  katana: {
+    create: katanaMock,
+    port: 4055,
+    category: 'erp',
+    description: 'The ERP/Inventory (Katana MRP API)',
+  },
 }
 
 /**
@@ -514,6 +545,10 @@ export const createAttioMock = withViews(attioMock)
 export const createQuickBooksMock = withViews(quickbooksMock)
 export const createNetSuiteMock = withViews(netsuiteMock)
 export const createSageMock = withViews(sageMock)
+export const createCin7Mock = withViews(cin7Mock)
+export const createDearMock = withViews(dearMock)
+export const createTradeGeckoMock = withViews(tradegeckoMock)
+export const createKatanaMock = withViews(katanaMock)
 
 /** A mock written as a route file rather than as code. */
 export const createSpecMock = withViews(specMock)

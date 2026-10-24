@@ -57,6 +57,10 @@
       "description": "CRM"
     },
     {
+      "name": "erp",
+      "description": "ERP/Inventory"
+    },
+    {
       "name": "social",
       "description": "Social"
     }
@@ -2497,9 +2501,9 @@
     },
     "/api/auth/token": {
       "post": {
-        "summary": "POST /api/auth/token (sage)",
+        "summary": "POST /api/auth/token (cin7)",
         "tags": [
-          "accounting"
+          "erp"
         ],
         "responses": {
           "200": {
@@ -2515,7 +2519,7 @@
             "description": "Internal error"
           }
         },
-        "x-mock-service": "sage"
+        "x-mock-service": "cin7"
       }
     },
     "/api/v1/customers": {
@@ -5199,6 +5203,695 @@
           }
         },
         "x-mock-service": "attio"
+      }
+    },
+    "/api/v1/products": {
+      "post": {
+        "summary": "POST /api/v1/products (katana)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "katana"
+      },
+      "get": {
+        "summary": "GET /api/v1/products (katana)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "katana"
+      }
+    },
+    "/api/v1/products/{id}": {
+      "get": {
+        "summary": "GET /api/v1/products/{id} (katana)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "katana"
+      }
+    },
+    "/api/v1/orders": {
+      "post": {
+        "summary": "POST /api/v1/orders (cin7)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "cin7"
+      },
+      "get": {
+        "summary": "GET /api/v1/orders (cin7)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "cin7"
+      }
+    },
+    "/api/v1/suppliers": {
+      "post": {
+        "summary": "POST /api/v1/suppliers (cin7)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "cin7"
+      },
+      "get": {
+        "summary": "GET /api/v1/suppliers (cin7)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "cin7"
+      }
+    },
+    "/api/v1/stock": {
+      "get": {
+        "summary": "GET /api/v1/stock (cin7)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "cin7"
+      }
+    },
+    "/api/v2/Product": {
+      "post": {
+        "summary": "POST /api/v2/Product (dear)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "dear"
+      },
+      "get": {
+        "summary": "GET /api/v2/Product (dear)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "dear"
+      }
+    },
+    "/api/v2/Product/{id}": {
+      "get": {
+        "summary": "GET /api/v2/Product/{id} (dear)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "dear"
+      }
+    },
+    "/api/v2/PurchaseOrder": {
+      "post": {
+        "summary": "POST /api/v2/PurchaseOrder (dear)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "dear"
+      },
+      "get": {
+        "summary": "GET /api/v2/PurchaseOrder (dear)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "dear"
+      }
+    },
+    "/api/v2/SaleOrder": {
+      "post": {
+        "summary": "POST /api/v2/SaleOrder (dear)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "dear"
+      },
+      "get": {
+        "summary": "GET /api/v2/SaleOrder (dear)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "dear"
+      }
+    },
+    "/api/v2/Stock": {
+      "get": {
+        "summary": "GET /api/v2/Stock (dear)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "dear"
+      }
+    },
+    "/products": {
+      "post": {
+        "summary": "POST /products (tradegecko)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "tradegecko"
+      },
+      "get": {
+        "summary": "GET /products (tradegecko)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "tradegecko"
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "summary": "GET /products/{id} (tradegecko)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "tradegecko"
+      }
+    },
+    "/variants": {
+      "post": {
+        "summary": "POST /variants (tradegecko)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "tradegecko"
+      },
+      "get": {
+        "summary": "GET /variants (tradegecko)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "tradegecko"
+      }
+    },
+    "/orders": {
+      "post": {
+        "summary": "POST /orders (tradegecko)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "tradegecko"
+      },
+      "get": {
+        "summary": "GET /orders (tradegecko)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "tradegecko"
+      }
+    },
+    "/stock_levels": {
+      "get": {
+        "summary": "GET /stock_levels (tradegecko)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "tradegecko"
+      }
+    },
+    "/api/v1/variants": {
+      "post": {
+        "summary": "POST /api/v1/variants (katana)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "katana"
+      },
+      "get": {
+        "summary": "GET /api/v1/variants (katana)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "katana"
+      }
+    },
+    "/api/v1/sales_orders": {
+      "post": {
+        "summary": "POST /api/v1/sales_orders (katana)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "katana"
+      },
+      "get": {
+        "summary": "GET /api/v1/sales_orders (katana)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "katana"
+      }
+    },
+    "/api/v1/manufacturing_orders": {
+      "post": {
+        "summary": "POST /api/v1/manufacturing_orders (katana)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "katana"
+      },
+      "get": {
+        "summary": "GET /api/v1/manufacturing_orders (katana)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "katana"
+      }
+    },
+    "/api/v1/inventory": {
+      "get": {
+        "summary": "GET /api/v1/inventory (katana)",
+        "tags": [
+          "erp"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "katana"
       }
     },
     "/v21.0/me": {

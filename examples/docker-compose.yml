@@ -439,3 +439,32 @@ services:
     command: ["sage"]
     ports:
       - "4051:4051"
+
+  # ── ERP/Inventory ────────────────────────────────────────────────────────────
+  cin7-mock:
+    <<: *mock
+    profiles: [erp, all]
+    command: ["cin7"]
+    ports:
+      - "4052:4052"
+
+  dear-mock:
+    <<: *mock
+    profiles: [erp, all]
+    command: ["dear"]
+    ports:
+      - "4053:4053"
+
+  tradegecko-mock:
+    <<: *mock
+    profiles: [erp, all]
+    command: ["tradegecko"]
+    ports:
+      - "4054:4054"
+
+  katana-mock:
+    <<: *mock
+    profiles: [erp, all]
+    command: ["katana"]
+    ports:
+      - "4055:4055"

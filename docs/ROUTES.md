@@ -498,6 +498,67 @@ whole API.
 | `POST` | `/v2/lists` |
 | `POST` | `/v2/lists/:listId/entries` |
 
+## ERP/Inventory
+
+### cin7
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/api/auth/token` |
+| `POST` | `/api/v1/products` |
+| `GET` | `/api/v1/products` |
+| `GET` | `/api/v1/products/:id` |
+| `POST` | `/api/v1/orders` |
+| `GET` | `/api/v1/orders` |
+| `POST` | `/api/v1/suppliers` |
+| `GET` | `/api/v1/suppliers` |
+| `GET` | `/api/v1/stock` |
+
+### dear
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/api/v2/Product` |
+| `GET` | `/api/v2/Product` |
+| `GET` | `/api/v2/Product/:id` |
+| `POST` | `/api/v2/PurchaseOrder` |
+| `GET` | `/api/v2/PurchaseOrder` |
+| `POST` | `/api/v2/SaleOrder` |
+| `GET` | `/api/v2/SaleOrder` |
+| `GET` | `/api/v2/Stock` |
+
+### tradegecko
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/products` |
+| `GET` | `/products` |
+| `GET` | `/products/:id` |
+| `POST` | `/variants` |
+| `GET` | `/variants` |
+| `POST` | `/orders` |
+| `GET` | `/orders` |
+| `GET` | `/stock_levels` |
+
+### katana
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/api/v1/products` |
+| `GET` | `/api/v1/products` |
+| `GET` | `/api/v1/products/:id` |
+| `POST` | `/api/v1/variants` |
+| `GET` | `/api/v1/variants` |
+| `POST` | `/api/v1/sales_orders` |
+| `GET` | `/api/v1/sales_orders` |
+| `POST` | `/api/v1/manufacturing_orders` |
+| `GET` | `/api/v1/manufacturing_orders` |
+| `GET` | `/api/v1/inventory` |
+
 ## Social
 
 ### facebook

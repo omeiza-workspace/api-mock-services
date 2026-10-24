@@ -128,6 +128,10 @@ can be checked against them.
 | `quickbooks` | QuickBooks | Intuit Inc. |
 | `netsuite` | NetSuite | Oracle Corporation |
 | `sage` | Sage | The Sage Group plc |
+| `cin7` | Cin7 | Cin7 Limited |
+| `dear` | DEAR Systems | DEAR Systems (Cin7) |
+| `tradegecko` | TradeGecko | TradeGecko (Cin7) |
+| `katana` | Katana | Katana Manufacturing Software Limited |
 
 The list is checked by a test: a mock that ships without a row here fails the
 build.
