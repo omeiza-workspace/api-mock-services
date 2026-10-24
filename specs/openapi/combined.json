@@ -53,6 +53,10 @@
       "description": "Marketplaces"
     },
     {
+      "name": "crm",
+      "description": "CRM"
+    },
+    {
       "name": "social",
       "description": "Social"
     }
@@ -2824,9 +2828,9 @@
     },
     "/oauth/token": {
       "post": {
-        "summary": "POST /oauth/token (dhl)",
+        "summary": "POST /oauth/token (attio)",
         "tags": [
-          "shipping"
+          "crm"
         ],
         "responses": {
           "200": {
@@ -2842,7 +2846,7 @@
             "description": "Internal error"
           }
         },
-        "x-mock-service": "dhl"
+        "x-mock-service": "attio"
       }
     },
     "/ship/v1/shipments": {
@@ -3975,6 +3979,722 @@
           }
         },
         "x-mock-service": "walmart"
+      }
+    },
+    "/oauth/v1/token": {
+      "post": {
+        "summary": "POST /oauth/v1/token (hubspot)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "hubspot"
+      }
+    },
+    "/crm/v3/objects/contacts": {
+      "post": {
+        "summary": "POST /crm/v3/objects/contacts (hubspot)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "hubspot"
+      },
+      "get": {
+        "summary": "GET /crm/v3/objects/contacts (hubspot)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "hubspot"
+      }
+    },
+    "/crm/v3/objects/contacts/{id}": {
+      "get": {
+        "summary": "GET /crm/v3/objects/contacts/{id} (hubspot)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "hubspot"
+      }
+    },
+    "/crm/v3/objects/companies": {
+      "post": {
+        "summary": "POST /crm/v3/objects/companies (hubspot)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "hubspot"
+      },
+      "get": {
+        "summary": "GET /crm/v3/objects/companies (hubspot)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "hubspot"
+      }
+    },
+    "/crm/v3/objects/deals": {
+      "post": {
+        "summary": "POST /crm/v3/objects/deals (hubspot)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "hubspot"
+      },
+      "get": {
+        "summary": "GET /crm/v3/objects/deals (hubspot)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "hubspot"
+      }
+    },
+    "/crm/v3/objects/tickets": {
+      "post": {
+        "summary": "POST /crm/v3/objects/tickets (hubspot)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "hubspot"
+      },
+      "get": {
+        "summary": "GET /crm/v3/objects/tickets (hubspot)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "hubspot"
+      }
+    },
+    "/services/oauth2/token": {
+      "post": {
+        "summary": "POST /services/oauth2/token (salesforce)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "salesforce"
+      }
+    },
+    "/services/data/v58.0/sobjects/{objectName}": {
+      "post": {
+        "summary": "POST /services/data/v58.0/sobjects/{objectName} (salesforce)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "salesforce"
+      }
+    },
+    "/services/data/v58.0/sobjects/{objectName}/{id}": {
+      "get": {
+        "summary": "GET /services/data/v58.0/sobjects/{objectName}/{id} (salesforce)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "salesforce"
+      },
+      "patch": {
+        "summary": "PATCH /services/data/v58.0/sobjects/{objectName}/{id} (salesforce)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "salesforce"
+      }
+    },
+    "/services/data/v58.0/query": {
+      "get": {
+        "summary": "GET /services/data/v58.0/query (salesforce)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "salesforce"
+      }
+    },
+    "/services/data/v58.0/queryAll": {
+      "get": {
+        "summary": "GET /services/data/v58.0/queryAll (salesforce)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "salesforce"
+      }
+    },
+    "/services/data/v58.0/composite": {
+      "post": {
+        "summary": "POST /services/data/v58.0/composite (salesforce)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "salesforce"
+      }
+    },
+    "/v1/persons": {
+      "post": {
+        "summary": "POST /v1/persons (pipedrive)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "pipedrive"
+      },
+      "get": {
+        "summary": "GET /v1/persons (pipedrive)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "pipedrive"
+      }
+    },
+    "/v1/persons/{id}": {
+      "get": {
+        "summary": "GET /v1/persons/{id} (pipedrive)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "pipedrive"
+      }
+    },
+    "/v1/organizations": {
+      "post": {
+        "summary": "POST /v1/organizations (pipedrive)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "pipedrive"
+      },
+      "get": {
+        "summary": "GET /v1/organizations (pipedrive)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "pipedrive"
+      }
+    },
+    "/v1/deals": {
+      "post": {
+        "summary": "POST /v1/deals (pipedrive)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "pipedrive"
+      },
+      "get": {
+        "summary": "GET /v1/deals (pipedrive)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "pipedrive"
+      }
+    },
+    "/v1/activities": {
+      "post": {
+        "summary": "POST /v1/activities (pipedrive)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "pipedrive"
+      }
+    },
+    "/v2/objects": {
+      "post": {
+        "summary": "POST /v2/objects (attio)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "attio"
+      },
+      "get": {
+        "summary": "GET /v2/objects (attio)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "attio"
+      }
+    },
+    "/v2/objects/{objectSlug}/records": {
+      "post": {
+        "summary": "POST /v2/objects/{objectSlug}/records (attio)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "attio"
+      },
+      "get": {
+        "summary": "GET /v2/objects/{objectSlug}/records (attio)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "attio"
+      }
+    },
+    "/v2/objects/{objectSlug}/records/{id}": {
+      "get": {
+        "summary": "GET /v2/objects/{objectSlug}/records/{id} (attio)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "attio"
+      }
+    },
+    "/v2/lists": {
+      "post": {
+        "summary": "POST /v2/lists (attio)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "attio"
+      }
+    },
+    "/v2/lists/{listId}/entries": {
+      "post": {
+        "summary": "POST /v2/lists/{listId}/entries (attio)",
+        "tags": [
+          "crm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "attio"
       }
     },
     "/v21.0/me": {

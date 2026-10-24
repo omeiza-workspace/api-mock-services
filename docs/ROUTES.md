@@ -399,6 +399,65 @@ whole API.
 | `POST` | `/v3/feeds` |
 | `GET` | `/v3/feeds/:feedId` |
 
+## CRM
+
+### hubspot
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/oauth/v1/token` |
+| `POST` | `/crm/v3/objects/contacts` |
+| `GET` | `/crm/v3/objects/contacts` |
+| `GET` | `/crm/v3/objects/contacts/:id` |
+| `POST` | `/crm/v3/objects/companies` |
+| `GET` | `/crm/v3/objects/companies` |
+| `POST` | `/crm/v3/objects/deals` |
+| `GET` | `/crm/v3/objects/deals` |
+| `POST` | `/crm/v3/objects/tickets` |
+| `GET` | `/crm/v3/objects/tickets` |
+
+### salesforce
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/services/oauth2/token` |
+| `POST` | `/services/data/v58.0/sobjects/:objectName` |
+| `GET` | `/services/data/v58.0/sobjects/:objectName/:id` |
+| `PATCH` | `/services/data/v58.0/sobjects/:objectName/:id` |
+| `GET` | `/services/data/v58.0/query` |
+| `GET` | `/services/data/v58.0/queryAll` |
+| `POST` | `/services/data/v58.0/composite` |
+
+### pipedrive
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/v1/persons` |
+| `GET` | `/v1/persons` |
+| `GET` | `/v1/persons/:id` |
+| `POST` | `/v1/organizations` |
+| `GET` | `/v1/organizations` |
+| `POST` | `/v1/deals` |
+| `GET` | `/v1/deals` |
+| `POST` | `/v1/activities` |
+
+### attio
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/oauth/token` |
+| `POST` | `/v2/objects` |
+| `GET` | `/v2/objects` |
+| `POST` | `/v2/objects/:objectSlug/records` |
+| `GET` | `/v2/objects/:objectSlug/records` |
+| `GET` | `/v2/objects/:objectSlug/records/:id` |
+| `POST` | `/v2/lists` |
+| `POST` | `/v2/lists/:listId/entries` |
+
 ## Social
 
 ### facebook

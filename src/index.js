@@ -30,6 +30,12 @@ import {
   createPostmarkMock as postmarkMock,
 } from './providers/email-marketing.js'
 import {
+  createHubspotMock as hubspotMock,
+  createSalesforceMock as salesforceMock,
+  createPipedriveMock as pipedriveMock,
+  createAttioMock as attioMock,
+} from './providers/crm.js'
+import {
   createPaystackMock as paystackMock,
   createInterswitchMock as interswitchMock,
   createYouVerifyMock as youverifyMock,
@@ -94,6 +100,8 @@ export const CATEGORIES = {
   storage: { title: 'Storage', description: 'The buckets and the objects' },
   shipping: { title: 'Shipping', description: 'The labels, the rates and the tracking' },
   marketplaces: { title: 'Marketplaces', description: 'The stores and the orders' },
+  email: { title: 'Email', description: 'The sending domains and the mail itself' },
+  crm: { title: 'CRM', description: 'The contacts, deals and the pipeline' },
   social: { title: 'Social', description: 'The networks, the video platforms and the community apps' },
 }
 
@@ -363,6 +371,30 @@ export const MOCKS = {
     category: 'email',
     description: 'The transactional email (Postmark API)',
   },
+  hubspot: {
+    create: hubspotMock,
+    port: 4045,
+    category: 'crm',
+    description: 'The CRM (HubSpot API)',
+  },
+  salesforce: {
+    create: salesforceMock,
+    port: 4046,
+    category: 'crm',
+    description: 'The CRM (Salesforce REST API)',
+  },
+  pipedrive: {
+    create: pipedriveMock,
+    port: 4047,
+    category: 'crm',
+    description: 'The CRM (Pipedrive API)',
+  },
+  attio: {
+    create: attioMock,
+    port: 4048,
+    category: 'crm',
+    description: 'The CRM (Attio API)',
+  },
 }
 
 /**
@@ -452,6 +484,10 @@ export const createSendGridMock = withViews(sendgridMock)
 export const createMailchimpMock = withViews(mailchimpMock)
 export const createKlaviyoMock = withViews(klaviyoMock)
 export const createPostmarkMock = withViews(postmarkMock)
+export const createHubspotMock = withViews(hubspotMock)
+export const createSalesforceMock = withViews(salesforceMock)
+export const createPipedriveMock = withViews(pipedriveMock)
+export const createAttioMock = withViews(attioMock)
 
 /** A mock written as a route file rather than as code. */
 export const createSpecMock = withViews(specMock)

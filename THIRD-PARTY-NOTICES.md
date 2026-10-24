@@ -121,6 +121,10 @@ can be checked against them.
 | `mailchimp` | Mailchimp | The Rocket Science Group LLC (Intuit) |
 | `klaviyo` | Klaviyo | Klaviyo, Inc. |
 | `postmark` | Postmark | ActiveCampaign, LLC |
+| `hubspot` | HubSpot | HubSpot, Inc. |
+| `salesforce` | Salesforce | Salesforce, Inc. |
+| `pipedrive` | Pipedrive | Pipedrive, Inc. |
+| `attio` | Attio | Attio Technologies Ltd. |
 
 The list is checked by a test: a mock that ships without a row here fails the
 build.

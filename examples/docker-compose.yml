@@ -388,3 +388,32 @@ services:
     command: ["youtube"]
     ports:
       - "4027:4027"
+
+  # ── CRM ────────────────────────────────────────────────────────────────────
+  hubspot-mock:
+    <<: *mock
+    profiles: [crm, all]
+    command: ["hubspot"]
+    ports:
+      - "4045:4045"
+
+  salesforce-mock:
+    <<: *mock
+    profiles: [crm, all]
+    command: ["salesforce"]
+    ports:
+      - "4046:4046"
+
+  pipedrive-mock:
+    <<: *mock
+    profiles: [crm, all]
+    command: ["pipedrive"]
+    ports:
+      - "4047:4047"
+
+  attio-mock:
+    <<: *mock
+    profiles: [crm, all]
+    command: ["attio"]
+    ports:
+      - "4048:4048"
