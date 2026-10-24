@@ -490,3 +490,32 @@ services:
     command: ["vertex"]
     ports:
       - "4058:4058"
+
+  # ── POS Hardware ─────────────────────────────────────────────────────────────
+  square-terminal-mock:
+    <<: *mock
+    profiles: [pos, all]
+    command: ["square-terminal"]
+    ports:
+      - "4059:4059"
+
+  clover-mock:
+    <<: *mock
+    profiles: [pos, all]
+    command: ["clover"]
+    ports:
+      - "4060:4060"
+
+  toast-mock:
+    <<: *mock
+    profiles: [pos, all]
+    command: ["toast"]
+    ports:
+      - "4061:4061"
+
+  lightspeed-mock:
+    <<: *mock
+    profiles: [pos, all]
+    command: ["lightspeed"]
+    ports:
+      - "4062:4062"

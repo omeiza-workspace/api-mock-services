@@ -135,6 +135,10 @@ can be checked against them.
 | `avalara` | Avalara | Avalara, Inc. |
 | `taxjar` | TaxJar | TaxJar (Stripe) |
 | `vertex` | Vertex | Vertex, Inc. |
+| `square-terminal` | Square Terminal | Block, Inc. |
+| `clover` | Clover | Fiserv, Inc. |
+| `toast` | Toast | Toast, Inc. |
+| `lightspeed` | Lightspeed | Lightspeed Commerce Inc. |
 
 The list is checked by a test: a mock that ships without a row here fails the
 build.

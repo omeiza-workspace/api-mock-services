@@ -65,6 +65,10 @@
       "description": "Tax"
     },
     {
+      "name": "pos",
+      "description": "POS Hardware"
+    },
+    {
       "name": "social",
       "description": "Social"
     }
@@ -1668,9 +1672,9 @@
     },
     "/oauth2/token": {
       "post": {
-        "summary": "POST /oauth2/token (mailchimp)",
+        "summary": "POST /oauth2/token (square-terminal)",
         "tags": [
-          "email"
+          "pos"
         ],
         "responses": {
           "200": {
@@ -1686,7 +1690,7 @@
             "description": "Internal error"
           }
         },
-        "x-mock-service": "mailchimp"
+        "x-mock-service": "square-terminal"
       }
     },
     "/3.0/lists": {
@@ -3340,9 +3344,9 @@
     },
     "/oauth/token": {
       "post": {
-        "summary": "POST /oauth/token (attio)",
+        "summary": "POST /oauth/token (clover)",
         "tags": [
-          "crm"
+          "pos"
         ],
         "responses": {
           "200": {
@@ -3358,7 +3362,7 @@
             "description": "Internal error"
           }
         },
-        "x-mock-service": "attio"
+        "x-mock-service": "clover"
       }
     },
     "/ship/v1/shipments": {
@@ -6241,6 +6245,636 @@
           }
         },
         "x-mock-service": "vertex"
+      }
+    },
+    "/v2/terminals/checkouts": {
+      "post": {
+        "summary": "POST /v2/terminals/checkouts (square-terminal)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "square-terminal"
+      }
+    },
+    "/v2/terminals/checkouts/{id}": {
+      "get": {
+        "summary": "GET /v2/terminals/checkouts/{id} (square-terminal)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "square-terminal"
+      }
+    },
+    "/v2/terminals/checkouts/{id}/cancel": {
+      "post": {
+        "summary": "POST /v2/terminals/checkouts/{id}/cancel (square-terminal)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "square-terminal"
+      }
+    },
+    "/v2/terminals/checkouts/{id}/process-payment": {
+      "post": {
+        "summary": "POST /v2/terminals/checkouts/{id}/process-payment (square-terminal)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "square-terminal"
+      }
+    },
+    "/v3/merchants/{mId}": {
+      "get": {
+        "summary": "GET /v3/merchants/{mId} (clover)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "clover"
+      }
+    },
+    "/v3/merchants/{mId}/orders": {
+      "post": {
+        "summary": "POST /v3/merchants/{mId}/orders (clover)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "clover"
+      },
+      "get": {
+        "summary": "GET /v3/merchants/{mId}/orders (clover)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "clover"
+      }
+    },
+    "/v3/merchants/{mId}/orders/{orderId}/payments": {
+      "post": {
+        "summary": "POST /v3/merchants/{mId}/orders/{orderId}/payments (clover)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "clover"
+      }
+    },
+    "/v3/merchants/{mId}/items": {
+      "post": {
+        "summary": "POST /v3/merchants/{mId}/items (clover)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "clover"
+      },
+      "get": {
+        "summary": "GET /v3/merchants/{mId}/items (clover)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "clover"
+      }
+    },
+    "/authentication/v1/authentication/login": {
+      "post": {
+        "summary": "POST /authentication/v1/authentication/login (toast)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "toast"
+      }
+    },
+    "/orders/v2/orders": {
+      "post": {
+        "summary": "POST /orders/v2/orders (toast)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "toast"
+      }
+    },
+    "/orders/v2/orders/{id}": {
+      "get": {
+        "summary": "GET /orders/v2/orders/{id} (toast)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "toast"
+      }
+    },
+    "/orders/v2/orders/{id}/void": {
+      "post": {
+        "summary": "POST /orders/v2/orders/{id}/void (toast)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "toast"
+      }
+    },
+    "/orders/v2/orders/{id}/payments": {
+      "post": {
+        "summary": "POST /orders/v2/orders/{id}/payments (toast)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "toast"
+      }
+    },
+    "/menu/v2/menuItems": {
+      "post": {
+        "summary": "POST /menu/v2/menuItems (toast)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "toast"
+      },
+      "get": {
+        "summary": "GET /menu/v2/menuItems (toast)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "toast"
+      }
+    },
+    "/labor/v2/employees": {
+      "post": {
+        "summary": "POST /labor/v2/employees (toast)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "toast"
+      },
+      "get": {
+        "summary": "GET /labor/v2/employees (toast)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "toast"
+      }
+    },
+    "/oauth/access_token.php": {
+      "post": {
+        "summary": "POST /oauth/access_token.php (lightspeed)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "lightspeed"
+      }
+    },
+    "/api/v1/sales.json": {
+      "post": {
+        "summary": "POST /api/v1/sales.json (lightspeed)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "lightspeed"
+      },
+      "get": {
+        "summary": "GET /api/v1/sales.json (lightspeed)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "lightspeed"
+      }
+    },
+    "/api/v1/sales/{id}.json": {
+      "get": {
+        "summary": "GET /api/v1/sales/{id}.json (lightspeed)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "lightspeed"
+      }
+    },
+    "/api/v1/customers.json": {
+      "post": {
+        "summary": "POST /api/v1/customers.json (lightspeed)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "lightspeed"
+      },
+      "get": {
+        "summary": "GET /api/v1/customers.json (lightspeed)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "lightspeed"
+      }
+    },
+    "/api/v1/items.json": {
+      "post": {
+        "summary": "POST /api/v1/items.json (lightspeed)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "lightspeed"
+      },
+      "get": {
+        "summary": "GET /api/v1/items.json (lightspeed)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "lightspeed"
+      }
+    },
+    "/api/v1/registers.json": {
+      "get": {
+        "summary": "GET /api/v1/registers.json (lightspeed)",
+        "tags": [
+          "pos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "x-mock-service": "lightspeed"
       }
     },
     "/v21.0/me": {

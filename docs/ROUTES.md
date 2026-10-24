@@ -594,6 +594,62 @@ whole API.
 | `POST` | `/api/v1/cleanseaddress` |
 | `GET` | `/api/v1/taxcodes` |
 
+## POS Hardware
+
+### square-terminal
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/oauth2/token` |
+| `POST` | `/v2/terminals/checkouts` |
+| `GET` | `/v2/terminals/checkouts/:id` |
+| `POST` | `/v2/terminals/checkouts/:id/cancel` |
+| `POST` | `/v2/terminals/checkouts/:id/process-payment` |
+
+### clover
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/oauth/token` |
+| `GET` | `/v3/merchants/:mId` |
+| `POST` | `/v3/merchants/:mId/orders` |
+| `GET` | `/v3/merchants/:mId/orders` |
+| `POST` | `/v3/merchants/:mId/orders/:orderId/payments` |
+| `POST` | `/v3/merchants/:mId/items` |
+| `GET` | `/v3/merchants/:mId/items` |
+
+### toast
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/authentication/v1/authentication/login` |
+| `POST` | `/orders/v2/orders` |
+| `GET` | `/orders/v2/orders/:id` |
+| `POST` | `/orders/v2/orders/:id/void` |
+| `POST` | `/orders/v2/orders/:id/payments` |
+| `POST` | `/menu/v2/menuItems` |
+| `GET` | `/menu/v2/menuItems` |
+| `POST` | `/labor/v2/employees` |
+| `GET` | `/labor/v2/employees` |
+
+### lightspeed
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/oauth/access_token.php` |
+| `POST` | `/api/v1/sales.json` |
+| `GET` | `/api/v1/sales.json` |
+| `GET` | `/api/v1/sales/:id.json` |
+| `POST` | `/api/v1/customers.json` |
+| `GET` | `/api/v1/customers.json` |
+| `POST` | `/api/v1/items.json` |
+| `GET` | `/api/v1/items.json` |
+| `GET` | `/api/v1/registers.json` |
+
 ## Social
 
 ### facebook

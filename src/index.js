@@ -52,6 +52,12 @@ import {
   createVertexMock as vertexMock,
 } from './providers/tax.js'
 import {
+  createSquareTerminalMock as squareTerminalMock,
+  createCloverMock as cloverMock,
+  createToastMock as toastMock,
+  createLightspeedMock as lightspeedMock,
+} from './providers/pos.js'
+import {
   createPaystackMock as paystackMock,
   createInterswitchMock as interswitchMock,
   createYouVerifyMock as youverifyMock,
@@ -120,6 +126,7 @@ export const CATEGORIES = {
   crm: { title: 'CRM', description: 'The contacts, deals and the pipeline' },
   erp: { title: 'ERP/Inventory', description: 'The products, orders and the stock' },
   tax: { title: 'Tax', description: 'The tax calculation and the compliance' },
+  pos: { title: 'POS Hardware', description: 'The terminals, the registers and the payments' },
   social: { title: 'Social', description: 'The networks, the video platforms and the community apps' },
 }
 
@@ -473,6 +480,30 @@ export const MOCKS = {
     category: 'tax',
     description: 'The tax calculation (Vertex Cloud API)',
   },
+  'square-terminal': {
+    create: squareTerminalMock,
+    port: 4059,
+    category: 'pos',
+    description: 'The POS terminal (Square Terminal API)',
+  },
+  clover: {
+    create: cloverMock,
+    port: 4060,
+    category: 'pos',
+    description: 'The POS (Clover API)',
+  },
+  toast: {
+    create: toastMock,
+    port: 4061,
+    category: 'pos',
+    description: 'The POS (Toast API)',
+  },
+  lightspeed: {
+    create: lightspeedMock,
+    port: 4062,
+    category: 'pos',
+    description: 'The POS (Lightspeed Retail API)',
+  },
 }
 
 /**
@@ -576,6 +607,10 @@ export const createKatanaMock = withViews(katanaMock)
 export const createAvalaraMock = withViews(avalaraMock)
 export const createTaxJarMock = withViews(taxjarMock)
 export const createVertexMock = withViews(vertexMock)
+export const createSquareTerminalMock = withViews(squareTerminalMock)
+export const createCloverMock = withViews(cloverMock)
+export const createToastMock = withViews(toastMock)
+export const createLightspeedMock = withViews(lightspeedMock)
 
 /** A mock written as a route file rather than as code. */
 export const createSpecMock = withViews(specMock)
