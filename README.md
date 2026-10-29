@@ -8,9 +8,6 @@
 
 Stand-ins for the outside world.
 
-> Also known as **SaaS-LocalStack** — the name this tool circulated under
-> before it was published. Searching for either finds this repository.
-
 Every project that talks to a payment gateway, an email provider, an
 accounting service, a DNS provider, a messaging service or an identity check
 needs something to talk to **in a test**. This is that something — one
