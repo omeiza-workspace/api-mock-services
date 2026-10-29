@@ -84,6 +84,7 @@ export class MockService {
   /** Send the webhook, as the settings say it should be sent. */
   sendWebhook(event?: any): Promise<{ sent: boolean; status?: number; reason?: string }>
   close(): Promise<void>
+  forceClose(): Promise<void>
 }
 
 export function json(res: any, status: number, body: unknown): void
@@ -111,26 +112,106 @@ export function startMocks(names: string[], options?: MockOptions): Promise<Mock
 /** Put the browser layer — the panel and the checkout — on a mock. */
 export function attachViews(service: MockService): MockService
 
+// Payment providers
 export function createStripeMock(options?: MockOptions): MockService
-export function createResendMock(options?: MockOptions): MockService
-export function createXeroMock(options?: MockOptions): MockService
-export function createCloudflareMock(options?: MockOptions): MockService
+export function createPaypalMock(options?: MockOptions): MockService
+export function createSquareMock(options?: MockOptions): MockService
+export function createAdyenMock(options?: MockOptions): MockService
 export function createPaystackMock(options?: MockOptions): MockService
 export function createInterswitchMock(options?: MockOptions): MockService
 export function createYouVerifyMock(options?: MockOptions): MockService
-export function createOneSignalMock(options?: MockOptions): MockService
-export function createTwilioMock(options?: MockOptions): MockService
 export function createFlutterwaveMock(options?: MockOptions): MockService
 export function createMonnifyMock(options?: MockOptions): MockService
-export function createTermiiMock(options?: MockOptions): MockService
+
+// Email/Marketing providers
+export function createResendMock(options?: MockOptions): MockService
+export function createSendGridMock(options?: MockOptions): MockService
+export function createMailchimpMock(options?: MockOptions): MockService
+export function createKlaviyoMock(options?: MockOptions): MockService
+export function createPostmarkMock(options?: MockOptions): MockService
+
+// Accounting providers
+export function createXeroMock(options?: MockOptions): MockService
+export function createQuickBooksMock(options?: MockOptions): MockService
+export function createNetSuiteMock(options?: MockOptions): MockService
+export function createSageMock(options?: MockOptions): MockService
+
+// DNS/Cloud
+export function createCloudflareMock(options?: MockOptions): MockService
+
+// Identity providers
+export function createYouVerifyMock(options?: MockOptions): MockService
 export function createSmileIdMock(options?: MockOptions): MockService
 export function createIdentityPassMock(options?: MockOptions): MockService
+
+// Messaging providers
+export function createTwilioMock(options?: MockOptions): MockService
+export function createTermiiMock(options?: MockOptions): MockService
 export function createWhatsAppMock(options?: MockOptions): MockService
 export function createFcmMock(options?: MockOptions): MockService
+export function createOneSignalMock(options?: MockOptions): MockService
+
+// AI providers
 export function createOpenAIMock(options?: MockOptions): MockService
+
+// Storage providers
 export function createS3Mock(options?: MockOptions): MockService
 
-/** A mock written as a route file rather than as code. */
+// Social providers
+export function createFacebookMock(options?: MockOptions): MockService
+export function createInstagramMock(options?: MockOptions): MockService
+export function createXMock(options?: MockOptions): MockService
+export function createBlueskyMock(options?: MockOptions): MockService
+export function createTelegramMock(options?: MockOptions): MockService
+export function createRedditMock(options?: MockOptions): MockService
+export function createLinkedinMock(options?: MockOptions): MockService
+export function createTiktokMock(options?: MockOptions): MockService
+export function createYoutubeMock(options?: MockOptions): MockService
+
+// Shipping providers
+export function createShippoMock(options?: MockOptions): MockService
+export function createEasyPostMock(options?: MockOptions): MockService
+export function createFedexMock(options?: MockOptions): MockService
+export function createUpsMock(options?: MockOptions): MockService
+export function createDhlMock(options?: MockOptions): MockService
+
+// Marketplace providers
+export function createAmazonSpApiMock(options?: MockOptions): MockService
+export function createShopifyMock(options?: MockOptions): MockService
+export function createEbayMock(options?: MockOptions): MockService
+export function createEtsyMock(options?: MockOptions): MockService
+export function createWalmartMock(options?: MockOptions): MockService
+
+// CRM providers
+export function createHubspotMock(options?: MockOptions): MockService
+export function createSalesforceMock(options?: MockOptions): MockService
+export function createPipedriveMock(options?: MockOptions): MockService
+export function createAttioMock(options?: MockOptions): MockService
+
+// ERP/Inventory providers
+export function createCin7Mock(options?: MockOptions): MockService
+export function createDearMock(options?: MockOptions): MockService
+export function createTradeGeckoMock(options?: MockOptions): MockService
+export function createKatanaMock(options?: MockOptions): MockService
+
+// Tax providers
+export function createAvalaraMock(options?: MockOptions): MockService
+export function createTaxJarMock(options?: MockOptions): MockService
+export function createVertexMock(options?: MockOptions): MockService
+
+// POS providers
+export function createSquareTerminalMock(options?: MockOptions): MockService
+export function createCloverMock(options?: MockOptions): MockService
+export function createToastMock(options?: MockOptions): MockService
+export function createLightspeedMock(options?: MockOptions): MockService
+
+// Analytics providers
+export function createSegmentMock(options?: MockOptions): MockService
+export function createMixpanelMock(options?: MockOptions): MockService
+export function createAmplitudeMock(options?: MockOptions): MockService
+export function createRudderStackMock(options?: MockOptions): MockService
+
+// Spec-based mocks
 export function createSpecMock(definition: {
   name?: string
   state?: Record<string, unknown>
@@ -144,5 +225,36 @@ export function createSpecMock(definition: {
   }[]
 }): MockService
 
-/** A mock written as a route file on disk — JSON, or a module. */
 export function createSpecMockFromFile(path: string): Promise<MockService>
+
+// Graceful shutdown
+export function trackServer(server: any): void
+export function untrackServer(server: any): void
+export function closeAllServers(): Promise<void>
+export function forceCloseAllServers(): Promise<void>
+export function installSignalHandlers(): void
+
+// Cassette recorder
+export class Cassette {
+  constructor(name: string)
+  name: string
+  interactions: any[]
+  loaded: boolean
+  playbackIndex: number
+  load(): Promise<void>
+  save(): Promise<void>
+  record(fn: () => Promise<any>): Promise<any>
+  play(fn: () => Promise<any>): Promise<any>
+  nextResponse(): any
+  reset(): void
+  count: number
+}
+export function createCassette(name: string): Cassette
+export async function withCassette(name: string, fn: (cassette: Cassette) => Promise<any>): Promise<any>
+export function cassetteMiddleware(cassette: Cassette): { restore: () => void }
+export { RECORD_MODE, PLAYBACK_MODE, cassettePath, loadCassette, saveCassette }
+export { Cassette, createCassette, withCassette, cassetteMiddleware }
+
+// Re-export from harness
+export { MockService, MockRequest, json, text, readBody, toMatcher } from './harness.js'
+export { Cassette, createCassette, withCassette, cassetteMiddleware, RECORD_MODE, PLAYBACK_MODE } from './cassette.js'
