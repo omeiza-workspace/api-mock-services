@@ -1,4 +1,5 @@
 import { createServer } from 'node:http'
+import { trackServer, untrackServer } from './shutdown.js'
 
 /**
  * The harness every mock is built on.
@@ -300,6 +301,9 @@ export class MockService {
 
     this.port = address.port
     this.url = `http://${host}:${address.port}`
+
+    // Track this server for graceful shutdown
+    trackServer(this)
 
     return this.url
   }
@@ -670,6 +674,15 @@ export class MockService {
     })
 
     this.server = null
+    untrackServer(this)
+  }
+
+  /** Force close without waiting (for emergency shutdown). */
+  async forceClose() {
+    if (!this.server) return
+    this.server.closeAllConnections?.()
+    this.server = null
+    untrackServer(this)
   }
 }
 

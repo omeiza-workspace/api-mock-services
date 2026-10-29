@@ -4,30 +4,89 @@
     "title": "lightspeed Mock API",
     "version": "1.0.0",
     "description": "Mock for lightspeed — generated from the mock's actual routes. Every endpoint is verified against the provider's published specification where available.",
-    "x-mock-service": "lightspeed"
+    "x-mock-service": "lightspeed",
+    "contact": {
+      "name": "API Mock Services",
+      "url": "https://github.com/omeiza-workspace/api-mock-services"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
   },
   "servers": [
     {
       "url": "http://localhost:4000",
       "description": "Local mock server (port varies per mock)"
+    },
+    {
+      "url": "{baseUrl}",
+      "description": "Custom base URL",
+      "variables": {
+        "baseUrl": {
+          "default": "http://localhost:4000"
+        }
+      }
     }
   ],
   "paths": {
     "/health": {
       "get": {
         "summary": "GET /health",
+        "tags": [
+          "lightspeed"
+        ],
+        "operationId": "get_health",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Health check",
+                "value": {
+                  "status": "healthy",
+                  "service": "mock"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {}
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -36,18 +95,73 @@
     "/oauth/access_token.php": {
       "post": {
         "summary": "POST /oauth/access_token.php",
+        "tags": [
+          "lightspeed"
+        ],
+        "operationId": "post_oauth_access_token.php",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Created/Updated",
+                "value": {
+                  "id": "obj_123",
+                  "status": "success"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "summary": "Created",
+                "value": {
+                  "id": "obj_123",
+                  "status": "created"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "summary": "Bad request",
+                "value": {
+                  "error": {
+                    "message": "Invalid request"
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {}
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -56,36 +170,139 @@
     "/api/v1/sales.json": {
       "post": {
         "summary": "POST /api/v1/sales.json",
+        "tags": [
+          "lightspeed"
+        ],
+        "operationId": "post_api_v1_sales.json",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Created/Updated",
+                "value": {
+                  "id": "obj_123",
+                  "status": "success"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "summary": "Created",
+                "value": {
+                  "id": "obj_123",
+                  "status": "created"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "summary": "Bad request",
+                "value": {
+                  "error": {
+                    "message": "Invalid request"
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {}
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
       },
       "get": {
         "summary": "GET /api/v1/sales.json",
+        "tags": [
+          "lightspeed"
+        ],
+        "operationId": "get_api_v1_sales.json",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -94,18 +311,66 @@
     "/api/v1/sales/{id}.json": {
       "get": {
         "summary": "GET /api/v1/sales/{id}.json",
+        "tags": [
+          "lightspeed"
+        ],
+        "operationId": "get_api_v1_sales__id_.json",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -114,36 +379,151 @@
     "/api/v1/customers.json": {
       "post": {
         "summary": "POST /api/v1/customers.json",
+        "tags": [
+          "lightspeed"
+        ],
+        "operationId": "post_api_v1_customers.json",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Created/Updated",
+                "value": {
+                  "id": "obj_123",
+                  "status": "success"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "summary": "Created",
+                "value": {
+                  "id": "obj_123",
+                  "status": "created"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "summary": "Bad request",
+                "value": {
+                  "error": {
+                    "message": "Invalid request"
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {}
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "summary": "Create customer",
+              "value": {
+                "email": "customer@example.com",
+                "name": "John Doe"
+              }
+            }
+          },
+          "required": true
         },
         "x-mock-route": true
       },
       "get": {
         "summary": "GET /api/v1/customers.json",
+        "tags": [
+          "lightspeed"
+        ],
+        "operationId": "get_api_v1_customers.json",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -152,36 +532,139 @@
     "/api/v1/items.json": {
       "post": {
         "summary": "POST /api/v1/items.json",
+        "tags": [
+          "lightspeed"
+        ],
+        "operationId": "post_api_v1_items.json",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Created/Updated",
+                "value": {
+                  "id": "obj_123",
+                  "status": "success"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "summary": "Created",
+                "value": {
+                  "id": "obj_123",
+                  "status": "created"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "summary": "Bad request",
+                "value": {
+                  "error": {
+                    "message": "Invalid request"
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {}
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
       },
       "get": {
         "summary": "GET /api/v1/items.json",
+        "tags": [
+          "lightspeed"
+        ],
+        "operationId": "get_api_v1_items.json",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -190,18 +673,66 @@
     "/api/v1/registers.json": {
       "get": {
         "summary": "GET /api/v1/registers.json",
+        "tags": [
+          "lightspeed"
+        ],
+        "operationId": "get_api_v1_registers.json",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -212,18 +743,81 @@
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
-        "scheme": "bearer"
+        "scheme": "bearer",
+        "description": "Bearer token (any value accepted by mock)"
       },
       "apiKey": {
         "type": "apiKey",
         "in": "header",
-        "name": "Authorization"
+        "name": "Authorization",
+        "description": "API key (any value accepted by mock)"
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "HealthCheck": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "healthy"
+            ]
+          },
+          "service": {
+            "type": "string"
+          }
+        }
+      },
+      "MockIdentity": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "mock"
+            ]
+          },
+          "service": {
+            "type": "string"
+          },
+          "real_service": {
+            "type": "boolean",
+            "enum": [
+              false
+            ]
+          },
+          "notice": {
+            "type": "string"
+          }
+        }
       }
     }
   },
   "security": [
     {
       "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "lightspeed",
+      "description": "lightspeed mock endpoints"
     }
   ]
 }

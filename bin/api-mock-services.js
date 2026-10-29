@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { MOCKS, CATEGORIES, startMock, createSpecMockFromFile } from '../src/index.js'
+import { installSignalHandlers, closeAllServers } from '../src/shutdown.js'
 
 /**
  * The command line.
@@ -201,19 +202,18 @@ async function start() {
 function wait(services = []) {
   console.log(SUPPORT.join('\n'))
 
-  const stop = async () => {
+  // Install graceful shutdown handlers
+  installSignalHandlers()
+
+  // Override the default stop to use the shutdown manager
+  const originalStop = async () => {
     console.log('\nStopping the mocks.')
-
-    // The ports are freed properly, so nothing is left behind.
-    for (const service of services) {
-      await service.close().catch(() => {})
-    }
-
+    await closeAllServers()
     process.exit(0)
   }
 
-  process.on('SIGINT', stop)
-  process.on('SIGTERM', stop)
+  process.on('SIGINT', originalStop)
+  process.on('SIGTERM', originalStop)
 }
 
 /** Ask a running mock to do something. */

@@ -4,30 +4,102 @@
     "title": "identitypass Mock API",
     "version": "1.0.0",
     "description": "Mock for identitypass — generated from the mock's actual routes. Every endpoint is verified against the provider's published specification where available.",
-    "x-mock-service": "identitypass"
+    "x-mock-service": "identitypass",
+    "contact": {
+      "name": "API Mock Services",
+      "url": "https://github.com/omeiza-workspace/api-mock-services"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
   },
   "servers": [
     {
       "url": "http://localhost:4000",
       "description": "Local mock server (port varies per mock)"
+    },
+    {
+      "url": "{baseUrl}",
+      "description": "Custom base URL",
+      "variables": {
+        "baseUrl": {
+          "default": "http://localhost:4000"
+        }
+      }
     }
   ],
   "paths": {
     "/v1/verification": {
       "post": {
         "summary": "POST /v1/verification",
+        "tags": [
+          "identitypass"
+        ],
+        "operationId": "post_v1_verification",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Created/Updated",
+                "value": {
+                  "id": "obj_123",
+                  "status": "success"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "summary": "Created",
+                "value": {
+                  "id": "obj_123",
+                  "status": "created"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "summary": "Bad request",
+                "value": {
+                  "error": {
+                    "message": "Invalid request"
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {}
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -36,18 +108,73 @@
     "/v1/business": {
       "post": {
         "summary": "POST /v1/business",
+        "tags": [
+          "identitypass"
+        ],
+        "operationId": "post_v1_business",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Created/Updated",
+                "value": {
+                  "id": "obj_123",
+                  "status": "success"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "summary": "Created",
+                "value": {
+                  "id": "obj_123",
+                  "status": "created"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "summary": "Bad request",
+                "value": {
+                  "error": {
+                    "message": "Invalid request"
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {}
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -58,18 +185,81 @@
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
-        "scheme": "bearer"
+        "scheme": "bearer",
+        "description": "Bearer token (any value accepted by mock)"
       },
       "apiKey": {
         "type": "apiKey",
         "in": "header",
-        "name": "Authorization"
+        "name": "Authorization",
+        "description": "API key (any value accepted by mock)"
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "HealthCheck": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "healthy"
+            ]
+          },
+          "service": {
+            "type": "string"
+          }
+        }
+      },
+      "MockIdentity": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "mock"
+            ]
+          },
+          "service": {
+            "type": "string"
+          },
+          "real_service": {
+            "type": "boolean",
+            "enum": [
+              false
+            ]
+          },
+          "notice": {
+            "type": "string"
+          }
+        }
       }
     }
   },
   "security": [
     {
       "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "identitypass",
+      "description": "identitypass mock endpoints"
     }
   ]
 }

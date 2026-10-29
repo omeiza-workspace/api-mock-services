@@ -4,30 +4,102 @@
     "title": "x Mock API",
     "version": "1.0.0",
     "description": "Mock for x — generated from the mock's actual routes. Every endpoint is verified against the provider's published specification where available.",
-    "x-mock-service": "x"
+    "x-mock-service": "x",
+    "contact": {
+      "name": "API Mock Services",
+      "url": "https://github.com/omeiza-workspace/api-mock-services"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
   },
   "servers": [
     {
       "url": "http://localhost:4000",
       "description": "Local mock server (port varies per mock)"
+    },
+    {
+      "url": "{baseUrl}",
+      "description": "Custom base URL",
+      "variables": {
+        "baseUrl": {
+          "default": "http://localhost:4000"
+        }
+      }
     }
   ],
   "paths": {
     "/2/oauth2/token": {
       "post": {
         "summary": "POST /2/oauth2/token",
+        "tags": [
+          "x"
+        ],
+        "operationId": "post_2_oauth2_token",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Created/Updated",
+                "value": {
+                  "id": "obj_123",
+                  "status": "success"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "summary": "Created",
+                "value": {
+                  "id": "obj_123",
+                  "status": "created"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "summary": "Bad request",
+                "value": {
+                  "error": {
+                    "message": "Invalid request"
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {}
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -36,18 +108,66 @@
     "/2/users/me": {
       "get": {
         "summary": "GET /2/users/me",
+        "tags": [
+          "x"
+        ],
+        "operationId": "get_2_users_me",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -56,18 +176,66 @@
     "/2/users/by/username/{username}": {
       "get": {
         "summary": "GET /2/users/by/username/{username}",
+        "tags": [
+          "x"
+        ],
+        "operationId": "get_2_users_by_username__username_",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -76,18 +244,66 @@
     "/2/users/{id}": {
       "get": {
         "summary": "GET /2/users/{id}",
+        "tags": [
+          "x"
+        ],
+        "operationId": "get_2_users__id_",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -96,18 +312,73 @@
     "/2/tweets": {
       "post": {
         "summary": "POST /2/tweets",
+        "tags": [
+          "x"
+        ],
+        "operationId": "post_2_tweets",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Created/Updated",
+                "value": {
+                  "id": "obj_123",
+                  "status": "success"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "summary": "Created",
+                "value": {
+                  "id": "obj_123",
+                  "status": "created"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "summary": "Bad request",
+                "value": {
+                  "error": {
+                    "message": "Invalid request"
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {}
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -116,18 +387,66 @@
     "/2/tweets/{id}": {
       "get": {
         "summary": "GET /2/tweets/{id}",
+        "tags": [
+          "x"
+        ],
+        "operationId": "get_2_tweets__id_",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -136,18 +455,66 @@
     "/2/users/{id}/tweets": {
       "get": {
         "summary": "GET /2/users/{id}/tweets",
+        "tags": [
+          "x"
+        ],
+        "operationId": "get_2_users__id__tweets",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -156,18 +523,66 @@
     "/2/users/{id}/followers": {
       "get": {
         "summary": "GET /2/users/{id}/followers",
+        "tags": [
+          "x"
+        ],
+        "operationId": "get_2_users__id__followers",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -176,18 +591,66 @@
     "/2/users/{id}/mentions": {
       "get": {
         "summary": "GET /2/users/{id}/mentions",
+        "tags": [
+          "x"
+        ],
+        "operationId": "get_2_users__id__mentions",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -196,18 +659,66 @@
     "/2/users/{id}/liked_tweets": {
       "get": {
         "summary": "GET /2/users/{id}/liked_tweets",
+        "tags": [
+          "x"
+        ],
+        "operationId": "get_2_users__id__liked_tweets",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -218,18 +729,81 @@
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
-        "scheme": "bearer"
+        "scheme": "bearer",
+        "description": "Bearer token (any value accepted by mock)"
       },
       "apiKey": {
         "type": "apiKey",
         "in": "header",
-        "name": "Authorization"
+        "name": "Authorization",
+        "description": "API key (any value accepted by mock)"
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "HealthCheck": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "healthy"
+            ]
+          },
+          "service": {
+            "type": "string"
+          }
+        }
+      },
+      "MockIdentity": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "mock"
+            ]
+          },
+          "service": {
+            "type": "string"
+          },
+          "real_service": {
+            "type": "boolean",
+            "enum": [
+              false
+            ]
+          },
+          "notice": {
+            "type": "string"
+          }
+        }
       }
     }
   },
   "security": [
     {
       "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "x",
+      "description": "x mock endpoints"
     }
   ]
 }

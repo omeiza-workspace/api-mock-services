@@ -4,30 +4,89 @@
     "title": "shippo Mock API",
     "version": "1.0.0",
     "description": "Mock for shippo — generated from the mock's actual routes. Every endpoint is verified against the provider's published specification where available.",
-    "x-mock-service": "shippo"
+    "x-mock-service": "shippo",
+    "contact": {
+      "name": "API Mock Services",
+      "url": "https://github.com/omeiza-workspace/api-mock-services"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
   },
   "servers": [
     {
       "url": "http://localhost:4000",
       "description": "Local mock server (port varies per mock)"
+    },
+    {
+      "url": "{baseUrl}",
+      "description": "Custom base URL",
+      "variables": {
+        "baseUrl": {
+          "default": "http://localhost:4000"
+        }
+      }
     }
   ],
   "paths": {
     "/health": {
       "get": {
         "summary": "GET /health",
+        "tags": [
+          "shippo"
+        ],
+        "operationId": "get_health",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Health check",
+                "value": {
+                  "status": "healthy",
+                  "service": "mock"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {}
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -36,18 +95,73 @@
     "/v1/addresses": {
       "post": {
         "summary": "POST /v1/addresses",
+        "tags": [
+          "shippo"
+        ],
+        "operationId": "post_v1_addresses",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Created/Updated",
+                "value": {
+                  "id": "obj_123",
+                  "status": "success"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "summary": "Created",
+                "value": {
+                  "id": "obj_123",
+                  "status": "created"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "summary": "Bad request",
+                "value": {
+                  "error": {
+                    "message": "Invalid request"
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {}
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -56,18 +170,66 @@
     "/v1/addresses/{id}": {
       "get": {
         "summary": "GET /v1/addresses/{id}",
+        "tags": [
+          "shippo"
+        ],
+        "operationId": "get_v1_addresses__id_",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -76,18 +238,73 @@
     "/v1/parcels": {
       "post": {
         "summary": "POST /v1/parcels",
+        "tags": [
+          "shippo"
+        ],
+        "operationId": "post_v1_parcels",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Created/Updated",
+                "value": {
+                  "id": "obj_123",
+                  "status": "success"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "summary": "Created",
+                "value": {
+                  "id": "obj_123",
+                  "status": "created"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "summary": "Bad request",
+                "value": {
+                  "error": {
+                    "message": "Invalid request"
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {}
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -96,18 +313,73 @@
     "/v1/customs_declarations": {
       "post": {
         "summary": "POST /v1/customs_declarations",
+        "tags": [
+          "shippo"
+        ],
+        "operationId": "post_v1_customs_declarations",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Created/Updated",
+                "value": {
+                  "id": "obj_123",
+                  "status": "success"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "summary": "Created",
+                "value": {
+                  "id": "obj_123",
+                  "status": "created"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "summary": "Bad request",
+                "value": {
+                  "error": {
+                    "message": "Invalid request"
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {}
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -116,18 +388,73 @@
     "/v1/shipments": {
       "post": {
         "summary": "POST /v1/shipments",
+        "tags": [
+          "shippo"
+        ],
+        "operationId": "post_v1_shipments",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Created/Updated",
+                "value": {
+                  "id": "obj_123",
+                  "status": "success"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "summary": "Created",
+                "value": {
+                  "id": "obj_123",
+                  "status": "created"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "summary": "Bad request",
+                "value": {
+                  "error": {
+                    "message": "Invalid request"
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {}
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -136,18 +463,66 @@
     "/v1/shipments/{id}": {
       "get": {
         "summary": "GET /v1/shipments/{id}",
+        "tags": [
+          "shippo"
+        ],
+        "operationId": "get_v1_shipments__id_",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -156,18 +531,73 @@
     "/v1/transactions": {
       "post": {
         "summary": "POST /v1/transactions",
+        "tags": [
+          "shippo"
+        ],
+        "operationId": "post_v1_transactions",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Created/Updated",
+                "value": {
+                  "id": "obj_123",
+                  "status": "success"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "summary": "Created",
+                "value": {
+                  "id": "obj_123",
+                  "status": "created"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "summary": "Bad request",
+                "value": {
+                  "error": {
+                    "message": "Invalid request"
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {}
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -176,18 +606,66 @@
     "/v1/transactions/{id}": {
       "get": {
         "summary": "GET /v1/transactions/{id}",
+        "tags": [
+          "shippo"
+        ],
+        "operationId": "get_v1_transactions__id_",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -196,18 +674,66 @@
     "/v1/tracks/{carrier}/{tracking_number}": {
       "get": {
         "summary": "GET /v1/tracks/{carrier}/{tracking_number}",
+        "tags": [
+          "shippo"
+        ],
+        "operationId": "get_v1_tracks__carrier___tracking_number_",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -218,18 +744,81 @@
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
-        "scheme": "bearer"
+        "scheme": "bearer",
+        "description": "Bearer token (any value accepted by mock)"
       },
       "apiKey": {
         "type": "apiKey",
         "in": "header",
-        "name": "Authorization"
+        "name": "Authorization",
+        "description": "API key (any value accepted by mock)"
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "HealthCheck": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "healthy"
+            ]
+          },
+          "service": {
+            "type": "string"
+          }
+        }
+      },
+      "MockIdentity": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "mock"
+            ]
+          },
+          "service": {
+            "type": "string"
+          },
+          "real_service": {
+            "type": "boolean",
+            "enum": [
+              false
+            ]
+          },
+          "notice": {
+            "type": "string"
+          }
+        }
       }
     }
   },
   "security": [
     {
       "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "shippo",
+      "description": "shippo mock endpoints"
     }
   ]
 }

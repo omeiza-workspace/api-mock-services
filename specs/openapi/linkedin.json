@@ -4,30 +4,89 @@
     "title": "linkedin Mock API",
     "version": "1.0.0",
     "description": "Mock for linkedin — generated from the mock's actual routes. Every endpoint is verified against the provider's published specification where available.",
-    "x-mock-service": "linkedin"
+    "x-mock-service": "linkedin",
+    "contact": {
+      "name": "API Mock Services",
+      "url": "https://github.com/omeiza-workspace/api-mock-services"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
   },
   "servers": [
     {
       "url": "http://localhost:4000",
       "description": "Local mock server (port varies per mock)"
+    },
+    {
+      "url": "{baseUrl}",
+      "description": "Custom base URL",
+      "variables": {
+        "baseUrl": {
+          "default": "http://localhost:4000"
+        }
+      }
     }
   ],
   "paths": {
     "/health": {
       "get": {
         "summary": "GET /health",
+        "tags": [
+          "linkedin"
+        ],
+        "operationId": "get_health",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Health check",
+                "value": {
+                  "status": "healthy",
+                  "service": "mock"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {}
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -36,18 +95,66 @@
     "/v2/me": {
       "get": {
         "summary": "GET /v2/me",
+        "tags": [
+          "linkedin"
+        ],
+        "operationId": "get_v2_me",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -56,18 +163,73 @@
     "/v2/posts": {
       "post": {
         "summary": "POST /v2/posts",
+        "tags": [
+          "linkedin"
+        ],
+        "operationId": "post_v2_posts",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Created/Updated",
+                "value": {
+                  "id": "obj_123",
+                  "status": "success"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "summary": "Created",
+                "value": {
+                  "id": "obj_123",
+                  "status": "created"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "summary": "Bad request",
+                "value": {
+                  "error": {
+                    "message": "Invalid request"
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {}
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -76,18 +238,66 @@
     "/v2/posts/{id}": {
       "get": {
         "summary": "GET /v2/posts/{id}",
+        "tags": [
+          "linkedin"
+        ],
+        "operationId": "get_v2_posts__id_",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -96,18 +306,66 @@
     "/v2/organizations": {
       "get": {
         "summary": "GET /v2/organizations",
+        "tags": [
+          "linkedin"
+        ],
+        "operationId": "get_v2_organizations",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -116,18 +374,66 @@
     "/v2/organizationAcls": {
       "get": {
         "summary": "GET /v2/organizationAcls",
+        "tags": [
+          "linkedin"
+        ],
+        "operationId": "get_v2_organizationAcls",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -136,36 +442,139 @@
     "/rest/posts": {
       "get": {
         "summary": "GET /rest/posts",
+        "tags": [
+          "linkedin"
+        ],
+        "operationId": "get_rest_posts",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
       },
       "post": {
         "summary": "POST /rest/posts",
+        "tags": [
+          "linkedin"
+        ],
+        "operationId": "post_rest_posts",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Created/Updated",
+                "value": {
+                  "id": "obj_123",
+                  "status": "success"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "summary": "Created",
+                "value": {
+                  "id": "obj_123",
+                  "status": "created"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "summary": "Bad request",
+                "value": {
+                  "error": {
+                    "message": "Invalid request"
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {}
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -174,18 +583,66 @@
     "/rest/posts/{urn}": {
       "delete": {
         "summary": "DELETE /rest/posts/{urn}",
+        "tags": [
+          "linkedin"
+        ],
+        "operationId": "delete_rest_posts__urn_",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Deleted",
+                "value": {
+                  "deleted": true
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -194,36 +651,132 @@
     "/rest/posts/{id}": {
       "get": {
         "summary": "GET /rest/posts/{id}",
+        "tags": [
+          "linkedin"
+        ],
+        "operationId": "get_rest_posts__id_",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
       },
       "delete": {
         "summary": "DELETE /rest/posts/{id}",
+        "tags": [
+          "linkedin"
+        ],
+        "operationId": "delete_rest_posts__id_",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Deleted",
+                "value": {
+                  "deleted": true
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -232,18 +785,66 @@
     "/v2/socialActions/{id}": {
       "get": {
         "summary": "GET /v2/socialActions/{id}",
+        "tags": [
+          "linkedin"
+        ],
+        "operationId": "get_v2_socialActions__id_",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -252,18 +853,73 @@
     "/oauth/v2/accessToken": {
       "post": {
         "summary": "POST /oauth/v2/accessToken",
+        "tags": [
+          "linkedin"
+        ],
+        "operationId": "post_oauth_v2_accessToken",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Created/Updated",
+                "value": {
+                  "id": "obj_123",
+                  "status": "success"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "summary": "Created",
+                "value": {
+                  "id": "obj_123",
+                  "status": "created"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "summary": "Bad request",
+                "value": {
+                  "error": {
+                    "message": "Invalid request"
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {}
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -272,18 +928,66 @@
     "/oauth/v2/authorization": {
       "get": {
         "summary": "GET /oauth/v2/authorization",
+        "tags": [
+          "linkedin"
+        ],
+        "operationId": "get_oauth_v2_authorization",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "summary": "Success",
+                "value": {
+                  "data": "..."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {}
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "summary": "Not found",
+                "value": {
+                  "error": {
+                    "message": "Not found"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal error"
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-mock-route": true
@@ -294,18 +998,81 @@
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
-        "scheme": "bearer"
+        "scheme": "bearer",
+        "description": "Bearer token (any value accepted by mock)"
       },
       "apiKey": {
         "type": "apiKey",
         "in": "header",
-        "name": "Authorization"
+        "name": "Authorization",
+        "description": "API key (any value accepted by mock)"
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "HealthCheck": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "healthy"
+            ]
+          },
+          "service": {
+            "type": "string"
+          }
+        }
+      },
+      "MockIdentity": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "mock"
+            ]
+          },
+          "service": {
+            "type": "string"
+          },
+          "real_service": {
+            "type": "boolean",
+            "enum": [
+              false
+            ]
+          },
+          "notice": {
+            "type": "string"
+          }
+        }
       }
     }
   },
   "security": [
     {
       "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "linkedin",
+      "description": "linkedin mock endpoints"
     }
   ]
 }

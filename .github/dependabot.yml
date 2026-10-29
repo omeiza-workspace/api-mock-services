@@ -1,26 +1,26 @@
 version: 2
-
-# Patch and minor updates come in on their own. Major bumps wait for a
-# human: a new major of a GitHub Action or a base image is a decision, not a
-# merge.
-
 updates:
-  - package-ecosystem: github-actions
-    directory: /
+  - package-ecosystem: "npm"
+    directory: "/"
     schedule:
-      interval: weekly
-    open-pull-requests-limit: 3
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 10
     labels:
-      - dependencies
+      - "dependencies"
+      - "npm"
+    commit-message:
+      prefix: "chore(deps)"
+      prefix-development: "chore(deps-dev)"
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
     ignore:
-      - update-types: ["version-update:semver-major"]
-
-  - package-ecosystem: docker
-    directory: /docker
-    schedule:
-      interval: monthly
-    open-pull-requests-limit: 2
-    labels:
-      - dependencies
-    ignore:
-      - update-types: ["version-update:semver-major"]
+      - dependency-name: "*"
+        update-type: "version-update:semver-major"
+    reviewers:
+      - "omeiza-workspace"
+    assignees:
+      - "omeiza-workspace"

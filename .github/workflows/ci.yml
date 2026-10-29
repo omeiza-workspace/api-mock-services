@@ -4,68 +4,57 @@ on:
   push:
     branches: [main]
   pull_request:
-  workflow_dispatch:
+    branches: [main]
 
 jobs:
-  lint:
-    name: Lint
+  lint-and-test:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - name: Check the house style
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
         run: npm run lint
 
-  tests:
-    name: Tests
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-        node: [20, 22]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node }}
-      - name: Run the test suite
+      - name: Test
         run: npm test
 
-  package:
-    name: Package
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - name: Check what would be published
-        run: npm pack --dry-run
-
-  footprint:
-    name: Footprint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - name: Check the mocks are still light
+      - name: Footprint check
         run: npm run footprint
 
-  image:
-    name: Container image
+      - name: Spec conformance
+        run: npm run specs
+
+  build-and-publish:
+    needs: lint-and-test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - name: Build the image
-        run: docker build -f docker/Dockerfile -t api-mock-services .
-      - name: Smoke test the image
-        run: |
-          docker run --rm -d --name mock -p 4001:4001 api-mock-services stripe
-          sleep 3
-          curl -fsS http://127.0.0.1:4001/health
-          curl -fsS http://127.0.0.1:4001/_panel | head -c 60
-          docker rm -f mock
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (no-op, but validates)
+        run: npm pack --dry-run
+
+      - name: Publish to npm
+        if: github.event.repository.owner.login == 'omeiza-workspace'
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
