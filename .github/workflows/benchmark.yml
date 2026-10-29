@@ -1,0 +1,62 @@
+# Benchmark
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 2 * * 0'  # Weekly on Sunday
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run benchmarks
+        run: |
+          # Warm up
+          for i in {1..3}; do npm run footprint; done
+          
+          # Run 10 iterations and collect stats
+          for i in {1..10}; do
+            npm run footprint 2>&1 | grep -E "(memory|startup|idle CPU)" | head -3
+          done > benchmark-results.txt
+
+      - name: Upload benchmark results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results
+          path: benchmark-results.txt
+
+      - name: Check for regressions
+        run: |
+          # Simple check: memory should be < 100MB, startup < 5000ms
+          # This is a simple check; in production you'd compare against baseline
+          MEMORY=$(grep "memory" benchmark-results.txt | tail -1 | grep -oE '[0-9]+')
+          STARTUP=$(grep "startup" benchmark-results.txt | tail -1 | grep -oE '[0-9]+')
+          
+          echo "Memory: ${MEMORY}MB"
+          echo "Startup: ${STARTUP}ms"
+          
+          if [ "$MEMORY" -gt 100 ]; then
+            echo "⚠️ Memory regression detected!"
+            exit 1
+          fi
+          
+          if [ "$STARTUP" -gt 5000 ]; then
+            echo "⚠️ Startup regression detected!"
+            exit 1
+          fi
+          
+          echo "✅ No regressions detected"

@@ -63,6 +63,7 @@ import {
   createAmplitudeMock as amplitudeMock,
   createRudderStackMock as rudderstackMock,
 } from './providers/analytics.js'
+import { Cassette, createCassette, withCassette, cassetteMiddleware, RECORD_MODE, PLAYBACK_MODE } from './cassette.js'
 import {
   createPaystackMock as paystackMock,
   createInterswitchMock as interswitchMock,
@@ -654,3 +655,4 @@ export const createSpecMock = withViews(specMock)
 export const createSpecMockFromFile = async (path) => attachViews(await specMockFromFile(path))
 
 export { attachViews } from './ui/index.js'
+export { Cassette, createCassette, withCassette, cassetteMiddleware, RECORD_MODE, PLAYBACK_MODE } from './cassette.js'
