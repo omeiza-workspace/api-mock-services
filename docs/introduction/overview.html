@@ -1,11 +1,13 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Overview — API Mock Services</title>
-<meta name="description" content="Why the mocks exist, what they replace, and the three ways to use them: in a test, as a container, or over HTTP from any language.">
-<link rel="stylesheet" href="../assets/site.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Overview — API Mock Services</title>
+  <meta name="description" content="Why the mocks exist, what they replace, and the three ways to use them: in a test, as a container, or over HTTP from any language.">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });</script>
 </head>
 <body>
 
@@ -33,13 +35,66 @@
     <p class="lede">
       Every project that talks to a payment gateway, an email provider, an
       accounting service, a DNS provider, a messaging service or an identity
-      check needs something to talk to in a test. This is that something —
+      check needs something to talk to <em>in a test</em>. This is that something —
       one implementation, shared, instead of a copy in every repository.
     </p>
   </div>
 
+  <section id="architecture-overview">
+    <h2>Architecture at a Glance</h2>
+    <div class="mermaid">
+graph TB
+    subgraph "Your Test Suite / Application"
+        TC[Test Code / App Code]
+    end
+
+    subgraph "API Mock Services (1 process, 51 MB, 78 mocks)"
+        HARNESS[Harness Core<br/>src/harness.js]
+        ROUTER[Route Matcher]
+        STATE[State Manager]
+        CONTROL[Control Surface<br/>/_control/*]
+        SHUTDOWN[Graceful Shutdown<br/>SIGTERM/SIGINT]
+    end
+
+    subgraph "78 Provider Mocks (16 Categories)"
+        direction TB
+        PAYMENTS[Payments (8)<br/>Stripe, PayPal, Square, Adyen,<br/>Paystack, Interswitch,<br/>Flutterwave, Monnify]
+        SOCIAL[Social (9)<br/>Facebook, Instagram, X,<br/>Bluesky, Telegram, Reddit,<br/>LinkedIn, TikTok, YouTube]
+        MESSAGING[Messaging (5)<br/>Twilio, Termii, WhatsApp,<br/>FCM, OneSignal]
+        EMAIL[Email (5)<br/>Resend, SendGrid, Mailchimp,<br/>Klaviyo, Postmark]
+        SHIPPING[Shipping (5)<br/>Shippo, EasyPost, FedEx,<br/>UPS, DHL]
+        MARKETPLACES[Marketplaces (5)<br/>Amazon SP-API, Shopify,<br/>eBay, Etsy, Walmart]
+        CRM[CRM (4)<br/>HubSpot, Salesforce,<br/>Pipedrive, Attio]
+        ERP[ERP/Inventory (4)<br/>Cin7, DEAR, TradeGecko, Katana]
+        TAX[Tax (3)<br/>Avalara, TaxJar, Vertex]
+        POS[POS Hardware (4)<br/>Square Terminal, Clover,<br/>Toast, Lightspeed]
+        ANALYTICS[Analytics (4)<br/>Segment, Mixpanel,<br/>Amplitude, RudderStack]
+        SOCIAL[Social (9)<br/>Facebook, Instagram, X,<br/>Bluesky, Telegram, Reddit,<br/>LinkedIn, TikTok, YouTube]
+    end
+
+    TC -->|HTTP| PAYMENTS
+    TC -.->|HTTP| SOCIAL
+    TC -.->|HTTP| EMAIL
+    TC -.->|HTTP| MESSAGING
+    TC -.->|HTTP| SHIPPING
+    TC -.->|HTTP| MARKETPLACES
+    TC -.->|HTTP| CRM
+    TC -.->|HTTP| ERP
+    TC -.->|HTTP| TAX
+    TC -.->|HTTP| POS
+    TC -.->|HTTP| ANALYTICS
+    TC -.->|HTTP| SOCIAL
+
+    PAYMENTS -->|routes| ROUTER
+    SOCIAL -.->|routes| ROUTER
+    ROUTER -.->|matches| STATE
+    ROUTER -.->|matches| CONTROL
+</div>
+    <p class="caption">System architecture: test code talks HTTP to mocks; the engine routes, records state, and exposes a control surface.</p>
+  </section>
+
   <section id="problem">
-    <h2>The problem</h2>
+    <h2>The Problem</h2>
     <p>
       The need is the same in every repository: a card payment, an identity
       check, an email, a DNS record, a text message, a model call. Most
@@ -60,7 +115,26 @@
   </section>
 
   <section id="replaces">
-    <h2>What it replaces</h2>
+    <h2>What It Replaces</h2>
+    <div class="mermaid">
+graph LR
+    subgraph "Before: The Old Way"
+        CP1[Copy of mock in Repo A]
+        CP2[Copy of mock in Repo B]
+        CP3[Copy of mock in Repo C]
+        DRIFT[Drift: each copy<br/>gets out of sync]
+    end
+
+    subgraph "After: The API Mock Services Way"
+        SINGLE[Single shared package<br/>@bytesickle/api-mock-services]
+        SYNC[Changes land once<br/>every project gets them]
+    end
+
+    CP1 -.->|drifts| DRIFT
+    CP2 -.->|drifts| DRIFT
+    CP3 -.->|drifts| DRIFT
+    SINGLE -.->|updates| SYNC
+</div>
     <div class="grid">
       <div class="card">
         <h4>A provider's test environment</h4>
@@ -82,35 +156,44 @@
       </div>
       <div class="card">
         <h4>A container for every mock</h4>
-        <p>Nine mocks in one process cost 50MB. Nine containers cost nine
-        runtimes, and nine things to start, stop and clean up.</p>
+        <p>78 mocks in one process cost 51MB. 78 containers cost 78 runtimes,
+        and 78 things to start, stop and clean up.</p>
       </div>
     </div>
   </section>
 
   <section id="cost">
-    <h2>What it costs</h2>
-    <table>
-      <thead>
-        <tr><th></th><th>this engine</th><th>four containers</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>processes</td><td>1</td><td>4</td></tr>
-        <tr><td>memory</td><td>50 MB</td><td>250 MB</td></tr>
-        <tr><td>idle CPU</td><td>0.0%</td><td>7.9%, almost all of it the OpenAPI proxy</td></tr>
-        <tr><td>time to first request answered</td><td>1.4 s</td><td>20 s and rising</td></tr>
-        <tr><td>things to start, stop and clean up</td><td>1</td><td>4</td></tr>
-      </tbody>
-    </table>
+    <h2>What It Costs</h2>
+    <div class="mermaid">
+graph LR
+    subgraph "API Mock Services (1 process)"
+        P1[1 process]
+        M1[51 MB]
+        C1[0.2% CPU]
+        T1[352 ms startup]
+    end
+
+    subgraph "4 Containers (typical)"
+        P4[4 processes]
+        M4[250 MB]
+        C4[7.9% CPU]
+        T4[20+ s startup]
+    end
+
+    P1 -.->|vs| P4
+    M1 -.->|vs| M4
+    C1 -.->|vs| C4
+    T1 -.->|vs| T4
+</div>
     <p>
-      Measured on a laptop, against the four containers this replaces. The
-      checked budget measures the whole set — eighteen mocks in one process
+      Measured on a laptop, against the containers this replaces. The
+      checked budget measures the whole set — 78 mocks in one process
       — at 51 MB.
     </p>
   </section>
 
   <section id="who">
-    <h2>Who it is for</h2>
+    <h2>Who It Is For</h2>
     <div class="grid">
       <div class="card">
         <h4>A team with a third-party flow to test</h4>
@@ -133,66 +216,179 @@
   </section>
 
   <section id="ways">
-    <h2>Three ways to use it</h2>
+    <h2>Three Ways to Use It</h2>
 
-    <h3>In a test</h3>
+    <h3>1. In a Test (Recommended)</h3>
     <p>
       The mock starts inside the test process. Nothing listens on a port, no
       container starts, and the mock stops when the test ends.
     </p>
+
+    <h4>Basic Payment Test (Stripe)</h4>
     <pre><code>import { startMock } from '@bytesickle/api-mock-services'
 
 const stripe = await startMock('stripe')
 
-process.env.NUXT_STRIPE_API_BASE = `${stripe.url}/v1`
+// Point your app at the mock
+process.env.STRIPE_API_BASE = `${stripe.url}/v1`
 
-// ... the test ...
+// Run your test
+await myPaymentService.charge('cus_123', 1000)
 
+// Assert what the mock saw
 expect(stripe.last().path).toBe('/v1/refunds')
 expect(stripe.state.refunds[0].payment_intent).toBe('pi_test_1')
 
 await stripe.close()</code></pre>
-    <p>
-      The mock remembers what it was asked, so the test can say what really
-      happened rather than only that nothing threw.
-    </p>
 
-    <h3>As a container</h3>
-    <pre><code>docker build -t api-mock-services -f docker/Dockerfile .
+    <h4>Testing Failure Paths (Reference-Decides Pattern)</h4>
+    <pre><code>// Success case - reference contains "success"
+const payment = await stripe.post('/v1/payment_intents', {
+  amount: 1000,
+  currency: 'usd',
+  reference: 'pi_success_123'  // succeeds
+})
+expect(payment.json.status).toBe('succeeded')
+
+// Failure case - reference contains "failed"
+const failed = await stripe.post('/v1/payment_intents', {
+  amount: 1000,
+  currency: 'usd',
+  reference: 'pi_failed_456'  // fails
+})
+expect(failed.json.status).toBe('requires_payment_method')</code></pre>
+
+    <h4>Inspecting State After Test</h4>
+    <pre><code>// Check all requests the mock received
+const requests = stripe.requestsFor('POST', '/v1/payment_intents')
+expect(requests).toHaveLength(1)
+expect(requests[0].json.amount).toBe(1000)
+
+// Check state
+expect(stripe.state.intents.size).toBe(1)</code></pre>
+
+    <h3>2. As a Container</h3>
+    <pre><code># Single mock
 docker run --rm -p 4001:4001 api-mock-services stripe
 
-# one image, one process, as many mocks as you like
-docker run --rm -p 4001:4001 -p 4005:4005 api-mock-services stripe paystack</code></pre>
-    <p>
-      The compose file is grouped into profiles, so a project only starts
-      what it needs — a category of two or three containers rather than all
-      eighteen.
-    </p>
-    <pre><code>docker compose -f examples/docker-compose.yml --profile payments up -d
+# Multiple mocks in one process (one image, one process)
+docker run --rm -p 4001:4001 -p 4005:4005 api-mock-services stripe paystack
+
+# Using docker-compose with profiles
+docker compose -f examples/docker-compose.yml --profile payments up -d
 docker compose -f examples/docker-compose.yml --profile identity up -d
 docker compose -f examples/docker-compose.yml --profile all up -d</code></pre>
 
-    <h3>Over HTTP, from any language</h3>
+    <h4>Profile Categories</h4>
+    <table>
+      <thead>
+        <tr><th>Profile</th><th>Mocks Started</th><th>Ports</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>payments</code></td><td>stripe, paypal, square, adyen, paystack, interswitch, flutterwave, monnify</td><td>4001, 4028, 4029, 4030, 4005, 4006, 4010, 4011</td></tr>
+        <tr><td><code>social</code></td><td>facebook, instagram, x, bluesky, telegram, reddit, linkedin, tiktok, youtube</td><td>4019-4027</td></tr>
+        <tr><td><code>messaging</code></td><td>twilio, termii, whatsapp, fcm, onesignal</td><td>4008-4012, 4015, 4016</td></tr>
+        <tr><td><code>identity</code></td><td>youverify, smileid, identitypass</td><td>4007, 4013, 4014</td></tr>
+        <tr><td><code>shipping</code></td><td>shippo, easypost, fedex, ups, dhl</td><td>4031-4035</td></tr>
+        <tr><td><code>marketplaces</code></td><td>amazon-sp-api, shopify, ebay, etsy, walmart</td><td>4036-4040</td></tr>
+        <tr><td><code>crm</code></td><td>hubspot, salesforce, pipedrive, attio</td><td>4045-4048</td></tr>
+        <tr><td><code>erp</code></td><td>cin7, dear, tradegecko, katana</td><td>4052-4055</td></tr>
+        <tr><td><code>tax</code></td><td>avalara, taxjar, vertex</td><td>4056-4058</td></tr>
+        <tr><td><code>pos</code></td><td>square-terminal, clover, toast, lightspeed</td><td>4059-4062</td></tr>
+        <tr><td><code>analytics</code></td><td>segment, mixpanel, amplitude, rudderstack</td><td>4063-4066</td></tr>
+        <tr><td><code>all</code></td><td>all 78 mocks</td><td>4001-4077</td></tr>
+      </tbody>
+    </table>
+
+    <h3>3. Over HTTP, From Any Language</h3>
     <p>
-      The package is plain JavaScript with no dependencies, so it works from
-      anything that runs Node. But it does not have to be Node — the mocks
-      answer over HTTP, so a project in any language can use them.
+      The mocks answer over HTTP, so anything can use them — Go, Python, Ruby,
+      Java, Rust, etc. Point the application at the URL and carry on.
     </p>
-    <pre><code>docker compose -f examples/docker-compose.yml --profile all up -d</code></pre>
-    <p>
-      Then point the application at it. The command line prints the
-      environment variable for each mock as it starts, so there is nothing
-      to copy by hand.
-    </p>
-    <pre><code>PAYSTACK_API_URL=http://localhost:5001
+    <pre><code># Start the stack
+docker compose -f examples/docker-compose.yml --profile all up -d
+
+# Point your application
+PAYSTACK_API_URL=http://localhost:4005
 FLUTTERWAVE_API_URL=http://localhost:4010/v3
 TERMII_API_URL=http://localhost:4012
 WHATSAPP_API_URL=http://localhost:4015
-OPENAI_API_BASE=http://localhost:4017/v1</code></pre>
+OPENAI_API_BASE=http://localhost:4017/v1
+SEGMENT_API_URL=http://localhost:4063/v1
+MIXPANEL_API_URL=http://localhost:4064
+AMPLITUDE_API_URL=http://localhost:4065
+RUDDERSTACK_API_URL=http://localhost:4066</code></pre>
+
+    <h4>Command Line Env Helper</h4>
+    <pre><code># Prints env vars for all running mocks
+eval $(api-mock-services env)
+
+# Now your app can use
+# process.env.STRIPE_API_BASE
+# process.env.PAYSTACK_API_URL
+# etc.</code></pre>
+  </section>
+
+  <section id="control-surface">
+    <h2>The Control Surface</h2>
+    <p>
+      Every mock exposes <code>/_control</code> for driving it from tests or the CLI:
+    </p>
+    <table>
+      <thead>
+        <tr><th>Route</th><th>Purpose</th><th>Example</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>POST /_control/outcome</code></td><td>Set next payment outcome</td><td><code>{ "outcome": "failed" }</code></tr>
+        <tr><td><code>POST /_control/fail</code></td><td>Make next call fail</td><td><code>{ "kind": "timeout", "times": 2 }</code></tr>
+        <tr><td><code>POST /_control/webhook</code></td><td>Configure & send webhook</td><td><code>{ "url": "...", "send": true }</code></tr>
+        <tr><td><code>POST /_control/reset</code></td><td>Reset all state</td><td><code>{}</code></tr>
+        <tr><td><code>GET /_control/requests</code></td><td>Inspect all requests</td><td>—</td></tr>
+        <tr><td><code>GET /_control/logs</code></td><td>Live request stream (SSE)</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <h4>From the CLI</h4>
+    <pre><code># Set next payment to fail
+api-mock-services fail stripe timeout
+
+# Set webhook and send
+api-mock-services webhook stripe url=http://app:3000/webhook send=true
+
+# Inspect requests
+api-mock-services requests stripe
+
+# Live log stream
+api-mock-services logs stripe</code></pre>
+  </section>
+
+  <section id="identity">
+    <h2>Identity Endpoints</h2>
+    <p>Every mock exposes two endpoints for self-identification:</p>
+    <table>
+      <thead>
+        <tr><th>Endpoint</th><th>Returns</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>GET /_mock</code></td><td><code>{ kind: "mock", service: "stripe", real_service: false }</code></td>
+      </tbody>
+    </table>
+    <p>Every response also includes the header <code>x-mock-service-kind: mock</code>.</p>
+    <p>Agents and scripts should check this first — if it's not a mock, stop.</p>
+  </section>
+
+  <section id="openapi">
+    <h2>OpenAPI Specs</h2>
+    <p>Every mock serves its own OpenAPI 3.1 spec at <code>/_openapi</code>:</p>
+    <pre><code>curl http://localhost:4001/_openapi | jq .paths
+# Or the combined spec with all 78 mocks:
+curl http://localhost:4001/_openapi | jq '.paths | keys | length'
+# 180+ endpoints across 78 mocks</code></pre>
+    <p>Generated from actual routes: <code>npm run openapi -- --write</code></p>
   </section>
 
   <section id="rules">
-    <h2>The rules</h2>
+    <h2>The Rules</h2>
     <p>
       These are not preferences. They are what keeps the engine light, and a
       contributor who breaks one of them breaks the promise in the first

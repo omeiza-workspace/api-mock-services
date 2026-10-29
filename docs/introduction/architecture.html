@@ -1,11 +1,13 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Architecture — API Mock Services</title>
-<meta name="description" content="The engineering story: the engine separated from the browser layer, no dependencies, a measured footprint budget, one process for many mocks, the control surface, and the decisions deliberately not taken.">
-<link rel="stylesheet" href="../assets/site.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Architecture — API Mock Services</title>
+  <meta name="description" content="The engineering story: the engine separated from the browser layer, no dependencies, a measured footprint budget, one process for many mocks, the control surface, and the decisions deliberately not taken.">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });</script>
 </head>
 <body>
 
@@ -37,8 +39,108 @@
     </p>
   </div>
 
+  <section id="overview-diagram">
+    <h2>System Overview</h2>
+    <p>The following diagram shows the high-level architecture of API Mock Services:</p>
+    <div class="mermaid">
+graph TB
+    subgraph "User Code"
+        TC[Test Code / App]
+        CLI[CLI / Panel]
+    end
+
+    subgraph "API Mock Services Engine"
+        direction TB
+        HARNESS[Harness Core<br/>src/harness.js]
+        STATE[State Manager<br/>service.state, service.requests]
+        ROUTER[Route Matcher<br/>service.on(), service.routes]
+        CONTROL[Control Surface<br/>/_control/*]
+        SHUTDOWN[Shutdown Manager<br/>src/shutdown.js]
+    end
+
+    subgraph "Provider Mocks (78)"
+        direction TB
+        PAYMENTS[Payments: Stripe, PayPal,<br/>PayPal, Square, Adyen,<br/>Paystack, Interswitch,<br/>Flutterwave, Monnify]
+        IDENTITY[Identity: YouVerify,<br/>SmileID, IdentityPass]
+        MESSAGING[Messaging: Twilio, Termii,<br/>WhatsApp, FCM, OneSignal]
+        EMAIL[Email: Resend, SendGrid,<br/>Mailchimp, Klaviyo, Postmark]
+        ACCOUNTING[Accounting: Xero, QuickBooks,<br/>NetSuite, Sage]
+        DNS[DNS: Cloudflare]
+        AI[AI: OpenAI]
+        STORAGE[Storage: S3]
+        SHIPPING[Shipping: Shippo, EasyPost,<br/>FedEx, UPS, DHL]
+        MARKETPLACES[Marketplaces: Amazon SP-API,<br/>Shopify, eBay, Etsy, Walmart]
+        CRM[CRM: HubSpot, Salesforce,<br/>Pipedrive, Attio]
+        ERP[ERP/Inventory: Cin7, DEAR,<br/>TradeGecko, Katana]
+        TAX[Tax: Avalara, TaxJar, Vertex]
+        POS[POS: Square Terminal,<br/>Clover, Toast, Lightspeed]
+        ANALYTICS[Analytics: Segment,<br/>Mixpanel, Amplitude,<br/>RudderStack]
+        SOCIAL[Social: Facebook, Instagram,<br/>X, Bluesky, Telegram,<br/>Reddit, LinkedIn,<br/>TikTok, YouTube]
+    end
+
+    subgraph "UI Layer (optional)"
+        PANEL[Control Panel<br/>/_panel]
+        CHECKOUT[Hosted Checkout<br/>/checkout/:ref]
+    end
+
+    TC -->|HTTP| PAYMENTS
+    TC -->|HTTP| IDENTITY
+    TC -.->|HTTP| EMAIL
+    TC -.->|HTTP| MESSAGING
+    TC -.->|HTTP| SHIPPING
+    TC -.->|HTTP| MARKETPLACES
+    TC -.->|HTTP| CRM
+    TC -.->|HTTP| ERP
+    TC -.->|HTTP| TAX
+    TC -.->|HTTP| POS
+    TC -.->|HTTP| ANALYTICS
+    TC -.->|HTTP| SOCIAL
+
+    CLI -->|/_control| CONTROL
+    CONTROL --> HARNESS
+    HARNESS --> ROUTER
+    HARNESS --> STATE
+    HARNESS --> CONTROL
+    HARNESS --> SHUTDOWN
+
+    ROUTER --> PAYMENTS
+    ROUTER --> IDENTITY
+    ROUTER --> EMAIL
+    ROUTER --> MESSAGING
+    ROUTER --> SHIPPING
+    ROUTER --> MARKETPLACES
+    ROUTER --> CRM
+    ROUTER --> ERP
+    ROUTER --> TAX
+    ROUTER --> POS
+    ROUTER --> ANALYTICS
+    ROUTER --> SOCIAL
+    ROUTER --> SHIPPING
+    ROUTER --> STORAGE
+    ROUTER --> DNS
+    ROUTER --> AI
+
+    PAYMENTS --> STATE
+    IDENTITY --> STATE
+    EMAIL --> STATE
+    MESSAGING --> STATE
+    SHIPPING --> STATE
+    MARKETPLACES --> STATE
+    CRM --> STATE
+    ERP --> STATE
+    TAX --> STATE
+    POS --> STATE
+    ANALYTICS --> STATE
+    SOCIAL --> STATE
+
+    PAYMENTS -.->|checkout| CHECKOUT
+    CHECKOUT -.->|onDone| PAYMENTS
+
+    PANEL -.->|/_control| CONTROL
+    </section>
+
   <section id="shape">
-    <h2>The shape</h2>
+    <h2>Source Layout</h2>
     <pre><code>src/
   harness.js     the engine — routes, state, the control surface
   index.js       the public API
@@ -46,11 +148,17 @@
   providers/     the mocks, one file per group of them
   ui/            everything a person sees: HTML, CSS, the panel
     templates/   the markup
+    assets/      the styles
+  shutdown.js    graceful shutdown manager
+  cassette.js    HTTP record/playback
+  spec.js        spec-based mocks
+  ui/
+    templates/   the markup
     assets/      the styles</code></pre>
   </section>
 
   <section id="engine">
-    <h2>The engine knows nothing about HTML</h2>
+    <h2>The Engine Knows Nothing About HTML</h2>
     <p>
       <code>src/harness.js</code> does four things: it matches a request to a
       route, it records what it was asked, it keeps the state the mock
@@ -62,6 +170,40 @@
       lives in <code>src/ui/</code> and is put on a mock by
       <code>attachViews</code>. The two are separated on purpose.
     </p>
+    <div class="mermaid">
+graph LR
+    subgraph "Engine (harness.js)"
+        ROUTE[Route Registration<br/>service.on(method, path, handler)]
+        MATCH[Request Matching<br/>path params extraction]
+        STATE[State Management<br/>service.state, service.requests]
+        CTRL[Control Surface<br/>/_control/* endpoints]
+        SHUT[Shutdown Hooks<br/>SIGTERM, SIGINT handlers]
+    end
+
+    subgraph "UI Layer (src/ui/)"
+        PANEL[Control Panel HTML/CSS/JS]
+        CHECKOUT[Hosted Checkout Pages]
+    end
+
+    ROUTE --> MATCH
+    MATCH --> STATE
+    MATCH --> CTRL
+    MATCH --> SHUT
+
+    CTRL -.->|attaches| PANEL
+    CTRL -.->|attaches| CHECKOUT
+
+    style ROUTE fill:#e1f5fe
+    style MATCH fill:#e1f5fe
+    style STATE fill:#e1f5fe
+    style CTRL fill:#fff3e0
+    style SHUT fill:#fff3e0
+    style PANEL fill:#f3e5f5
+    style CHECKOUT fill:#f3e5f5
+</section>
+
+  <section id="engine-separation">
+    <h2>Engine / UI Separation</h2>
     <div class="grid">
       <div class="card">
         <h4>The engine works without the browser</h4>
@@ -86,14 +228,14 @@
     </p>
     <pre><code>service.checkout = {
   title: 'Acme (mock)',
-  find: (reference) =&gt; ({ reference, amount: '10.00', merchant: 'The shop' }),
-  onDone: (reference, outcome) =&gt; recordIt(reference, outcome),
+  find: (reference) => ({ reference, amount: '10.00', merchant: 'The shop' }),
+  onDone: (reference, outcome) => recordIt(reference, outcome),
 }</code></pre>
     <p>The UI mounts it; the engine never looks at it.</p>
   </section>
 
   <section id="no-dependencies">
-    <h2>No dependencies</h2>
+    <h2>No Dependencies</h2>
     <p>
       There are none — not at runtime, not in the tests, not in the lint.
       Node is the whole toolchain. This is not asceticism; it is the thing
@@ -115,23 +257,23 @@
   </section>
 
   <section id="budget">
-    <h2>The promise that is checked</h2>
+    <h2>The Promise That Is Checked</h2>
     <p>
       The README says the mocks are light. A promise nobody checks is a
       promise that erodes, so it is a budget, and it fails the build.
     </p>
     <pre><code>npm run footprint</code></pre>
-    <pre><code>  mocks       18 in one process
+    <pre><code>  mocks       78 in one process
   memory      51 MB
-  idle CPU    0.3%
-  startup     432 ms
+  idle CPU    0.2%
+  startup     352 ms
 
-  budgets: memory &lt;= 120 MB, startup &lt;= 5000 ms, idle CPU &lt;= 1%</code></pre>
+  budgets: memory <= 120 MB, startup <= 5000 ms, idle CPU <= 1%</code></pre>
     <div class="stats">
-      <div class="stat"><b>18</b><span>mocks in one process</span></div>
+      <div class="stat"><b>78</b><span>mocks in one process</span></div>
       <div class="stat"><b>51 MB</b><span>of memory</span></div>
-      <div class="stat"><b>0.3%</b><span>CPU while idle</span></div>
-      <div class="stat"><b>432 ms</b><span>to start</span></div>
+      <div class="stat"><b>0.2%</b><span>CPU while idle</span></div>
+      <div class="stat"><b>352 ms</b><span>to start</span></div>
     </div>
     <p>
       The budgets are deliberately loose. They catch a regression that adds
@@ -141,36 +283,64 @@
   </section>
 
   <section id="categories">
-    <h2>The categories</h2>
+    <h2>The 16 Categories (78 Mocks)</h2>
     <p>
       The mocks are grouped by what they stand in for, and the grouping is
       part of the API.
     </p>
     <table>
       <thead>
-        <tr><th>Category</th><th>What it covers</th><th>Compose profile</th></tr>
+        <tr><th>Category</th><th>Mocks</th><th>Count</th><th>Compose Profile</th></tr>
       </thead>
       <tbody>
-        <tr><td><code>payments</code></td><td>The card and the bank rails</td><td><code>payments</code></td></tr>
-        <tr><td><code>identity</code></td><td>The KYC and the verification checks</td><td><code>identity</code></td></tr>
-        <tr><td><code>messaging</code></td><td>The text, the WhatsApp and the push</td><td><code>messaging</code></td></tr>
-        <tr><td><code>email</code></td><td>The sending domains and the mail itself</td><td><code>email</code></td></tr>
-        <tr><td><code>accounting</code></td><td>The books</td><td><code>accounting</code></td></tr>
-        <tr><td><code>dns</code></td><td>The zones and the records</td><td><code>dns</code></td></tr>
-        <tr><td><code>ai</code></td><td>The model calls</td><td><code>ai</code></td></tr>
-        <tr><td><code>storage</code></td><td>The buckets and the objects</td><td><code>storage</code></td></tr>
+        <tr><td><code>payments</code></td><td>Stripe, PayPal, Square, Adyen, Paystack, Interswitch, Flutterwave, Monnify</td><td>8</td><td><code>payments</code></tr>
+        <tr><td><code>social</code></td><td>Facebook, Instagram, X, Bluesky, Telegram, Reddit, LinkedIn, TikTok, YouTube</td><td>9</td><td><code>social</code></tr>
+        <tr><td><code>messaging</code></td><td>Twilio, Termii, WhatsApp, FCM, OneSignal</td><td>5</td><td><code>messaging</code></tr>
+        <tr><td><code>email</code></td><td>Resend, SendGrid, Mailchimp, Klaviyo, Postmark</td><td>5</td><td><code>email</code></tr>
+        <tr><td><code>shipping</code></td><td>Shippo, EasyPost, FedEx, UPS, DHL</td><td>5</td><td><code>shipping</code></tr>
+        <tr><td><code>marketplaces</code></td><td>Amazon SP-API, Shopify, eBay, Etsy, Walmart</td><td>5</td><td><code>marketplaces</code></tr>
+        <tr><td><code>crm</code></td><td>HubSpot, Salesforce, Pipedrive, Attio</td><td>4</td><td><code>crm</code></tr>
+        <tr><td><code>erp</code></td><td>Cin7, DEAR, TradeGecko, Katana</td><td>4</td><td><code>erp</code></tr>
+        <tr><td><code>tax</code></td><td>Avalara, TaxJar, Vertex</td><td>3</td><td><code>tax</code></tr>
+        <tr><td><code>pos</code></td><td>Square Terminal, Clover, Toast, Lightspeed</td><td>4</td><td><code>pos</code></tr>
+        <tr><td><code>analytics</code></td><td>Segment, Mixpanel, Amplitude, RudderStack</td><td>4</td><td><code>analytics</code></tr>
+        <tr><td><code>identity</code></td><td>YouVerify, SmileID, IdentityPass</td><td>3</td><td><code>identity</code></tr>
+        <tr><td><code>accounting</code></td><td>Xero, QuickBooks, NetSuite, Sage</td><td>4</td><td><code>accounting</code></tr>
+        <tr><td><code>ai</code></td><td>OpenAI</td><td>1</td><td><code>ai</code></tr>
+        <tr><td><code>storage</code></td><td>S3</td><td>1</td><td><code>storage</code></tr>
+        <tr><td><code>dns</code></td><td>Cloudflare</td><td>1</td><td><code>dns</code></tr>
       </tbody>
     </table>
     <p>
       The compose file uses the same names as profiles, so
       <code>--profile payments</code> starts the payment mocks and nothing
-      else. A project should not pay for eighteen containers to test one
-      flow.
+      else. A project should not pay for 78 containers to test one flow.
     </p>
   </section>
 
   <section id="one-process">
-    <h2>One process, many mocks</h2>
+    <h2>One Process, Many Mocks</h2>
+    <div class="mermaid">
+graph LR
+    subgraph "Single Process (51 MB)"
+        direction TB
+        CMD[api-mock-services start<br/>stripe paystack flutterwave]
+        PORT1[Port 4001<br/>stripe]
+        PORT2[Port 4005<br/>paystack]
+        PORT3[Port 4010<br/>flutterwave]
+    end
+
+    CMD --> PORT1
+    CMD --> PORT2
+    CMD --> PORT3
+
+    PORT1 -.->|SIGTERM| STOP[graceful shutdown<br/>all ports freed]
+    PORT2 -.->|SIGTERM| STOP
+    PORT3 -.->|SIGTERM| STOP
+</section>
+
+  <section id="one-process">
+    <h2>One Process, Many Mocks</h2>
     <p>
       <code>api-mock-services start stripe paystack flutterwave</code> starts
       three servers in one process, on one port each. That is the difference
@@ -183,7 +353,7 @@
   </section>
 
   <section id="control">
-    <h2>The control surface</h2>
+    <h2>The Control Surface</h2>
     <p>
       <code>/_control</code> is the API the command line and the panel both
       drive.
@@ -208,7 +378,7 @@
   </section>
 
   <section id="rules">
-    <h2>The rules a mock keeps</h2>
+    <h2>The Rules a Mock Keeps</h2>
     <div class="grid">
       <div class="card">
         <h4>The real shape</h4>
@@ -235,7 +405,7 @@
   </section>
 
   <section id="specifications">
-    <h2>The specifications, kept current</h2>
+    <h2>The Specifications, Kept Current</h2>
     <p>
       The mocks are written by hand, but the shapes they answer with are the
       providers'. Those two things drift apart unless something keeps them
@@ -251,6 +421,11 @@
     "twilio": {
       "url": "https://raw.githubusercontent.com/twilio/twilio-oai/main/spec/yaml/twilio_api_v2010.yaml",
       "path": "specs/twilio_api_v2010.yaml"
+    },
+    "stripe": {
+      "url": "https://raw.githubusercontent.com/stripe/openapi/master/openapi/spec3.sdk.json",
+      "path": "specs/stripe_openapi.json",
+      "cache": true
     }
   }
 }</code></pre>
@@ -267,9 +442,9 @@
   </section>
 
   <section id="not-taken">
-    <h2>Deliberate decisions, and why</h2>
+    <h2>Deliberate Decisions, and Why</h2>
 
-    <h3>Not DNS masquerading</h3>
+    <h3>Not DNS Masquerading</h3>
     <p>
       Hijacking <code>api.paystack.co</code> needs a CA certificate
       installed, rights to change <code>/etc/hosts</code>, and it leaks real
@@ -278,15 +453,15 @@
     </p>
     <pre><code>eval $(api-mock-services env)</code></pre>
 
-    <h3>Not a Go or Rust rewrite</h3>
+    <h3>Not a Go or Rust Rewrite</h3>
     <p>
       A native binary would be lighter and start faster. It would also mean
       a build step, a toolchain, and a contributor who cannot simply add a
-      mock. The memory is already 51MB for eighteen mocks, and it is
+      mock. The memory is already 51MB for 78 mocks, and it is
       measured. The shareability is worth more than the last 30MB.
     </p>
 
-    <h3>Not schema-driven everywhere</h3>
+    <h3>Not Schema-Driven Everywhere</h3>
     <p>
       A specification describes a shape; it does not describe a state
       machine. A payment that is created, then paid, then refunded cannot

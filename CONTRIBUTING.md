@@ -11,6 +11,7 @@ Thank you for considering contributing! This document outlines the process for c
 - [Testing](#testing)
 - [Submitting Changes](#submitting-changes)
 - [Adding a New Mock](#adding-a-new-mock)
+- [Architecture Overview](#architecture-overview)
 - [Style Guide](#style-guide)
 
 ## Code of Conduct
@@ -23,7 +24,7 @@ This project follows the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.
 2. Clone your fork: `git clone https://github.com/your-username/api-mock-services.git`
 3. Install dependencies: `npm ci`
 4. Run tests: `npm test`
-5. Run lint: `npm run lint`
+6. Run lint: `npm run lint`
 
 ## Development Setup
 
@@ -46,14 +47,25 @@ npm run list
 
 ## Making Changes
 
+```mermaid
+graph LR
+    A[Fork Repo] --> B[Create Branch]
+    B --> C[Make Changes]
+    C --> D[Run Tests]
+    D --> E[Run Lint]
+    E --> F[Run Footprint]
+    F --> G[Commit & Push]
+    G --> H[Open PR]
+```
+
 1. Create a new branch: `git checkout -b feature/your-feature-name`
 2. Make your changes
 3. Run tests: `npm test`
 4. Run lint: `npm run lint`
-4. Run footprint check: `npm run footprint`
-5. Commit with a clear message: `git commit -m "feat: your feature description"`
-6. Push to your fork: `git push origin feature/your-feature-name`
-7. Open a Pull Request
+5. Run footprint check: `npm run footprint`
+6. Commit with a clear message: `git commit -m "feat: your feature description"`
+7. Push to your fork: `git push origin feature/your-feature-name`
+8. Open a Pull Request
 
 ## Testing
 
@@ -88,6 +100,22 @@ node --test --experimental-test-coverage test/*.test.js
 ## Adding a New Mock
 
 This is the most common contribution. Follow these steps:
+
+### Architecture Overview
+
+```mermaid
+graph TB
+    subgraph "Source Structure"
+        INDEX[src/index.js<br/>MOCKS registry]
+        HARNESS[src/harness.js<br/>Engine core]
+        PROVIDERS[src/providers/<br/>category.js files]
+        SHUTDOWN[src/shutdown.js<br/>Graceful shutdown]
+    end
+
+    MOCKS[MOCKS Registry] --> |registers| PROVIDERS
+    HARNESS -->|provides| MOCKS
+    SHUTDOWN -->|tracks| MOCKS
+```
 
 ### 1. Create the Provider File
 
@@ -150,6 +178,28 @@ export const CATEGORIES = {
   // ... existing categories
   yourcategory: { title: 'Your Category', description: 'Description' },
 }
+```
+
+### Current Categories (16 total)
+
+```mermaid
+graph TD
+    PAY[Payments: 8]
+    SOC[Social: 9]
+    MSG[Messaging: 5]
+    EML[Email: 5]
+    SHP[Shipping: 5]
+    MKT[Marketplaces: 5]
+    CRM[CRM: 4]
+    ERP[ERP/Inventory: 4]
+    TAX[Tax: 3]
+    POS[POS: 4]
+    ANA[Analytics: 4]
+    ID[Identity: 3]
+    ACC[Accounting: 4]
+    AI[AI: 1]
+    STG[Storage: 1]
+    DNS[DNS: 1]
 ```
 
 ### 4. Write Tests
@@ -224,6 +274,8 @@ src/
 ├── harness.js           # Core engine
 ├── index.js             # Main exports, MOCKS registry
 ├── shutdown.js          # Graceful shutdown
+├── cassette.js          # HTTP record/playback
+├── spec.js              # Spec-based mocks
 ├── providers/           # Provider implementations
 │   ├── commerce.js      # Stripe, Resend, Xero, Cloudflare
 │   ├── payments.js      # PayPal, Square, Adyen
@@ -251,6 +303,16 @@ src/
 ```
 
 ### Testing Patterns
+
+```mermaid
+graph TD
+    A[Create Mock Service] --> B[Start on Random Port]
+    B --> C[Test Happy Path]
+    C --> D[Test Error Path<br/>reference with 'failed']
+    D --> E[Test /_mock Endpoint]
+    E --> F[Test /_openapi Endpoint]
+    F --> G[Close Service]
+```
 
 ```javascript
 // Always test:
