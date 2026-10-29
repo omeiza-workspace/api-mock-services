@@ -143,6 +143,17 @@ can be checked against them.
 | `mixpanel` | Mixpanel | Mixpanel, Inc. |
 | `amplitude` | Amplitude | Amplitude, Inc. |
 | `rudderstack` | RudderStack | RudderStack, Inc. |
+| `rabbitmq` | RabbitMQ | VMware, Inc. |
+| `kafka` | Kafka | Apache Software Foundation |
+| `sqs` | Amazon SQS | Amazon Web Services, Inc. |
+| `pubsub` | Google Cloud Pub/Sub | Google LLC |
+| `redis-streams` | Redis Streams | Redis Ltd. |
+| `postgres` | PostgreSQL | PostgreSQL Global Development Group |
+| `mysql` | MySQL | Oracle Corporation |
+| `mongodb` | MongoDB | MongoDB, Inc. |
+| `redis` | Redis | Redis Ltd. |
+| `dynamodb` | Amazon DynamoDB | Amazon Web Services, Inc. |
+| `firestore` | Google Cloud Firestore | Google LLC |
 
 The list is checked by a test: a mock that ships without a row here fails the
 build.

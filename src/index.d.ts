@@ -211,6 +211,21 @@ export function createMixpanelMock(options?: MockOptions): MockService
 export function createAmplitudeMock(options?: MockOptions): MockService
 export function createRudderStackMock(options?: MockOptions): MockService
 
+// Message Queue providers
+export function createRabbitmqMock(options?: MockOptions): MockService
+export function createKafkaMock(options?: MockOptions): MockService
+export function createSqsMock(options?: MockOptions): MockService
+export function createPubsubMock(options?: MockOptions): MockService
+export function createRedisStreamsMock(options?: MockOptions): MockService
+
+// Database providers
+export function createPostgresMock(options?: MockOptions): MockService
+export function createMysqlMock(options?: MockOptions): MockService
+export function createMongodbMock(options?: MockOptions): MockService
+export function createRedisMock(options?: MockOptions): MockService
+export function createDynamodbMock(options?: MockOptions): MockService
+export function createFirestoreMock(options?: MockOptions): MockService
+
 // Spec-based mocks
 export function createSpecMock(definition: {
   name?: string

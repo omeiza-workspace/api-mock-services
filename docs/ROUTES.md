@@ -825,3 +825,181 @@ whole API.
 | `GET` | `/youtube/v3/comments` |
 | `GET` | `/youtube/v3/playlists` |
 | `POST` | `/youtube/v3/videos` |
+
+## Message Queues
+
+### rabbitmq
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `GET` | `/api/connections` |
+| `GET` | `/api/connections/:name` |
+| `DELETE` | `/api/connections/:name` |
+| `GET` | `/api/channels` |
+| `POST` | `/api/channels` |
+| `GET` | `/api/queues` |
+| `PUT` | `/api/queues/:vhost/:name` |
+| `DELETE` | `/api/queues/:vhost/:name` |
+| `GET` | `/api/exchanges` |
+| `POST` | `/api/exchanges/:vhost/:name` |
+| `POST` | `/api/exchanges/:vhost/:name/publish` |
+| `POST` | `/api/queues/:vhost/:name/get` |
+| `POST` | `/api/bindings/:vhost/e/:exchange/q/:queue` |
+
+### kafka
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `GET` | `/topics` |
+| `GET` | `/topics/:topic` |
+| `POST` | `/topics` |
+| `DELETE` | `/topics/:topic` |
+| `POST` | `/topics/:topic/records` |
+| `POST` | `/consumers/:group/instances` |
+| `DELETE` | `/consumers/:group/instances/:instance` |
+| `GET` | `/consumers/:group/instances/:instance/records` |
+| `POST` | `/consumers/:group/instances/:instance/offsets` |
+
+### sqs
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `GET` | `/` |
+| `POST` | `/` |
+| `POST` | `/` |
+| `POST` | `/` |
+| `POST` | `/` |
+| `POST` | `/` |
+| `POST` | `/` |
+
+### pubsub
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `GET` | `/v1/projects/:project/topics` |
+| `POST` | `/v1/projects/:project/topics` |
+| `GET` | `/v1/:topic` |
+| `DELETE` | `/v1/:topic` |
+| `POST` | `/v1/:topic:publish` |
+| `GET` | `/v1/projects/:project/subscriptions` |
+| `POST` | `/v1/projects/:project/subscriptions` |
+| `DELETE` | `/v1/:subscription` |
+| `POST` | `/v1/:subscription:pull` |
+| `POST` | `/v1/:subscription:acknowledge` |
+| `POST` | `/v1/:subscription:push` |
+
+### redis-streams
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/streams/:key/add` |
+| `GET` | `/streams/:key/range` |
+| `POST` | `/streams/read` |
+| `POST` | `/streams/:key/groups` |
+| `POST` | `/streams/:key/groups/:group/read` |
+| `POST` | `/streams/:key/groups/:group/ack` |
+| `GET` | `/streams/:key/groups/:group/pending` |
+| `POST` | `/streams/:key/groups/:group/claim` |
+
+## Databases
+
+### postgres
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/query` |
+| `POST` | `/transaction/begin` |
+| `POST` | `/transaction/:txId/query` |
+| `POST` | `/transaction/:txId/commit` |
+| `POST` | `/transaction/:txId/rollback` |
+| `GET` | `/tables` |
+
+### mysql
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/query` |
+| `GET` | `/databases` |
+| `POST` | `/databases` |
+| `GET` | `/tables` |
+
+### mongodb
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `GET` | `/databases` |
+| `POST` | `/databases` |
+| `GET` | `/collections` |
+| `POST` | `/collections` |
+| `POST` | `/collections/:collection/find` |
+| `POST` | `/collections/:collection/insertOne` |
+| `POST` | `/collections/:collection/insertMany` |
+| `POST` | `/collections/:collection/updateOne` |
+| `POST` | `/collections/:collection/deleteOne` |
+| `POST` | `/collections/:collection/deleteMany` |
+| `POST` | `/collections/:collection/aggregate` |
+
+### redis
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/set` |
+| `GET` | `/get` |
+| `DELETE` | `/del` |
+| `POST` | `/expire` |
+| `GET` | `/ttl` |
+| `POST` | `/hset` |
+| `POST` | `/hget` |
+| `POST` | `/hgetall` |
+| `POST` | `/lpush` |
+| `POST` | `/rpush` |
+| `POST` | `/lpop` |
+| `POST` | `/lrange` |
+| `POST` | `/sadd` |
+| `POST` | `/smembers` |
+| `POST` | `/zadd` |
+| `POST` | `/zrange` |
+| `GET` | `/keys` |
+| `GET` | `/exists` |
+| `GET` | `/info` |
+
+### dynamodb
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `POST` | `/` |
+| `GET` | `/` |
+| `POST` | `/` |
+| `POST` | `/` |
+| `POST` | `/` |
+| `POST` | `/` |
+| `POST` | `/` |
+| `POST` | `/` |
+| `POST` | `/` |
+| `POST` | `/` |
+
+### firestore
+
+| Method | Path |
+|---|---|
+| `GET` | `/health` |
+| `GET` | `/v1/projects/:project/databases/:database/documents` |
+| `POST` | `/v1/projects/:project/databases/:database/documents` |
+| `GET` | `/v1/projects/:project/databases/:database/documents/:path` |
+| `PATCH` | `/v1/projects/:project/databases/:database/documents/:path` |
+| `DELETE` | `/v1/projects/:project/databases/:database/documents/:path` |
+| `POST` | `/v1/projects/:project/databases/:database/documents:runQuery` |
+| `POST` | `/v1/projects/:project/databases/:database:beginTransaction` |
+| `POST` | `/v1/projects/:project/databases/:database:commit` |
+| `POST` | `/v1/projects/:project/databases/:database:rollback` |
+| `GET` | `/v1/projects/:project/databases/:database/indexes` |

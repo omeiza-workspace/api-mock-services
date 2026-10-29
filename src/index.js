@@ -63,6 +63,21 @@ import {
   createAmplitudeMock as amplitudeMock,
   createRudderStackMock as rudderstackMock,
 } from './providers/analytics.js'
+import {
+  createRabbitmqMock as rabbitmqMock,
+  createKafkaMock as kafkaMock,
+  createSqsMock as sqsMock,
+  createPubsubMock as pubsubMock,
+  createRedisStreamsMock as redisStreamsMock,
+} from './providers/message-queues.js'
+import {
+  createPostgresMock as postgresMock,
+  createMysqlMock as mysqlMock,
+  createMongodbMock as mongodbMock,
+  createRedisMock as redisMock,
+  createDynamodbMock as dynamodbMock,
+  createFirestoreMock as firestoreMock,
+} from './providers/databases.js'
 import { Cassette, createCassette, withCassette, cassetteMiddleware, RECORD_MODE, PLAYBACK_MODE } from './cassette.js'
 import {
   createPaystackMock as paystackMock,
@@ -136,6 +151,8 @@ export const CATEGORIES = {
   pos: { title: 'POS Hardware', description: 'The terminals, the registers and the payments' },
   analytics: { title: 'Analytics', description: 'The events, the funnels and the cohorts' },
   social: { title: 'Social', description: 'The networks, the video platforms and the community apps' },
+  messagequeues: { title: 'Message Queues', description: 'The brokers, the streams and the topics' },
+  databases: { title: 'Databases', description: 'The stores, the queries and the transactions' },
 }
 
 /** Every mock this package can start. */
@@ -536,6 +553,72 @@ export const MOCKS = {
     category: 'analytics',
     description: 'The analytics (RudderStack API)',
   },
+  rabbitmq: {
+    create: rabbitmqMock,
+    port: 4067,
+    category: 'messagequeues',
+    description: 'The message broker (RabbitMQ HTTP API)',
+  },
+  kafka: {
+    create: kafkaMock,
+    port: 4068,
+    category: 'messagequeues',
+    description: 'The event streaming (Kafka REST Proxy API)',
+  },
+  sqs: {
+    create: sqsMock,
+    port: 4069,
+    category: 'messagequeues',
+    description: 'The message queue (AWS SQS API)',
+  },
+  pubsub: {
+    create: pubsubMock,
+    port: 4070,
+    category: 'messagequeues',
+    description: 'The message queue (Google Cloud Pub/Sub API)',
+  },
+  'redis-streams': {
+    create: redisStreamsMock,
+    port: 4071,
+    category: 'messagequeues',
+    description: 'The message streams (Redis Streams API)',
+  },
+  postgres: {
+    create: postgresMock,
+    port: 4072,
+    category: 'databases',
+    description: 'The relational database (PostgreSQL REST API)',
+  },
+  mysql: {
+    create: mysqlMock,
+    port: 4073,
+    category: 'databases',
+    description: 'The relational database (MySQL REST API)',
+  },
+  mongodb: {
+    create: mongodbMock,
+    port: 4074,
+    category: 'databases',
+    description: 'The document database (MongoDB REST API)',
+  },
+  redis: {
+    create: redisMock,
+    port: 4075,
+    category: 'databases',
+    description: 'The key-value store (Redis REST API)',
+  },
+  dynamodb: {
+    create: dynamodbMock,
+    port: 4076,
+    category: 'databases',
+    description: 'The NoSQL database (AWS DynamoDB API)',
+  },
+  firestore: {
+    create: firestoreMock,
+    port: 4077,
+    category: 'databases',
+    description: 'The document database (Google Cloud Firestore API)',
+  },
 }
 
 /**
@@ -647,6 +730,17 @@ export const createSegmentMock = withViews(segmentMock)
 export const createMixpanelMock = withViews(mixpanelMock)
 export const createAmplitudeMock = withViews(amplitudeMock)
 export const createRudderStackMock = withViews(rudderstackMock)
+export const createRabbitmqMock = withViews(rabbitmqMock)
+export const createKafkaMock = withViews(kafkaMock)
+export const createSqsMock = withViews(sqsMock)
+export const createPubsubMock = withViews(pubsubMock)
+export const createRedisStreamsMock = withViews(redisStreamsMock)
+export const createPostgresMock = withViews(postgresMock)
+export const createMysqlMock = withViews(mysqlMock)
+export const createMongodbMock = withViews(mongodbMock)
+export const createRedisMock = withViews(redisMock)
+export const createDynamodbMock = withViews(dynamodbMock)
+export const createFirestoreMock = withViews(firestoreMock)
 
 /** A mock written as a route file rather than as code. */
 export const createSpecMock = withViews(specMock)
